@@ -1,4 +1,4 @@
 package handlers
 
-type Message struct {
+type MessageService struct {
 }
