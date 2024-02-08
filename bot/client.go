@@ -26,7 +26,7 @@ func SpawnBot(uri string) (*Bot, error) {
 	}, nil
 }
 
-func (b *Bot) PollForUpdates() {
+func (b *Bot) Start() {
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 	updates := b.GetUpdatesChan(u)
