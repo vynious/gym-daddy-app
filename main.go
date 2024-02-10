@@ -4,7 +4,11 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/vynious/gym-daddy/db"
 	"github.com/vynious/gym-daddy/kafka"
+	"github.com/vynious/gym-daddy/pb/proto_files/notification"
+	"github.com/vynious/gym-daddy/rpc"
+	"google.golang.org/grpc"
 	"log"
+	"net"
 )
 
 func main() {
@@ -16,11 +20,29 @@ func main() {
 	// init database
 	repository, err := db.SpawnRepository(db.LoadDatabaseConfig())
 	if err != nil {
-		log.Fatalf("failed to start repository")
+		log.Fatalf(err.Error())
 	}
 
 	// init kafka producer
-	prod := kafka.SpawnKafkaProducer(kafka.LoadKafkaConfigurations(), repository)
+	prod := kafka.SpawnKafkaProducer(kafka.LoadKafkaConfigurations())
 
-	defer prod.CloseConnection()
+	// embed database service and kafka producer into rpc client
+	server, err := rpc.SpawnGrpcClient(repository, prod)
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+
+	defer server.CloseConnections()
+
+	lis, err := net.Listen("tcp", "5000")
+	if err != nil {
+		log.Fatalf("failed to listen : %v", err)
+	}
+	s := grpc.NewServer()
+	notification.RegisterNotificationServiceServer(s, server)
+
+	log.Printf("Server listening at %v", lis.Addr())
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
 }

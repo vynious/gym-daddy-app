@@ -9,12 +9,6 @@ type (
 	KafkaTopic       string
 )
 
-type Message struct {
-	userId  string
-	event   string // type of message to send to the user (event == topic)
-	content string
-}
-
 type GormConfig struct {
 	Host     Localhost
 	Username DatabaseUsername
