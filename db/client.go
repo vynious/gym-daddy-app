@@ -33,6 +33,10 @@ func SpawnRepository(cfg types.GormConfig) (*Repository, error) {
 	}, nil
 }
 
+func (r *Repository) CreateNotification() {
+
+}
+
 func (r *Repository) Close() error {
 	sqlDB, err := r.gc.DB()
 	if err != nil {

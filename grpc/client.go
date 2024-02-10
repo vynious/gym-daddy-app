@@ -6,14 +6,13 @@ import (
 
 type Client struct {
 	// grpc client
-	// mongodb
-	notifier *kafka.NotificationProducer
+	Notifier *kafka.NotificationProducer
 }
 
 func SpawnGrpcClient(notifier *kafka.NotificationProducer) (*Client, error) {
 	// create grpc client from the generated client code... (not yet imported)
 	return &Client{
-		notifier: notifier,
+		Notifier: notifier,
 	}, nil
 }
 
