@@ -24,7 +24,7 @@ func main() {
 
 	// init kafka subscriber
 
-	sub := kafka.SpawnNotificationSubscriber(kafka.LoadKafkaConfigurations(), repository)
+	sub := kafka.SpawnNotificationSubscriber(kafka.LoadKafkaConfigurations())
 
 	// init telegram bot
 
