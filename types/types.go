@@ -4,8 +4,11 @@ type (
 	MongoURI       string
 	DatabaseName   string
 	CollectionName string
-	ChatID         string
+	ChatID         int64
 	TelegramHandle string
+	TelegramBotURI string
+	EventType      string
+	Content        string
 )
 
 type UserDocument struct {
@@ -17,4 +20,10 @@ type MongoConfig struct {
 	Url      MongoURI
 	DBName   DatabaseName
 	CollName CollectionName
+}
+
+type NotificationMessage struct {
+	TelegramHandle TelegramHandle
+	EventType      EventType
+	Content        Content
 }

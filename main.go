@@ -7,7 +7,6 @@ import (
 	"github.com/vynious/gd-telemessenger-ms/db"
 	"github.com/vynious/gd-telemessenger-ms/kafka"
 	"log"
-	"os"
 )
 
 func main() {
@@ -17,38 +16,29 @@ func main() {
 	}
 
 	// init database
-	cfg, err := db.LoadMongoConfig()
-	if err == nil {
-		log.Fatalf(err.Error())
-	}
-	repository, err := db.SpawnMongoClient(cfg)
+
+	repository, err := db.SpawnRepository(db.LoadMongoConfig())
 	if err != nil {
 		log.Fatalf("failed to start repository")
 	}
 
 	// init kafka subscriber
-	kafkaUrl := os.Getenv("KAFKA_URL")
-	if kafkaUrl == "" {
-		log.Fatalf("missing url for kafka subscriber")
-	}
+
 	sub := kafka.SpawnNotificationSubscriber(kafka.LoadKafkaConfigurations(), repository)
 
 	// init telegram bot
-	telegramUri := os.Getenv("TELEGRAM_BOT_URI")
-	if telegramUri == "" {
-		log.Fatalf("missing uri for telegram bot")
-	}
-	telegramBot, err := bot.SpawnBot(telegramUri)
+
+	telegramBot, err := bot.SpawnBot(bot.LoadBotConfig(), repository)
 	if err != nil {
-		log.Fatalf("")
+		log.Fatalf(err.Error())
 	}
 
-	defer sub.Subscriber.Close()
+	defer sub.CloseConnections() // close both mongo and kafka clients
 
 	fmt.Println("[kafka] consuming messages...")
 	fmt.Println("[telegram-bot] server running...")
 
-	telegramBot.Start()
-	sub.Start()
+	go telegramBot.Start()
+	go sub.Start()
 
 }
