@@ -12,6 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 	"log"
 	"os"
+	"sync"
 )
 
 type Client struct {
@@ -53,15 +54,33 @@ func (c *Client) CreateNotification(ctx context.Context, req *notification.Creat
 		notificationProto.Id = id.String()
 	}
 
-	// send message to kafka
-	if err := c.Notifier.SendNotification(ctx, notificationProto); err != nil {
+	errCh := make(chan error, 2)
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		if err := c.Repository.SaveNotification(notificationProto); err != nil {
+			errCh <- status.Errorf(codes.Internal, "failed to save notitfication to db: %w", err)
+		}
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		if err := c.Notifier.SendNotification(ctx, notificationProto); err != nil {
+			errCh <- status.Errorf(codes.Internal, "failed to send notitfication to kafka queue: %w", err)
+		}
+	}()
+
+	wg.Wait()
+	close(errCh)
+
+	for err := range errCh {
+		return nil, err
 	}
 
-	// store message into to database
-	if err := c.Repository.SaveNotification(notificationProto); err != nil {
-	}
-
-	return nil, nil
+	return &notification.CreateNotificationResponse{}, nil
 }
 
 func (c *Client) CloseConnections() {
