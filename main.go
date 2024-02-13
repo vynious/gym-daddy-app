@@ -27,12 +27,10 @@ func main() {
 	prod := kafka.SpawnKafkaProducer(kafka.LoadKafkaConfigurations())
 
 	// embed database service and kafka producer into rpc client
-	server, err := rpc.SpawnGrpcClient(repository, prod)
+	server, err := rpc.SpawnGrpcServer(repository, prod)
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
-
-	defer server.CloseConnections()
 
 	lis, err := net.Listen("tcp", "5000")
 	if err != nil {
@@ -45,4 +43,6 @@ func main() {
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
+
+	defer server.CloseConnections()
 }
