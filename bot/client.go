@@ -21,7 +21,7 @@ var inlineKeyboard = tgbotapi.NewInlineKeyboardMarkup(
 )
 
 func LoadBotConfig() types.TelegramBotURI {
-	telegramUri := os.Getenv("TELEGRAM_BOT_URI")
+	telegramUri := os.Getenv("TELEGRAM_BOT_KEY")
 	if telegramUri == "" {
 		log.Fatalf("missing uri for telegram bot")
 	}
@@ -58,7 +58,7 @@ func (b *Bot) Start() {
 					log.Println("Error creating subscription:", err)
 					msg.Text = "Oh no! Something went wrong with the server, try again."
 				} else {
-					msg.Text = "You've subscribed successfully."
+					msg.Text = "You've subscribed."
 				}
 
 				// Send response message

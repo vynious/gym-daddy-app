@@ -29,32 +29,34 @@ func LoadKafkaConfigurations() kafka.ReaderConfig {
 	}
 }
 
-func SpawnNotificationSubscriber(cfg kafka.ReaderConfig) *NotificationSubscriber {
+func SpawnNotificationSubscriber(cfg kafka.ReaderConfig, b *bot.Bot) *NotificationSubscriber {
 	sub := kafka.NewReader(cfg)
 	return &NotificationSubscriber{
-		Subscriber: sub,
+		Subscriber:  sub,
+		TelegramBot: b,
 	}
 }
 
 func (ns *NotificationSubscriber) Start() {
+
 	for {
 		msg, err := ns.Subscriber.ReadMessage(context.Background())
 		if err != nil {
 			log.Fatalf("error reading kafka messages: %v", err)
 
 		}
-		telHandle := types.TelegramHandle(msg.Key)
-
-		chatId, err := ns.TelegramBot.Database.GetSubscription(telHandle)
-		if err != nil {
-			log.Println("failed to get chatID: ", err)
-			continue
-		}
 		var nm types.NotificationMessage
 		if err := json.Unmarshal(msg.Value, &nm); err != nil {
 			log.Println("failed to unmarshal msg: ", err)
 			continue
 		}
+		log.Printf("%v", nm)
+		chatId, err := ns.TelegramBot.Database.GetSubscription(nm.TelegramHandle)
+		if err != nil {
+			log.Println("failed to get chatID: ", err)
+			continue
+		}
+
 		if err := ns.TelegramBot.SendNotification(chatId, &nm); err != nil {
 			log.Println("failed to send notification to user: ", err)
 			continue
