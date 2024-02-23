@@ -1,6 +1,7 @@
 package db
 
 import (
+	"context"
 	"fmt"
 	"github.com/redis/go-redis/v9"
 	"os"
@@ -21,7 +22,10 @@ func SpawnRedisDB(queueName string) (*RedisDB, error) {
 		return nil, fmt.Errorf("failed to parse url")
 	}
 	r := redis.NewClient(opts)
-
+	_, err = r.Set(context.Background(), "ticket_count", 0, 0).Result()
+	if err != nil {
+		return nil, fmt.Errorf("fail to init counter %w", err)
+	}
 	return &RedisDB{
 		r,
 		queueName,

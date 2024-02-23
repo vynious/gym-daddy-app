@@ -2,37 +2,65 @@ package queue_mgmt
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/vynious/gd-queue-ms/db"
+	"github.com/vynious/gd-queue-ms/pb/proto_files/queue"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type QueueService struct {
 	*db.RedisDB
 }
 
-// Enqueue returns Ticket Number (current size) of the queue
-func (q *QueueService) Enqueue(ctx context.Context, userId string) (int64, error) {
-	number, err := q.RPush(ctx, q.QueueName, userId).Result()
+func (q *QueueService) Enqueue(ctx context.Context, ticket *queue.Ticket) error {
+	serializedTicket, err := json.Marshal(ticket)
 	if err != nil {
-		return 0, fmt.Errorf("failed to enqueue %w", err)
+		return fmt.Errorf("failed to serialize ticket: %w", err)
 	}
-	return number, nil
+
+	_, err = q.RPush(ctx, q.QueueName, serializedTicket).Result()
+	if err != nil {
+		return fmt.Errorf("failed to enqueue: %w", err)
+	}
+
+	return nil
 }
 
-// Dequeue retrieves the next userId (string) from the queue
-func (q *QueueService) Dequeue(ctx context.Context, userId string) (string, error) {
-	// when its someone's turn
-	userId, err := q.LPop(ctx, q.QueueName).Result()
+func (q *QueueService) Dequeue(ctx context.Context) (*queue.Ticket, error) {
+	serializedTicket, err := q.LPop(ctx, q.QueueName).Result()
 	if err != nil {
-		return "", fmt.Errorf("failed to dequeue %w", err)
+		return nil, fmt.Errorf("failed to dequeue: %w", err)
 	}
-	return userId, nil
+	// Assuming the ticket data is stored as a JSON string in the queue,
+	// we need to deserialize it back into a queue.Ticket object.
+	var ticket queue.Ticket
+	err = json.Unmarshal([]byte(serializedTicket), &ticket)
+	if err != nil {
+		return nil, fmt.Errorf("failed to deserialize ticket: %w", err)
+	}
+	return &ticket, nil
 }
 
-func (q *QueueService) GetSize(ctx context.Context) (int64, error) {
-	size, err := q.LLen(ctx, q.QueueName).Result()
+func (q *QueueService) CreateTicket(ctx context.Context, userId string) (*queue.Ticket, error) {
+	// Start a Redis transaction.
+	pipeline := q.TxPipeline()
+
+	// Increment the ticket_count atomically.
+	incr := pipeline.Incr(ctx, "ticket_count")
+
+	// Execute the transaction.
+	_, err := pipeline.Exec(ctx)
 	if err != nil {
-		return 0, fmt.Errorf("failed to get size of queue %w", err)
+		return nil, fmt.Errorf("failed to create ticket: %w", err)
 	}
-	return size, nil
+
+	// Create a new ticket with the incremented ticket_count as the QueueNumber.
+	ticket := &queue.Ticket{
+		UserID:      userId,
+		QueueNumber: incr.Val(), // Use the result of the INCR operation as the queue number.
+		CreatedAt:   timestamppb.Now(),
+	}
+
+	return ticket, nil
 }
