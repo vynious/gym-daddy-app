@@ -13,6 +13,12 @@ type QueueService struct {
 	*db.RedisDB
 }
 
+func SpawnQueueService(db *db.RedisDB) *QueueService {
+	return &QueueService{
+		db,
+	}
+}
+
 func (q *QueueService) Enqueue(ctx context.Context, ticket *queue.Ticket) error {
 	serializedTicket, err := json.Marshal(ticket)
 	if err != nil {

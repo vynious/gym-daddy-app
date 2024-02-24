@@ -35,7 +35,6 @@ func (s *Server) JoinQueue(ctx context.Context, req *queue.JoinQueueRequest) (*q
 }
 
 func (s *Server) RetrieveNextInLine(ctx context.Context, req *queue.RetrieveNextRequest) (*queue.RetrieveNextResponse, error) {
-
 	ticket, err := s.QueueMgmt.Dequeue(ctx)
 	if err != nil {
 		return nil, err
