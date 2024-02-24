@@ -23,7 +23,7 @@ func main() {
 	qService := queue_mgmt.SpawnQueueService(rdb)
 	rpcServer := rpc.SpawnServer(qService)
 
-	lis, err := net.Listen("tcp", ":3001")
+	lis, err := net.Listen("tcp", ":3002")
 	if err != nil {
 		log.Fatalf("failed to listen : %v", err)
 	}

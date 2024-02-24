@@ -11,7 +11,7 @@ COPY .env .
 
 # Build the Go app
 RUN go build -o main main.go
-EXPOSE 3001
+EXPOSE 3002
 
 # Command to run the executable
 ENTRYPOINT ["/app/main"]

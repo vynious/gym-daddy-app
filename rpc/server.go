@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/vynious/gd-queue-ms/pb/proto_files/queue"
 	"github.com/vynious/gd-queue-ms/queue_mgmt"
+	"github.com/vynious/gd-queue-ms/util"
 )
 
 type Server struct {
@@ -25,6 +26,10 @@ func (s *Server) JoinQueue(ctx context.Context, req *queue.JoinQueueRequest) (*q
 	}
 
 	if err = s.QueueMgmt.Enqueue(ctx, ticket); err != nil {
+		return nil, err
+	}
+
+	if err = util.NotifyThroughTelegram(ticket.UserID); err != nil {
 		return nil, err
 	}
 
