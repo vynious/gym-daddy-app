@@ -43,14 +43,21 @@ type NotificationEntry struct {
 }
 
 func SpawnRepository(cfg types.GormConfig) (*Repository, error) {
-	// Format the DSN string based on the configuration
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%v sslmode=disable TimeZone=Asia/Shanghai",
-		cfg.Host, cfg.Username, cfg.Password, cfg.DBName, 5432)
+	var db *gorm.DB
+	var err error
+	maxAttempts := 5
+	for attempt := 1; attempt <= maxAttempts; attempt++ {
+		dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%v sslmode=disable TimeZone=Asia/Shanghai",
+			cfg.Host, cfg.Username, cfg.Password, cfg.DBName, 5432)
+		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		if err == nil {
+			break
+		}
+		log.Printf("Database connection attempt %d failed: %v", attempt, err)
+	}
 
-	// Open the DB connection
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		return nil, fmt.Errorf("failed to connect to database: %w", err)
+		return nil, fmt.Errorf("failed to connect to the database after %d attempts", maxAttempts)
 	}
 
 	if err := db.AutoMigrate(&NotificationEntry{}); err != nil {
@@ -60,7 +67,8 @@ func SpawnRepository(cfg types.GormConfig) (*Repository, error) {
 	return &Repository{
 		gc:      db,
 		timeout: time.Duration(2) * time.Second,
-	}, nil
+	}, nil // Connection successful
+
 }
 
 func (r *Repository) SaveNotification(notification *notification.Notification) error {
