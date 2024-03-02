@@ -67,6 +67,22 @@ func (q *QueueService) CreateTicket(ctx context.Context, userId string) (*queue.
 		QueueNumber: incr.Val(), // Use the result of the INCR operation as the queue number.
 		CreatedAt:   timestamppb.Now(),
 	}
-
 	return ticket, nil
+}
+
+func (q *QueueService) RetrieveUpcoming(ctx context.Context, quantity int64) ([]*queue.Ticket, error) {
+	var ticketList []*queue.Ticket
+	tickets, err := q.LRange(ctx, q.QueueName, 0, quantity-1).Result()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get upcoming tickets")
+	}
+	for _, t := range tickets {
+		var ticket queue.Ticket
+		err = json.Unmarshal([]byte(t), &ticket)
+		if err != nil {
+			return nil, fmt.Errorf("failed to deserialize ticket: %w", err)
+		}
+		ticketList = append(ticketList, &ticket)
+	}
+	return ticketList, nil
 }

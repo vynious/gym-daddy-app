@@ -199,6 +199,100 @@ func (x *RetrieveNextResponse) GetTicket() *Ticket {
 	return nil
 }
 
+type GetUpcomingTicketsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Quantity int64 `protobuf:"varint,1,opt,name=quantity,proto3" json:"quantity,omitempty"`
+}
+
+func (x *GetUpcomingTicketsRequest) Reset() {
+	*x = GetUpcomingTicketsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_queue_queue_service_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetUpcomingTicketsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUpcomingTicketsRequest) ProtoMessage() {}
+
+func (x *GetUpcomingTicketsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_queue_queue_service_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUpcomingTicketsRequest.ProtoReflect.Descriptor instead.
+func (*GetUpcomingTicketsRequest) Descriptor() ([]byte, []int) {
+	return file_queue_queue_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetUpcomingTicketsRequest) GetQuantity() int64 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+type GetUpcomingTicketsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Tickets []*Ticket `protobuf:"bytes,1,rep,name=tickets,proto3" json:"tickets,omitempty"`
+}
+
+func (x *GetUpcomingTicketsResponse) Reset() {
+	*x = GetUpcomingTicketsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_queue_queue_service_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetUpcomingTicketsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUpcomingTicketsResponse) ProtoMessage() {}
+
+func (x *GetUpcomingTicketsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_queue_queue_service_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUpcomingTicketsResponse.ProtoReflect.Descriptor instead.
+func (*GetUpcomingTicketsResponse) Descriptor() ([]byte, []int) {
+	return file_queue_queue_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetUpcomingTicketsResponse) GetTickets() []*Ticket {
+	if x != nil {
+		return x.Tickets
+	}
+	return nil
+}
+
 var File_queue_queue_service_proto protoreflect.FileDescriptor
 
 var file_queue_queue_service_proto_rawDesc = []byte{
@@ -217,7 +311,15 @@ var file_queue_queue_service_proto_rawDesc = []byte{
 	0x52, 0x65, 0x74, 0x72, 0x69, 0x65, 0x76, 0x65, 0x4e, 0x65, 0x78, 0x74, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x06, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x2e, 0x54, 0x69, 0x63,
-	0x6b, 0x65, 0x74, 0x52, 0x06, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x32, 0x9b, 0x01, 0x0a, 0x0c,
+	0x6b, 0x65, 0x74, 0x52, 0x06, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x22, 0x37, 0x0a, 0x19, 0x47,
+	0x65, 0x74, 0x55, 0x70, 0x63, 0x6f, 0x6d, 0x69, 0x6e, 0x67, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x71, 0x75, 0x61, 0x6e,
+	0x74, 0x69, 0x74, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x71, 0x75, 0x61, 0x6e,
+	0x74, 0x69, 0x74, 0x79, 0x22, 0x45, 0x0a, 0x1a, 0x47, 0x65, 0x74, 0x55, 0x70, 0x63, 0x6f, 0x6d,
+	0x69, 0x6e, 0x67, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x27, 0x0a, 0x07, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x18, 0x01, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x0d, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x2e, 0x54, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x52, 0x07, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x32, 0xf8, 0x01, 0x0a, 0x0c,
 	0x51, 0x75, 0x65, 0x75, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x40, 0x0a, 0x09,
 	0x4a, 0x6f, 0x69, 0x6e, 0x51, 0x75, 0x65, 0x75, 0x65, 0x12, 0x17, 0x2e, 0x71, 0x75, 0x65, 0x75,
 	0x65, 0x2e, 0x4a, 0x6f, 0x69, 0x6e, 0x51, 0x75, 0x65, 0x75, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65,
@@ -227,9 +329,15 @@ var file_queue_queue_service_proto_rawDesc = []byte{
 	0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x2e, 0x52, 0x65, 0x74, 0x72, 0x69, 0x65, 0x76, 0x65, 0x4e,
 	0x65, 0x78, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x71, 0x75, 0x65,
 	0x75, 0x65, 0x2e, 0x52, 0x65, 0x74, 0x72, 0x69, 0x65, 0x76, 0x65, 0x4e, 0x65, 0x78, 0x74, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x14, 0x5a, 0x12, 0x2f, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x5f, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x2f, 0x71, 0x75, 0x65, 0x75, 0x65, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x5b, 0x0a, 0x12, 0x47, 0x65, 0x74,
+	0x55, 0x70, 0x63, 0x6f, 0x6d, 0x69, 0x6e, 0x67, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x12,
+	0x20, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x70, 0x63, 0x6f, 0x6d,
+	0x69, 0x6e, 0x67, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x21, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x2e, 0x47, 0x65, 0x74, 0x55, 0x70, 0x63,
+	0x6f, 0x6d, 0x69, 0x6e, 0x67, 0x54, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x14, 0x5a, 0x12, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x5f, 0x66, 0x69, 0x6c, 0x65, 0x73, 0x2f, 0x71, 0x75, 0x65, 0x75, 0x65, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -244,26 +352,31 @@ func file_queue_queue_service_proto_rawDescGZIP() []byte {
 	return file_queue_queue_service_proto_rawDescData
 }
 
-var file_queue_queue_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_queue_queue_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_queue_queue_service_proto_goTypes = []interface{}{
-	(*JoinQueueRequest)(nil),     // 0: queue.JoinQueueRequest
-	(*JoinQueueResponse)(nil),    // 1: queue.JoinQueueResponse
-	(*RetrieveNextRequest)(nil),  // 2: queue.RetrieveNextRequest
-	(*RetrieveNextResponse)(nil), // 3: queue.RetrieveNextResponse
-	(*Ticket)(nil),               // 4: queue.Ticket
+	(*JoinQueueRequest)(nil),           // 0: queue.JoinQueueRequest
+	(*JoinQueueResponse)(nil),          // 1: queue.JoinQueueResponse
+	(*RetrieveNextRequest)(nil),        // 2: queue.RetrieveNextRequest
+	(*RetrieveNextResponse)(nil),       // 3: queue.RetrieveNextResponse
+	(*GetUpcomingTicketsRequest)(nil),  // 4: queue.GetUpcomingTicketsRequest
+	(*GetUpcomingTicketsResponse)(nil), // 5: queue.GetUpcomingTicketsResponse
+	(*Ticket)(nil),                     // 6: queue.Ticket
 }
 var file_queue_queue_service_proto_depIdxs = []int32{
-	4, // 0: queue.JoinQueueResponse.ticket:type_name -> queue.Ticket
-	4, // 1: queue.RetrieveNextResponse.ticket:type_name -> queue.Ticket
-	0, // 2: queue.QueueService.JoinQueue:input_type -> queue.JoinQueueRequest
-	2, // 3: queue.QueueService.RetrieveNext:input_type -> queue.RetrieveNextRequest
-	1, // 4: queue.QueueService.JoinQueue:output_type -> queue.JoinQueueResponse
-	3, // 5: queue.QueueService.RetrieveNext:output_type -> queue.RetrieveNextResponse
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	6, // 0: queue.JoinQueueResponse.ticket:type_name -> queue.Ticket
+	6, // 1: queue.RetrieveNextResponse.ticket:type_name -> queue.Ticket
+	6, // 2: queue.GetUpcomingTicketsResponse.tickets:type_name -> queue.Ticket
+	0, // 3: queue.QueueService.JoinQueue:input_type -> queue.JoinQueueRequest
+	2, // 4: queue.QueueService.RetrieveNext:input_type -> queue.RetrieveNextRequest
+	4, // 5: queue.QueueService.GetUpcomingTickets:input_type -> queue.GetUpcomingTicketsRequest
+	1, // 6: queue.QueueService.JoinQueue:output_type -> queue.JoinQueueResponse
+	3, // 7: queue.QueueService.RetrieveNext:output_type -> queue.RetrieveNextResponse
+	5, // 8: queue.QueueService.GetUpcomingTickets:output_type -> queue.GetUpcomingTicketsResponse
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_queue_queue_service_proto_init() }
@@ -321,6 +434,30 @@ func file_queue_queue_service_proto_init() {
 				return nil
 			}
 		}
+		file_queue_queue_service_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetUpcomingTicketsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_queue_queue_service_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetUpcomingTicketsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -328,7 +465,7 @@ func file_queue_queue_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_queue_queue_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

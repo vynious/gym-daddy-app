@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	QueueService_JoinQueue_FullMethodName    = "/queue.QueueService/JoinQueue"
-	QueueService_RetrieveNext_FullMethodName = "/queue.QueueService/RetrieveNext"
+	QueueService_JoinQueue_FullMethodName          = "/queue.QueueService/JoinQueue"
+	QueueService_RetrieveNext_FullMethodName       = "/queue.QueueService/RetrieveNext"
+	QueueService_GetUpcomingTickets_FullMethodName = "/queue.QueueService/GetUpcomingTickets"
 )
 
 // QueueServiceClient is the client API for QueueService service.
@@ -29,6 +30,7 @@ const (
 type QueueServiceClient interface {
 	JoinQueue(ctx context.Context, in *JoinQueueRequest, opts ...grpc.CallOption) (*JoinQueueResponse, error)
 	RetrieveNext(ctx context.Context, in *RetrieveNextRequest, opts ...grpc.CallOption) (*RetrieveNextResponse, error)
+	GetUpcomingTickets(ctx context.Context, in *GetUpcomingTicketsRequest, opts ...grpc.CallOption) (*GetUpcomingTicketsResponse, error)
 }
 
 type queueServiceClient struct {
@@ -57,12 +59,22 @@ func (c *queueServiceClient) RetrieveNext(ctx context.Context, in *RetrieveNextR
 	return out, nil
 }
 
+func (c *queueServiceClient) GetUpcomingTickets(ctx context.Context, in *GetUpcomingTicketsRequest, opts ...grpc.CallOption) (*GetUpcomingTicketsResponse, error) {
+	out := new(GetUpcomingTicketsResponse)
+	err := c.cc.Invoke(ctx, QueueService_GetUpcomingTickets_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueueServiceServer is the server API for QueueService service.
 // All implementations must embed UnimplementedQueueServiceServer
 // for forward compatibility
 type QueueServiceServer interface {
 	JoinQueue(context.Context, *JoinQueueRequest) (*JoinQueueResponse, error)
 	RetrieveNext(context.Context, *RetrieveNextRequest) (*RetrieveNextResponse, error)
+	GetUpcomingTickets(context.Context, *GetUpcomingTicketsRequest) (*GetUpcomingTicketsResponse, error)
 	mustEmbedUnimplementedQueueServiceServer()
 }
 
@@ -75,6 +87,9 @@ func (UnimplementedQueueServiceServer) JoinQueue(context.Context, *JoinQueueRequ
 }
 func (UnimplementedQueueServiceServer) RetrieveNext(context.Context, *RetrieveNextRequest) (*RetrieveNextResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RetrieveNext not implemented")
+}
+func (UnimplementedQueueServiceServer) GetUpcomingTickets(context.Context, *GetUpcomingTicketsRequest) (*GetUpcomingTicketsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUpcomingTickets not implemented")
 }
 func (UnimplementedQueueServiceServer) mustEmbedUnimplementedQueueServiceServer() {}
 
@@ -125,6 +140,24 @@ func _QueueService_RetrieveNext_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QueueService_GetUpcomingTickets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUpcomingTicketsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueueServiceServer).GetUpcomingTickets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueueService_GetUpcomingTickets_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueueServiceServer).GetUpcomingTickets(ctx, req.(*GetUpcomingTicketsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QueueService_ServiceDesc is the grpc.ServiceDesc for QueueService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +172,10 @@ var QueueService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RetrieveNext",
 			Handler:    _QueueService_RetrieveNext_Handler,
+		},
+		{
+			MethodName: "GetUpcomingTickets",
+			Handler:    _QueueService_GetUpcomingTickets_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
