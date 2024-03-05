@@ -16,4 +16,6 @@ func SpawnServer() *Server {
 func (s *Server) MountHandlers() {
 	api := s.Router.Group("/api/queue")
 	api.POST("/join", JoinQueue)
+	api.GET("/upcoming", GetUpcomingTicketsInQueue)
+	api.GET("/next", RetrieveNextInQueue)
 }

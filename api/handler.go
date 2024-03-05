@@ -8,13 +8,14 @@ import (
 )
 
 func JoinQueue(c *gin.Context) {
+
 	var requestBody struct {
 		UserId string `json:"user_Id"`
 	}
 
 	if err := c.BindJSON(&requestBody); err != nil {
 		log.Println(err.Error())
-		c.JSON(http.StatusBadRequest, gin.H{"message": "error"})
+		c.JSON(http.StatusBadRequest, gin.H{"data": "error"})
 		return
 	}
 
@@ -22,16 +23,39 @@ func JoinQueue(c *gin.Context) {
 
 	if userId == "" {
 		log.Println("Error: no User ID provided")
-		c.JSON(http.StatusBadRequest, gin.H{"message": "error"})
+		c.JSON(http.StatusBadRequest, gin.H{"data": "error"})
 		return
 	}
 
-	if err := rpc.RPCJoinQueue(c, userId); err != nil {
+	ticket, err := rpc.GRPCJoinQueue(c, userId)
+	if err != nil {
 		log.Println(err.Error())
-		c.JSON(http.StatusBadRequest, gin.H{"message": "error"})
+		c.JSON(http.StatusBadRequest, gin.H{"data": "error"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": ""})
+	c.JSON(http.StatusOK, gin.H{"data": ticket})
+	return
+}
+
+func GetUpcomingTicketsInQueue(c *gin.Context) {
+	tickets, err := rpc.GRPCGetUpcomingTickets(c)
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"data": "error"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": tickets})
+	return
+}
+
+func RetrieveNextInQueue(c *gin.Context) {
+	tickets, err := rpc.GRPCGetNextInQueue(c)
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"data": "error"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": tickets})
 	return
 }

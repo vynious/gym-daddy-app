@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-func GRPCJoinQueue(ctx context.Context, userId string) (*queue.Ticket, error) {
+func GRPCGetNextInQueue(ctx context.Context) (*queue.Ticket, error) {
 
 	var ticket *queue.Ticket
 
@@ -17,22 +17,22 @@ func GRPCJoinQueue(ctx context.Context, userId string) (*queue.Ticket, error) {
 	if grpcServerQueue == "" {
 		return nil, fmt.Errorf("missing .env url for queue grpc server")
 	}
+
 	qcc, err := grpc.Dial(grpcServerQueue, grpc.WithTransportCredentials(insecure.NewCredentials()))
 
 	if err != nil {
-		return nil, fmt.Errorf("failed to create grpc connection")
+		return nil, fmt.Errorf("failed to make grpc conn")
 	}
-	qClient := queue.NewQueueServiceClient(qcc)
-	response, err := qClient.JoinQueue(ctx, &queue.JoinQueueRequest{
-		UserId: userId,
-	})
 
-	if err != nil {
-		return nil, fmt.Errorf("failed to join queue")
-	}
+	qClient := queue.NewQueueServiceClient(qcc)
+
+	response, err := qClient.RetrieveNext(ctx, &queue.RetrieveNextRequest{})
+
 	ticket = response.GetTicket()
 
-	go GRPCSendNotification(ctx, nil, ticket, "Join-Queue")
+	if err != nil {
+		return nil, fmt.Errorf("failed to get next ticket")
+	}
 
 	return ticket, nil
 }
