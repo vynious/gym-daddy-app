@@ -63,7 +63,7 @@ func (q *QueueService) CreateTicket(ctx context.Context, userId string) (*queue.
 
 	// Create a new ticket with the incremented ticket_count as the QueueNumber.
 	ticket := &queue.Ticket{
-		UserID:      userId,
+		UserId:      userId,
 		QueueNumber: incr.Val(), // Use the result of the INCR operation as the queue number.
 		CreatedAt:   timestamppb.Now(),
 	}

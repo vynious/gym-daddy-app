@@ -14,7 +14,7 @@ func NotifyThroughTelegram(ticket *queue.Ticket) error {
 
 	var n notification.Notification
 
-	n.Type = "queue"
+	n.NotificationType = "queue"
 	n.CreatedAt = timestamppb.Now()
 	n.Content = fmt.Sprintf("Congrats! Your queue number is %v", ticket.QueueNumber)
 
@@ -31,7 +31,8 @@ func NotifyThroughTelegram(ticket *queue.Ticket) error {
 
 	// GRPC dial to server
 	_, err = c.CreateNotification(context.Background(), &notification.CreateNotificationRequest{
-		Notification: &n,
+		NotificationType: "queue",
+		
 	})
 
 	if err != nil {
