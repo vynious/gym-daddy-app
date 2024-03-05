@@ -1,4 +1,4 @@
-module github.com/vynious/gym-daddy
+module github.com/vynious/gym-daddy/gd-notification-ms
 
 go 1.21.5
 

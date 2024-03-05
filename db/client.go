@@ -2,8 +2,8 @@ package db
 
 import (
 	"fmt"
-	"github.com/vynious/gym-daddy/pb/proto_files/notification"
-	"github.com/vynious/gym-daddy/types"
+	"github.com/vynious/gym-daddy/gd-notification-ms/pb/proto_files/notification"
+	"github.com/vynious/gym-daddy/gd-notification-ms/types"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
@@ -76,7 +76,7 @@ func (r *Repository) SaveNotification(notification *notification.Notification) e
 
 	n.TelegramHandle = notification.GetTelegramHandle()
 	n.Content = notification.GetContent()
-	n.EventType = notification.GetEventType()
+	n.EventType = notification.GetNotificationType()
 	n.CreatedAt = notification.GetCreatedAt().AsTime()
 
 	err := r.gc.Create(n).Error

@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/segmentio/kafka-go"
-	"github.com/vynious/gym-daddy/pb/proto_files/notification"
-	"github.com/vynious/gym-daddy/types"
+	"github.com/vynious/gym-daddy/gd-notification-ms/pb/proto_files/notification"
+	"github.com/vynious/gym-daddy/gd-notification-ms/types"
 	"log"
 	"os"
 )
@@ -48,7 +48,7 @@ func (np *NotificationProducer) SendNotification(ctx context.Context, notificati
 	var n NotificationMessage
 	n.TelegramHandle = notification.GetTelegramHandle()
 	n.Content = notification.GetContent()
-	n.EventType = notification.GetEventType()
+	n.EventType = notification.GetNotificationType()
 
 	jsonMsg, err := json.Marshal(n)
 	if err != nil {

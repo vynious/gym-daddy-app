@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/joho/godotenv"
-	"github.com/vynious/gym-daddy/db"
-	"github.com/vynious/gym-daddy/kafka"
-	"github.com/vynious/gym-daddy/pb/proto_files/notification"
-	"github.com/vynious/gym-daddy/rpc"
+	"github.com/vynious/gym-daddy/gd-notification-ms/db"
+	"github.com/vynious/gym-daddy/gd-notification-ms/kafka"
+	"github.com/vynious/gym-daddy/gd-notification-ms/pb/proto_files/notification"
+	"github.com/vynious/gym-daddy/gd-notification-ms/rpc"
 	"google.golang.org/grpc"
 	"log"
 	"net"

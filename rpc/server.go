@@ -2,12 +2,14 @@ package rpc
 
 import (
 	"context"
+	"fmt"
 	"github.com/google/uuid"
-	"github.com/vynious/gym-daddy/db"
-	"github.com/vynious/gym-daddy/kafka"
-	"github.com/vynious/gym-daddy/pb/proto_files/notification"
+	"github.com/vynious/gym-daddy/gd-notification-ms/db"
+	"github.com/vynious/gym-daddy/gd-notification-ms/kafka"
+	"github.com/vynious/gym-daddy/gd-notification-ms/pb/proto_files/notification"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
 	"log"
 	"sync"
 )
@@ -27,7 +29,7 @@ func SpawnGrpcServer(repo *db.Repository, notifier *kafka.NotificationProducer) 
 
 func (c *Server) CreateNotification(ctx context.Context, req *notification.CreateNotificationRequest) (*notification.CreateNotificationResponse, error) {
 
-	notificationProto := req.GetNotification()
+	var notificationProto notification.Notification
 
 	if len(notificationProto.Id) > 0 {
 
@@ -39,22 +41,39 @@ func (c *Server) CreateNotification(ctx context.Context, req *notification.Creat
 		notificationProto.Id = id.String()
 	}
 
+	notificationProto.NotificationType = req.GetNotificationType()
+	notificationProto.CreatedAt = timestamppb.Now()
+
+	userTicket := req.GetUserTicket()
+	if userTicket == nil {
+		return nil, fmt.Errorf("missing ticket in request")
+	}
+	// todo: make call to get telegram_handle
+	notificationProto.TelegramHandle = "shawntyw" // default
+
+	switch req.GetNotificationType() {
+	case "Join-Queue":
+		notificationProto.Content = fmt.Sprintf("You have joined the queue! Your ticket number is %v", userTicket.QueueNumber)
+	case "Coming-Soon":
+		notificationProto.Content = fmt.Sprintf("It's almost your turn soon! Prepare to come down ~")
+	}
+
 	errCh := make(chan error, 2)
 	var wg sync.WaitGroup
 
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		if err := c.Repository.SaveNotification(notificationProto); err != nil {
-			errCh <- status.Errorf(codes.Internal, "failed to save notitfication to db: %w", err)
+		if err := c.Repository.SaveNotification(&notificationProto); err != nil {
+			errCh <- status.Errorf(codes.Internal, "failed to save notitfication to db: %v", err)
 		}
 	}()
 
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		if err := c.Notifier.SendNotification(ctx, notificationProto); err != nil {
-			errCh <- status.Errorf(codes.Internal, "failed to send notitfication to kafka queue: %w", err)
+		if err := c.Notifier.SendNotification(ctx, &notificationProto); err != nil {
+			errCh <- status.Errorf(codes.Internal, "failed to send notitfication to kafka queue: %v", err)
 		}
 	}()
 
@@ -65,7 +84,9 @@ func (c *Server) CreateNotification(ctx context.Context, req *notification.Creat
 		return nil, err
 	}
 
-	return &notification.CreateNotificationResponse{}, nil
+	return &notification.CreateNotificationResponse{
+		Notification: &notificationProto,
+	}, nil
 }
 
 func (c *Server) CloseConnections() {
