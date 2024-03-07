@@ -74,6 +74,7 @@ func SpawnRepository(cfg types.GormConfig) (*Repository, error) {
 func (r *Repository) SaveNotification(notification *notification.Notification) error {
 	var n NotificationEntry
 
+	n.ID = notification.GetId()
 	n.TelegramHandle = notification.GetTelegramHandle()
 	n.Content = notification.GetContent()
 	n.EventType = notification.GetNotificationType()
