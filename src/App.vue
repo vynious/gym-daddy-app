@@ -1,18 +1,24 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
-
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import CardBooker from './components/CardBooker.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    CardBooker
   }
 }
-</script>
+</script><template>
+  <img alt="Vue logo" src="./assets/logo.png">
+  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <CardBooker/> 
+    <!-- just testing it out can remove it! -->
+  </div>
+</template>
+
+
 
 <style>
 #app {
