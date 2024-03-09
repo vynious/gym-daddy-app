@@ -37,6 +37,7 @@
     margin: 0;
     font-weight: bold;
     font-size: 28px;
+    margin-left: auto;
   }
 
   .navbar-menu li {
@@ -47,8 +48,9 @@
     margin-right: 30px;
   }
 
-  .navbar-menu {
-    margin-left: auto;
+  .navbar-menu a {
+    text-decoration: none;
+    color: white;
   }
 
   .navbar-logo {
