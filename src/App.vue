@@ -1,20 +1,30 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import CardBooker from './components/CardBooker.vue';
+import BookingConfirmation from './components/BookingConfirmation.vue';
+import ClassConfirmation from './components/ClassConfirmation.vue'
+import ErrorMessage from './components/ErrorMessage.vue'
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
-    CardBooker
+    CardBooker,
+    BookingConfirmation,
+    ClassConfirmation,
+    ErrorMessage,
   }
 }
 </script><template>
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
   <div>
-    <CardBooker/> 
     <!-- just testing it out can remove it! -->
+    <!-- it shows an error when I don't call the components so i'll place it here first  -->
+    <CardBooker/> 
+    <BookingConfirmation/>
+    <ClassConfirmation/>
+    <ErrorMessage/>
   </div>
 </template>
 
