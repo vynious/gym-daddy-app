@@ -1,0 +1,46 @@
+# Compiled Go binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.bin
+*.o
+*.a
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
+.glide/
+
+# JetBrains IDEs
+.idea/
+
+# VSCode
+.vscode/
+
+# Mac OS X specific files
+.DS_Store
+
+# Node.js specific files
+node_modules/
+npm-debug.log
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
+
+# Misc
+.DS_Store
+Thumbs.db
+db.sqlite3
+"""
