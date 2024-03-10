@@ -1,3 +1,4 @@
+
 <script>
   import NavigationBar from './components/NavigationBar.vue'
   export default {
@@ -12,6 +13,7 @@
     <NavigationBar />
     <router-view></router-view>
   </div>
+
 </template>
 
 <style>
