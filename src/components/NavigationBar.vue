@@ -7,6 +7,7 @@
       <ul class="navbar-menu">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/queue">Queue</router-link></li>
+        <li><router-link to='/book'>Book</router-link></li>
       </ul>
     </div>
   </nav>
