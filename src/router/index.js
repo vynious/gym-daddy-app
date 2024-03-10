@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import BookClass from '../views/BookClass.vue'
+import ClassList from '../views/ClassList.vue'
+import UserProfile from '../views/UserProfile.vue'
+import UserQueue from '../views/UserQueue.vue'
 
 const routes = [
   {
@@ -17,10 +19,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/bookclass',
-    name: 'bookclass',
-    component: BookClass
-  }
+    path: '/classList',
+    name: 'classList',
+    component: ClassList
+  },
+  { 
+    path: '/profile',
+    name: 'profile',
+    component: UserProfile
+  },
+  {
+    path: '/queue',
+    name: 'queue',
+    component: UserQueue
+  },
 ]
 
 const router = createRouter({

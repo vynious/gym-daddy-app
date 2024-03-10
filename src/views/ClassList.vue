@@ -12,5 +12,6 @@ export default {
 </script>
 
 <template>
+    <h1>Classes</h1>
     <CardBooker/>
 </template>
