@@ -1,34 +1,11 @@
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-import CardBooker from './components/CardBooker.vue';
-import BookingConfirmation from './components/BookingConfirmation.vue';
-import ClassConfirmation from './components/ClassConfirmation.vue'
-import ErrorMessage from './components/ErrorMessage.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld,
-    CardBooker,
-    BookingConfirmation,
-    ClassConfirmation,
-    ErrorMessage,
-  }
-}
-</script><template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-  <div>
-    <!-- just testing it out can remove it! -->
-    <!-- it shows an error when I don't call the components so i'll place it here first  -->
-    <CardBooker/> 
-    <BookingConfirmation/>
-    <ClassConfirmation/>
-    <ErrorMessage/>
-  </div>
+<template>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link> | 
+    <router-link to="/bookclass">Book</router-link>
+  </nav>
+  <router-view/>
 </template>
-
-
 
 <style>
 #app {
@@ -37,6 +14,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
