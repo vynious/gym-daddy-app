@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ClassList from '../views/ClassList.vue'
-import UserProfile from '../views/UserProfile.vue'
 import UserQueue from '../views/UserQueue.vue'
 
 const routes = [
@@ -23,16 +22,26 @@ const routes = [
     name: 'classList',
     component: ClassList
   },
-  { 
-    path: '/profile',
-    name: 'profile',
-    component: UserProfile
-  },
   {
     path: '/queue',
     name: 'queue',
     component: UserQueue
   },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('../views/ProfileDefaultPage.vue')
+  },
+  {
+      path: '/profileEditInfo',
+      name: 'profileEditInfo',
+      component: () => import('../views/ProfileEditInfoPage.vue')
+  },
+  {
+      path: '/profileRefer',
+      name: 'profileRefer',
+      component: () => import('../views/ProfileReferPage.vue')
+  }
 ]
 
 const router = createRouter({
