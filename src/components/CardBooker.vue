@@ -3,11 +3,13 @@
       <a-row :gutter="16">
         <a-col :span="8">
           <a-card title="Yoga" :bordered="false">
-            <a-image :width="300" src="../images/yoga.jpeg"/>
+            <a-image :width="300" src="/images/yoga.jpeg"/>
             <p>A 1h session, this class will introduce the fundamentals of a yoga practice, including breath, proper alignment, and mindfulness practices.</p>
             <b>Difficulty: EASY</b>
             <br>
-            <a-button type="primary">Book Now</a-button>
+            <router-link to="/bookyoga">
+              <a-button type="primary">Book Now</a-button>
+            </router-link>
           </a-card>
         </a-col>
         <a-col :span="8">
