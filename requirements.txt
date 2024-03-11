@@ -1,0 +1,4 @@
+Flask==2.0.1
+grpcio==1.38.1
+grpcio-tools==1.38.1
+protobuf==3.17.3
