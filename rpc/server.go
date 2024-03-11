@@ -6,9 +6,12 @@ import (
 	"context"
 	"net"
 
-	"google.golang.org/grpc"
-	"gd-booking-ms/pb/proto_files/booking"
 	"gd-booking-ms/db"
+	"gd-booking-ms/pb/proto_files/booking"
+	"google.golang.org/protobuf/types/known/timestamppb"
+
+
+	"google.golang.org/grpc"
 )
 
 type BookingServer struct {
@@ -41,8 +44,23 @@ func (s *BookingServer) Start() error {
 
 // Example implementation
 func (s *BookingServer) CreateBooking(ctx context.Context, req *booking.CreateBookingRequest) (*booking.CreateBookingResponse, error) {
-	// Logic to create booking using s.repo
-	return &booking.CreateBookingResponse{}, nil
-}
+	// Call the CreateBooking method on the repository to create a new booking entry in the database.
 
+	bookingEntry, err := s.repo.CreateBooking(req.UserId, req.ClassId)
+	if err != nil {
+		// Handle any errors that occur during the booking creation.
+		// You could return a gRPC error with a status code, for example, grpc.Status(codes.Internal, "Error creating booking")
+		return nil, err
+	}
+
+	// Create and return a CreateBookingResponse with the booking information.
+	return &booking.CreateBookingResponse{
+		Booking: &booking.Booking{
+			Id:        bookingEntry.ID,
+			UserId:    bookingEntry.UserID,
+			ClassId:   bookingEntry.ClassID,
+			CreatedAt: timestamppb.New(bookingEntry.CreatedAt),
+		},
+	}, nil
+}
 // And so on for the rest of the gRPC methods...

@@ -38,12 +38,11 @@ func LoadDatabaseConfig() types.GormConfig {
 // For example, a method to create a booking entry:
 
 type BookingEntry struct {
-	ID        string `gorm:"primary_key"`
+	ID        string `gorm:"type:uuid;primary_key;default:uuid_generate_v4()"`
 	UserID    string
 	ClassID   string
 	CreatedAt time.Time
 }
-
 
 func SpawnRepository(cfg types.GormConfig) (*Repository, error) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC",
