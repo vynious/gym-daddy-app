@@ -1,23 +1,3 @@
-<template>
-  <nav class="navbar">
-    <div class="navbar-container">
-
-      <img src="../assets/logo.png" alt="logo" class="navbar-logo">
-
-      <ul class="navbar-menu">
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/queue">Queue</router-link></li>
-      </ul>
-    </div>
-  </nav>
-</template>
-  
-<script>
-  export default {
-    name: 'NavigationBar'
-  }
-</script>
-  
 <style scoped>
   .navbar {
     background-color: black;
@@ -29,6 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
   }
 
   .navbar-menu {
@@ -58,4 +39,24 @@
     height: auto;
   }
 </style>
+
+<template>
+  <nav class="navbar">
+    <div class="navbar-container">
+
+      <img src="../assets/logo.png" alt="logo" class="navbar-logo">
+
+      <ul class="navbar-menu">
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/queue">Queue</router-link></li>
+      </ul>
+    </div>
+  </nav>
+</template>
+  
+<script>
+  export default {
+    name: 'NavigationBar'
+  }
+</script>
   

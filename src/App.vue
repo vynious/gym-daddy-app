@@ -24,4 +24,9 @@
   text-align: center;
   color: black;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+}
 </style>

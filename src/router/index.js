@@ -13,6 +13,11 @@ const router = createRouter({
             path: '/queue',
             name: 'queue',
             component: () => import('../views/QueuePage.vue')
+        },
+        {
+            path: '/joinqueue',
+            name: 'joinqueue',
+            component: () => import('../views/JoinQueue.vue')
         }
     ]
 })
