@@ -1,4 +1,5 @@
 <template>
+  <NavigationBar></NavigationBar>
   <div class="signup-container">
     <div class="form-section">
       <div class="form-container">
@@ -42,7 +43,12 @@
 </template>
 
 <script>
+import NavigationBar from '../components/NavigationBar.vue';
+
 export default {
+  components: {
+    NavigationBar,
+  },
   name: "SignupPage",
   data() {
     return {
