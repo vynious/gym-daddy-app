@@ -3,6 +3,7 @@
 package db
 
 import (
+	"errors"
 	"fmt"
 	"gd-booking-ms/types"
 	"log"
@@ -85,6 +86,57 @@ func (r *Repository) CreateBooking(userID, classID string) (BookingEntry, error)
 		CreatedAt: booking.CreatedAt,
 	}, nil
 }
+
+func (r *Repository) CancelBooking(bookingID string) error {
+	result := r.DB.Where("id = ?", bookingID).Delete(&BookingEntry{})
+	if result.Error != nil {
+		return fmt.Errorf("failed to delete booking: %w", result.Error)
+	}
+	if result.RowsAffected == 0 {
+		return fmt.Errorf("no booking found with id: %s", bookingID)
+	}
+	return nil
+}
+
+
+func (r *Repository) GetBooking(bookingID string) (BookingEntry, error) {
+	var booking BookingEntry
+	err := r.DB.Where("id = ?", bookingID).First(&booking).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return BookingEntry{}, fmt.Errorf("booking not found: %w", err)
+		}
+		return BookingEntry{}, fmt.Errorf("failed to get booking: %w", err)
+	}
+	return booking, nil
+}
+
+func (r *Repository) ListBookings() ([]BookingEntry, error) {
+	var bookings []BookingEntry
+	err := r.DB.Find(&bookings).Error
+	if err != nil {
+		return nil, fmt.Errorf("failed to list bookings: %w", err)
+	}
+	return bookings, nil
+}
+
+func (r *Repository) UpdateBooking(bookingID, classID string) (BookingEntry, error) {
+	var booking BookingEntry
+	err := r.DB.Where("id = ?", bookingID).First(&booking).Error // Use Where to specify the column
+	if err != nil {
+		return BookingEntry{}, fmt.Errorf("failed to get booking: %w", err)
+	}
+
+	booking.ClassID = classID
+	err = r.DB.Save(&booking).Error
+	if err != nil {
+		return BookingEntry{}, fmt.Errorf("failed to update booking: %w", err)
+	}
+
+	return booking, nil
+}
+
+
 
 // CloseConnection closes the database connection.
 func (r *Repository) CloseConnection() error {

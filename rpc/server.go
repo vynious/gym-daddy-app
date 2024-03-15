@@ -10,8 +10,9 @@ import (
 	"gd-booking-ms/pb/proto_files/booking"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type BookingServer struct {
@@ -25,7 +26,6 @@ func NewBookingServer(r *db.Repository) *BookingServer {
 }
 
 // Implement the gRPC service methods using the Repository, such as CreateBooking, etc.
-
 func (s *BookingServer) Start() error {
 	lis, err := net.Listen("tcp", ":50051") // Port can be changed as needed
 	if err != nil {
@@ -42,18 +42,12 @@ func (s *BookingServer) Start() error {
 	return nil
 }
 
-// Example implementation
 func (s *BookingServer) CreateBooking(ctx context.Context, req *booking.CreateBookingRequest) (*booking.CreateBookingResponse, error) {
-	// Call the CreateBooking method on the repository to create a new booking entry in the database.
-
 	bookingEntry, err := s.repo.CreateBooking(req.UserId, req.ClassId)
 	if err != nil {
-		// Handle any errors that occur during the booking creation.
-		// You could return a gRPC error with a status code, for example, grpc.Status(codes.Internal, "Error creating booking")
-		return nil, err
+		return nil, status.Errorf(codes.Internal, "Error creating booking: %v", err)
 	}
 
-	// Create and return a CreateBookingResponse with the booking information.
 	return &booking.CreateBookingResponse{
 		Booking: &booking.Booking{
 			Id:        bookingEntry.ID,
@@ -63,4 +57,86 @@ func (s *BookingServer) CreateBooking(ctx context.Context, req *booking.CreateBo
 		},
 	}, nil
 }
-// And so on for the rest of the gRPC methods...
+
+
+func (s *BookingServer) ListBookings(ctx context.Context, req *booking.ListBookingsRequest) (*booking.ListBookingsResponse, error) {
+	bookings, err := s.repo.ListBookings()
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Error listing bookings: %v", err)
+	}
+
+	bookingList := make([]*booking.Booking, 0, len(bookings))
+	for _, b := range bookings {
+		bookingList = append(bookingList, &booking.Booking{
+			Id:        b.ID,
+			UserId:    b.UserID,
+			ClassId:   b.ClassID,
+			CreatedAt: timestamppb.New(b.CreatedAt),
+		})
+	}
+
+	return &booking.ListBookingsResponse{Bookings: bookingList}, nil
+}
+
+func (s *BookingServer) GetBooking(ctx context.Context, req *booking.GetBookingRequest) (*booking.GetBookingResponse, error) {
+	bookingEntry, err := s.repo.GetBooking(req.Id)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Error getting booking: %v", err)
+	}
+
+	return &booking.GetBookingResponse{
+		Booking: &booking.Booking{
+			Id:        bookingEntry.ID,
+			UserId:    bookingEntry.UserID,
+			ClassId:   bookingEntry.ClassID,
+			CreatedAt: timestamppb.New(bookingEntry.CreatedAt),
+		},
+	}, nil
+}
+
+func (s *BookingServer) UpdateBooking(ctx context.Context, req *booking.UpdateBookingRequest) (*booking.UpdateBookingResponse, error) {
+	// Validate request
+	if req.Id == "" {
+		return nil, status.Errorf(codes.InvalidArgument, "Booking ID is required")
+	}
+	if req.ClassId == "" {
+		return nil, status.Errorf(codes.InvalidArgument, "Class ID is required")
+	}
+
+	// Call the UpdateBooking method on the repository to update the booking entry in the database.
+	updatedBooking, err := s.repo.UpdateBooking(req.Id, req.ClassId)
+	if err != nil {
+		// Handle any errors that occur during the update, e.g. not found, validation errors, etc.
+		return nil, status.Errorf(codes.Internal, "Error updating booking: %v", err)
+	}
+
+	// Create and return an UpdateBookingResponse with the updated booking information.
+	return &booking.UpdateBookingResponse{
+		Booking: &booking.Booking{
+			Id:        updatedBooking.ID,
+			UserId:    updatedBooking.UserID,
+			ClassId:   updatedBooking.ClassID,
+			CreatedAt: timestamppb.New(updatedBooking.CreatedAt),
+		},
+	}, nil
+}
+
+
+
+
+
+
+
+
+
+func (s *BookingServer) CancelBooking(ctx context.Context, req *booking.CancelBookingRequest) (*booking.CancelBookingResponse, error) {
+	err := s.repo.CancelBooking(req.Id)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Error cancelling booking: %v", err)
+	}
+
+	return &booking.CancelBookingResponse{}, nil
+}
+
+
+
