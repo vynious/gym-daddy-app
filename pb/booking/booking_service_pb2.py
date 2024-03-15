@@ -12,11 +12,10 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
-from pb.booking import booking_message_pb2 as booking_dot_booking__message__pb2
+from . import booking_message_pb2 as booking_dot_booking__message__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x62ooking/booking_service.proto\x12\x07\x62ooking\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1d\x62ooking/booking_message.proto\"9\n\x14\x43reateBookingRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x10\n\x08\x63lass_id\x18\x02 \x01(\t\":\n\x15\x43reateBookingResponse\x12!\n\x07\x62ooking\x18\x01 \x01(\x0b\x32\x10.booking.Booking\"\"\n\x14\x43\x61ncelBookingRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x17\n\x15\x43\x61ncelBookingResponse2\xb4\x01\n\x0e\x42ookingService\x12P\n\rCreateBooking\x12\x1d.booking.CreateBookingRequest\x1a\x1e.booking.CreateBookingResponse\"\x00\x12P\n\rCancelBooking\x12\x1d.booking.CancelBookingRequest\x1a\x1e.booking.CancelBookingResponse\"\x00\x42\x16Z\x14/proto_files/bookingb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x62ooking/booking_service.proto\x12\x07\x62ooking\x1a\x1d\x62ooking/booking_message.proto2\x9e\x03\n\x0e\x42ookingService\x12P\n\rCreateBooking\x12\x1d.booking.CreateBookingRequest\x1a\x1e.booking.CreateBookingResponse\"\x00\x12M\n\x0cListBookings\x12\x1c.booking.ListBookingsRequest\x1a\x1d.booking.ListBookingsResponse\"\x00\x12G\n\nGetBooking\x12\x1a.booking.GetBookingRequest\x1a\x1b.booking.GetBookingResponse\"\x00\x12P\n\rUpdateBooking\x12\x1d.booking.UpdateBookingRequest\x1a\x1e.booking.UpdateBookingResponse\"\x00\x12P\n\rCancelBooking\x12\x1d.booking.CancelBookingRequest\x1a\x1e.booking.CancelBookingResponse\"\x00\x42\x16Z\x14/proto_files/bookingb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -24,14 +23,6 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'booking.booking_service_pb2
 if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['DESCRIPTOR']._options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z\024/proto_files/booking'
-  _globals['_CREATEBOOKINGREQUEST']._serialized_start=106
-  _globals['_CREATEBOOKINGREQUEST']._serialized_end=163
-  _globals['_CREATEBOOKINGRESPONSE']._serialized_start=165
-  _globals['_CREATEBOOKINGRESPONSE']._serialized_end=223
-  _globals['_CANCELBOOKINGREQUEST']._serialized_start=225
-  _globals['_CANCELBOOKINGREQUEST']._serialized_end=259
-  _globals['_CANCELBOOKINGRESPONSE']._serialized_start=261
-  _globals['_CANCELBOOKINGRESPONSE']._serialized_end=284
-  _globals['_BOOKINGSERVICE']._serialized_start=287
-  _globals['_BOOKINGSERVICE']._serialized_end=467
+  _globals['_BOOKINGSERVICE']._serialized_start=74
+  _globals['_BOOKINGSERVICE']._serialized_end=488
 # @@protoc_insertion_point(module_scope)
