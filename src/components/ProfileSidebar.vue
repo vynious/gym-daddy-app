@@ -6,9 +6,9 @@
         <h1>USER 12345</h1>
         <hr>
         <router-link to="/profileEditInfo"><button class="button" id="editInfo">Edit Info</button></router-link>
-        <button class="button">My Bookings</button>
+        <router-link to="/profileBookings"><button class="button">My Bookings</button></router-link>
         <router-link to="/profileRefer"><button class="button" id="refer">Refer a Friend</button></router-link>
-        <button class="button">Logout</button>
+        <router-link to="/profileLogout"><button class="button">Logout</button></router-link>
     </div>
     
 </template>
