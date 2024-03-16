@@ -18,7 +18,7 @@
     name: 'NavigationBar'
   }
 </script>
-  
+
 <style scoped>
   .navbar {
     background-color: black;
@@ -30,6 +30,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
   }
 
   .navbar-menu {
@@ -59,4 +60,3 @@
     height: auto;
   }
 </style>
-  

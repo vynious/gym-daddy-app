@@ -14,6 +14,12 @@ const router = createRouter({
             name: 'queue',
             component: () => import('../views/QueuePage.vue')
         },
+
+        {
+            path: '/joinqueue',
+            name: 'joinqueue',
+            component: () => import('../views/JoinQueue.vue')
+
         {   
             path: '/book',
             name: 'book',
@@ -23,6 +29,7 @@ const router = createRouter({
             path: '/bookyoga',
             name: 'bookyoga',
             component: () => import('../views/BookYoga.vue')
+
         }
     ]
 })
