@@ -19,6 +19,7 @@ const router = createRouter({
             path: '/joinqueue',
             name: 'joinqueue',
             component: () => import('../views/JoinQueue.vue')
+        },
 
         {   
             path: '/book',
