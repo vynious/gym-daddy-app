@@ -13,7 +13,7 @@
 <template>
   <div class="background">
     <a-card style="width: 600px">
-      <h1>Selected Class: Yoga</h1>
+      <h1>Selected Class: Pilates</h1>
       <h1>Choose a date</h1>
       <DatePicker/>
     </a-card>

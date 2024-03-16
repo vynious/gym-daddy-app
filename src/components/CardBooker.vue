@@ -19,7 +19,9 @@
             <p>A 1h session where instructors will share their tips and tricks accumulated from experience to teach the trendiest dance moves</p>
             <b>Difficulty: INTERMEDIATE</b>
             <br>
-            <a-button type="primary">Book Now</a-button>
+            <router-link to="/bookdance">
+              <a-button type="primary">Book Now</a-button>
+            </router-link>
           </a-card>
         </a-col>
         <a-col :span="8">
@@ -28,7 +30,9 @@
             <p>A 1h session where each class will work towards balancing all muscle groups’ strength and flexibility, stimulating the core muscles.</p>
             <b>Difficulty: HARD</b>
             <br>
-            <a-button type="primary">Book Now</a-button>
+            <router-link to="/bookpilates">
+              <a-button type="primary">Book Now</a-button>
+            </router-link>
           </a-card>
         </a-col>
       </a-row>

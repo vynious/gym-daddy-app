@@ -31,6 +31,18 @@ const router = createRouter({
             name: 'bookyoga',
             component: () => import('../views/BookYoga.vue')
 
+        },
+        {
+            path: '/bookdance',
+            name: 'bookdance',
+            component: () => import('../views/BookDance.vue')
+
+        },
+        {
+            path: '/bookpilates',
+            name: 'bookpilates',
+            component: () => import('../views/BookPilates.vue')
+
         }
     ]
 })
