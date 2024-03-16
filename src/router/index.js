@@ -38,10 +38,20 @@ const routes = [
       component: () => import('../views/ProfileEditInfoPage.vue')
   },
   {
+    path: '/profileBookings',
+    name: 'profileBookings',
+    component: () => import('../views/ProfileBookingsPage.vue')
+  },
+  {
       path: '/profileRefer',
       name: 'profileRefer',
       component: () => import('../views/ProfileReferPage.vue')
-  }
+  },
+  {
+      path: '/profileLogout',
+      name: 'profileLogout',
+      component: () => import('../views/ProfileLogoutPage.vue')
+  },
 ]
 
 const router = createRouter({
