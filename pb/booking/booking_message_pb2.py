@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x62ooking/booking_message.proto\x12\x07\x62ooking\x1a\x1fgoogle/protobuf/timestamp.proto\"h\n\x07\x42ooking\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\t\x12\x10\n\x08\x63lass_id\x18\x03 \x01(\t\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"9\n\x14\x43reateBookingRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x10\n\x08\x63lass_id\x18\x02 \x01(\t\":\n\x15\x43reateBookingResponse\x12!\n\x07\x62ooking\x18\x01 \x01(\x0b\x32\x10.booking.Booking\"\"\n\x14\x43\x61ncelBookingRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x17\n\x15\x43\x61ncelBookingResponse\"&\n\x13ListBookingsRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\":\n\x14ListBookingsResponse\x12\"\n\x08\x62ookings\x18\x01 \x03(\x0b\x32\x10.booking.Booking\"\x1f\n\x11GetBookingRequest\x12\n\n\x02id\x18\x01 \x01(\t\"7\n\x12GetBookingResponse\x12!\n\x07\x62ooking\x18\x01 \x01(\x0b\x32\x10.booking.Booking\"E\n\x14UpdateBookingRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\t\x12\x10\n\x08\x63lass_id\x18\x03 \x01(\t\":\n\x15UpdateBookingResponse\x12!\n\x07\x62ooking\x18\x01 \x01(\x0b\x32\x10.booking.Bookingb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x62ooking/booking_message.proto\x12\x07\x62ooking\x1a\x1fgoogle/protobuf/timestamp.proto\"h\n\x07\x42ooking\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\t\x12\x10\n\x08\x63lass_id\x18\x03 \x01(\t\x12.\n\ncreated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"9\n\x14\x43reateBookingRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x10\n\x08\x63lass_id\x18\x02 \x01(\t\":\n\x15\x43reateBookingResponse\x12!\n\x07\x62ooking\x18\x01 \x01(\x0b\x32\x10.booking.Booking\"\"\n\x14\x43\x61ncelBookingRequest\x12\n\n\x02id\x18\x01 \x01(\t\"\x17\n\x15\x43\x61ncelBookingResponse\"&\n\x13ListBookingsRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\":\n\x14ListBookingsResponse\x12\"\n\x08\x62ookings\x18\x01 \x03(\x0b\x32\x10.booking.Booking\"\x1f\n\x11GetBookingRequest\x12\n\n\x02id\x18\x01 \x01(\t\"7\n\x12GetBookingResponse\x12!\n\x07\x62ooking\x18\x01 \x01(\x0b\x32\x10.booking.Booking\"*\n\x17GetBookingByUserRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\">\n\x18GetBookingByUserResponse\x12\"\n\x08\x62ookings\x18\x01 \x03(\x0b\x32\x10.booking.Booking\"E\n\x14UpdateBookingRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x10\n\x08\x63lass_id\x18\x02 \x01(\t\x12\x0f\n\x07user_id\x18\x03 \x01(\t\":\n\x15UpdateBookingResponse\x12!\n\x07\x62ooking\x18\x01 \x01(\x0b\x32\x10.booking.Bookingb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -40,8 +40,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_GETBOOKINGREQUEST']._serialized_end=492
   _globals['_GETBOOKINGRESPONSE']._serialized_start=494
   _globals['_GETBOOKINGRESPONSE']._serialized_end=549
-  _globals['_UPDATEBOOKINGREQUEST']._serialized_start=551
-  _globals['_UPDATEBOOKINGREQUEST']._serialized_end=620
-  _globals['_UPDATEBOOKINGRESPONSE']._serialized_start=622
-  _globals['_UPDATEBOOKINGRESPONSE']._serialized_end=680
+  _globals['_GETBOOKINGBYUSERREQUEST']._serialized_start=551
+  _globals['_GETBOOKINGBYUSERREQUEST']._serialized_end=593
+  _globals['_GETBOOKINGBYUSERRESPONSE']._serialized_start=595
+  _globals['_GETBOOKINGBYUSERRESPONSE']._serialized_end=657
+  _globals['_UPDATEBOOKINGREQUEST']._serialized_start=659
+  _globals['_UPDATEBOOKINGREQUEST']._serialized_end=728
+  _globals['_UPDATEBOOKINGRESPONSE']._serialized_start=730
+  _globals['_UPDATEBOOKINGRESPONSE']._serialized_end=788
 # @@protoc_insertion_point(module_scope)

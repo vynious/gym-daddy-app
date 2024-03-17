@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from . import booking_message_pb2 as booking_dot_booking__message__pb2
+from pb.booking import booking_message_pb2 as booking_dot_booking__message__pb2
 
 
 class BookingServiceStub(object):
@@ -28,6 +28,11 @@ class BookingServiceStub(object):
                 '/booking.BookingService/GetBooking',
                 request_serializer=booking_dot_booking__message__pb2.GetBookingRequest.SerializeToString,
                 response_deserializer=booking_dot_booking__message__pb2.GetBookingResponse.FromString,
+                )
+        self.GetBookingByUser = channel.unary_unary(
+                '/booking.BookingService/GetBookingByUser',
+                request_serializer=booking_dot_booking__message__pb2.GetBookingByUserRequest.SerializeToString,
+                response_deserializer=booking_dot_booking__message__pb2.GetBookingByUserResponse.FromString,
                 )
         self.UpdateBooking = channel.unary_unary(
                 '/booking.BookingService/UpdateBooking',
@@ -62,6 +67,12 @@ class BookingServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetBookingByUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def UpdateBooking(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -91,6 +102,11 @@ def add_BookingServiceServicer_to_server(servicer, server):
                     servicer.GetBooking,
                     request_deserializer=booking_dot_booking__message__pb2.GetBookingRequest.FromString,
                     response_serializer=booking_dot_booking__message__pb2.GetBookingResponse.SerializeToString,
+            ),
+            'GetBookingByUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetBookingByUser,
+                    request_deserializer=booking_dot_booking__message__pb2.GetBookingByUserRequest.FromString,
+                    response_serializer=booking_dot_booking__message__pb2.GetBookingByUserResponse.SerializeToString,
             ),
             'UpdateBooking': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateBooking,
@@ -160,6 +176,23 @@ class BookingService(object):
         return grpc.experimental.unary_unary(request, target, '/booking.BookingService/GetBooking',
             booking_dot_booking__message__pb2.GetBookingRequest.SerializeToString,
             booking_dot_booking__message__pb2.GetBookingResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetBookingByUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/booking.BookingService/GetBookingByUser',
+            booking_dot_booking__message__pb2.GetBookingByUserRequest.SerializeToString,
+            booking_dot_booking__message__pb2.GetBookingByUserResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
