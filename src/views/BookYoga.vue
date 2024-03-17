@@ -1,20 +1,23 @@
-<script>
-import CardBooker from '../components/CardBooker.vue'
-export default {
-  components: {
-    CardBooker,
-},
-}
 
+<script>
+  import DatePicker from '../components/DatePicker.vue'
+  export default {
+    components: {
+      DatePicker
+    }
+  }
+
+// fetch data from backend - time of the class on the selected day 
 </script>
 
 <template>
-    <div class="background">
-      <div class="heading">
-        <h1>Classes</h1>
-      </div>
-      <CardBooker/>
-    </div>
+  <div class="background">
+    <a-card style="width: 600px">
+      <h1>Selected Class: Yoga</h1>
+      <h1>Choose a date</h1>
+      <DatePicker/>
+    </a-card>
+  </div>
 </template>
 
 <style scoped>
@@ -27,11 +30,5 @@ export default {
         flex-direction: column; /* Align items in a column */
         justify-content: flex-start; /* Start from the top */
         align-items: center;
-    }
-    .heading {
-      margin-top: 20px; /* Add some margin to the top */
-    }
-    h1 {
-      color: #c7ff9c;
     }
 </style>
