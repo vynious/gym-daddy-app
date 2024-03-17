@@ -68,6 +68,16 @@ const router = createRouter({
               name: 'profileLogout',
               component: () => import('../views/ProfileLogoutPage.vue')
           },
+          {
+            path: '/createClass',
+            name: 'createClass',
+            component: () => import('../views/CreateClass.vue')
+          },
+          {
+            path: '/classSearch',
+            name: 'classSearch',
+            component: () => import('../views/ClassSearch.vue')
+          }
     ]
 })
 

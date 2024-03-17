@@ -11,7 +11,8 @@ export default {
 <template>
     <div class="background">
       <div class="heading">
-        <h1>Classes</h1>
+        <h1>Classes <router-link to="/createClass">Admin</router-link></h1>
+        
       </div>
       <CardBooker/>
     </div>
