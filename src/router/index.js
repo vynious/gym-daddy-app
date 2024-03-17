@@ -72,6 +72,11 @@ const router = createRouter({
             path: '/createClass',
             name: 'createClass',
             component: () => import('../views/CreateClass.vue')
+          },
+          {
+            path: '/classSearch',
+            name: 'classSearch',
+            component: () => import('../views/ClassSearch.vue')
           }
     ]
 })

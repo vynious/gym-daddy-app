@@ -16,7 +16,7 @@
         <a-col :span="8">
           <a-card title="Dance" :bordered="false">
             <a-image :width="300" src="https://cdn.class101.net/images/f4d5c83d-4af5-42c3-8d52-685fc55e74b4"/>
-            <p>A 1h session where instructors will share their tips and tricks accumulated from experience to teach the trendiest dance moves</p>
+            <p>A 1h session where instructors will share their tips and tricks accumulated from experience to teach the trendiest dance moves.</p>
             <b>Difficulty: INTERMEDIATE</b>
             <br>
             <router-link to="/bookdance">

@@ -1,7 +1,7 @@
 <!-- admin side -->
 <template>
   <div class="background">
-    <h1>Create a Class</h1>
+    <h1>Create a Class <router-link to="/classSearch">Class search</router-link></h1>
     <a-form
       ref="formRef"
       :model="formState"
