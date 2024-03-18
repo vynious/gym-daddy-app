@@ -1,3 +1,7 @@
 [submodule "proto"]
 	path = proto
+<<<<<<< HEAD
 	url = https://github.com/vynious/gd-protorepo.git
+=======
+	url = https://github.com/vynious/gd-protorepo
+>>>>>>> gd-queue-ms/main
