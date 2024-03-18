@@ -1,7 +1,9 @@
-[submodule "proto"]
-	path = proto
-<<<<<<< HEAD
+[submodule "gd-notification-ms/proto"]
+	path = gd-notification-ms/proto
 	url = https://github.com/vynious/gd-protorepo.git
-=======
-	url = https://github.com/vynious/gd-protorepo
->>>>>>> gd-queue-ms/main
+[submodule "gd-queue-ms/proto"]
+	path = gd-queue-ms/proto
+	url = https://github.com/vynious/gd-protorepo.git
+[submodule "gd-joinqueue-cms/proto"]
+	path = gd-joinqueue-cms/proto
+	url = https://github.com/vynious/gd-protorepo.git
