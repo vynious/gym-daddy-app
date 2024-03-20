@@ -91,7 +91,9 @@
         name: 'JoinQueue',
         methods: {
             joinqueue() {
-                this.$router.push({name: 'joinqueue'})
+                this.$router.push({name: 'joinqueue'});
+                // some logic here depending on backend
+                
             }
         }
     };
