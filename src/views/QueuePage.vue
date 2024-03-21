@@ -70,7 +70,7 @@
                 <div class="card-title header">Virtual Queue</div> 
                 <div class="card-text subheader">
                     There are currently
-                    <span class="circle">35</span>
+                    <span class="circle"> {{ queueNo }} </span>
                     people in line.
                 </div>  
             </div> 
@@ -89,10 +89,25 @@
 <script>
     export default {
         name: 'JoinQueue',
+        data() {
+            return {
+                queueNo: 0
+            }
+        },
         methods: {
             joinqueue() {
                 this.$router.push({name: 'joinqueue'});
-                // some logic here depending on backend
+                const baseURL = "";
+
+                this.$axios.get(`${baseURL}/`,{  // to check path
+                    // headers: {
+                    //     Authorization: ``
+                    // }
+                }) 
+                .then(response => {
+                    console.log(response.data);
+                    // this.queueNo = 
+                })
                 
             }
         }

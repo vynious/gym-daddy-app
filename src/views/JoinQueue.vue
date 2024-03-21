@@ -123,9 +123,21 @@
         },
         methods: {
             fetchQueueData() {
-                // i need to know what the backend looks like ahh
-                const progress = this.currentQueue / this.userQueue * 100;
-                this.progressBar = `${progress}%`;
+                const baseURL = "";
+
+                this.$axios.get(`${baseURL}/`, {
+                    // headers: {
+                    //     Authorization: ``
+                    // }
+                }) 
+                .then (response => {
+                    console.log(response.data);
+                    // this.currentQueue = 
+                    // this.userQueue = 
+
+                    const progress = this.currentQueue / this.userQueue * 100;
+                    this.progressBar = `${progress}%`;
+                })
             }
         }
     }
