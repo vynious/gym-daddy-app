@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -37,8 +36,30 @@ const router = createRouter({
             path: '/bookyoga',
             name: 'bookyoga',
             component: () => import('../views/BookYoga.vue')
+        },
+        {
+          path: '/login',
+          name: 'Login',
+          component: () => import('../views/Login.vue'),
+        },
+        {
+          path: '/sign-up',
+          name: 'SignUp',
+          component: () => import('../views/SignUp.vue'),
         }
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) {
+      if (to.hash) {
+        return {
+          el: to.hash,
+          behavior: 'smooth',
+        };
+      } else if (savedPosition) {
+        return savedPosition;
+      } else {
+        return { top: 0 };
+      }
+    }
 })
 
 export default router

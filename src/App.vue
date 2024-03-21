@@ -1,7 +1,8 @@
-
 <script>
-  import NavigationBar from './components/NavigationBar.vue'
+  import NavigationBar from './components/NavigationBar.vue';
+  import "./styles.css";
   export default {
+    name: "App",
     components: {
       NavigationBar
     }
