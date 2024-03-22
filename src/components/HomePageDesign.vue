@@ -61,6 +61,17 @@
 
         </div>
 
+        <div id="footer">
+            <div class="copyright">
+                <p class="copyrighttext">© 2024 Gym Daddy</p>
+            </div>
+            <img src="../assets/mail.png" alt="" class="icon">
+            <br>
+            <img src="../assets/facebook.png" alt="" class="icon">
+            <br>
+            <img src="../assets/instagram.png" alt="" class="icon">
+        </div>
+
     </div>
 
 </template>
@@ -154,7 +165,7 @@
     #down {
         cursor: pointer;
         position: absolute;
-        top: 695px;
+        top: 697px;
         left: 700px
     }
     #bottom {
@@ -165,6 +176,7 @@
         color: white;
     }
     .topinfo, .bottominfo {
+        height: 50vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -201,7 +213,7 @@
         height: 100px;
         border-radius: 12px;
         position: absolute;
-        top: 10px;
+        top: 0px;
         left: 30px;
     }
     #strength {
@@ -215,7 +227,7 @@
         height: 100px;
         border-radius: 12px;
         position: absolute;
-        top: 130px;
+        top: 120px;
         left: 130px;
     }
     #yoga {
@@ -229,7 +241,7 @@
         height: 100px;
         border-radius: 12px;
         position: absolute;
-        top: 250px;
+        top: 240px;
         left: 230px;
     }
     .label {
@@ -268,5 +280,26 @@
         border: 1px solid #C7FF9C;
         /* border-radius: 12px; */
         cursor: pointer;
+    }
+    #footer {
+        height: 60px;
+        width: 100vw;
+        background-color: black;
+        display: flex;
+        padding: 20px;
+    }
+    .icon {
+        width: 30px;
+        height: 30px;
+        display: inline;
+        margin-left: 30px;
+    }
+    .copyright {
+        width: 80vw;
+        text-align: left;
+    }
+    .copyrighttext {
+        font-size: 18px;
+        color: white;
     }
 </style>
