@@ -36,3 +36,26 @@ services:
           - https
         strip_path: false
 
+  - name: gym-avail-cms
+    protocol: http
+    url: http://gym-avail-ms:3006
+    routes:
+      - name: get-avail
+        paths:
+          - /api/gym/avail
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: update-avail
+        paths:
+          - /api/gym/update-avail
+        methods:
+          - POST
+        protocols:
+          - http
+          - https
+        strip_path: false

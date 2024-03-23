@@ -7,8 +7,8 @@ require (
 	github.com/go-pg/migrations/v8 v8.1.0
 	github.com/go-pg/pg/v10 v10.12.0
 	github.com/joho/godotenv v1.5.1
-	google.golang.org/genproto/googleapis/api v0.0.0-20240123012728-ef4313101c80
-	google.golang.org/grpc v1.62.1
+	google.golang.org/genproto/googleapis/api v0.0.0-20240116215550-a9fa1716bcac
+	google.golang.org/grpc v1.60.1
 	google.golang.org/protobuf v1.32.0
 )
 
