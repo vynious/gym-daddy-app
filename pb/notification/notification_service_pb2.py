@@ -12,8 +12,8 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-from notification import notification_message_pb2 as notification_dot_notification__message__pb2
-from queue import queue_message_pb2 as queue_dot_queue__message__pb2
+from pb.notification import notification_message_pb2 as notification_dot_notification__message__pb2
+from pb.queue import queue_message_pb2 as queue_dot_queue__message__pb2
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\'notification/notification_service.proto\x12\x0cnotification\x1a\'notification/notification_message.proto\x1a\x19queue/queue_message.proto\"\x96\x01\n\x19\x43reateNotificationRequest\x12\"\n\x0buser_ticket\x18\x01 \x01(\x0b\x32\r.queue.Ticket\x12!\n\x14\x63urrent_queue_number\x18\x02 \x01(\x03H\x00\x88\x01\x01\x12\x19\n\x11notification_type\x18\x03 \x01(\tB\x17\n\x15_current_queue_number\"N\n\x1a\x43reateNotificationResponse\x12\x30\n\x0cnotification\x18\x01 \x01(\x0b\x32\x1a.notification.Notification2\x80\x01\n\x13NotificationService\x12i\n\x12\x43reateNotification\x12\'.notification.CreateNotificationRequest\x1a(.notification.CreateNotificationResponse\"\x00\x42\x1bZ\x19/proto_files/notificationb\x06proto3')

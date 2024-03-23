@@ -1,0 +1,6 @@
+.gitignore
+.git
+.gitmodules
+README.md
+Makefile
+.idea
