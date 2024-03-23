@@ -137,6 +137,68 @@ services:
       KAFKA_URL: "kafka:9092"
     networks:
       - gd-network
+  
+  user-ms:
+        image: "gd-users-ms"
+        ports:
+            - "3005:3005"
+        volumes:
+            - ./users-ms/db/migrations:/app/db/migrations
+            - ./users-ms/scripts:/app/scripts
+        environment:
+            DB_PASSWORD: "postgres"
+            DB_USER: "postgres"
+            DB_HOST: "user-db"
+            DB_NAME: "users_ms"
+
+        depends_on:
+            - user-db
+        networks:
+            - gd-network
+
+    user-db:
+        image: "postgres"
+        ports:
+            - "5435:5432"
+        environment:
+            POSTGRES_PASSWORD: "postgres"
+            POSTGRES_USER: "postgres"
+            POSTGRES_DB: "users_ms"
+        volumes:
+            - ./users-ms/db:/docker-entrypoint-initdb.d
+        networks:
+            - gd-network
+
+    gym-avail-ms:
+        image: "gd-gym-avail-ms"
+        ports:
+            - "3006:3006"
+        volumes:
+            - ./gym-avail-ms/db/migrations:/app/db/migrations
+            - ./gym-avail-ms/scripts:/app/scripts
+        environment:
+            DB_PASSWORD: "postgres"
+            DB_USER: "postgres"
+            DB_HOST: "gym-avail-db"
+            DB_NAME: "gym_avail_ms"
+
+        depends_on:
+            - gym-avail-db
+        networks:
+            - gd-network
+
+    gym-avail-db:
+        image: "postgres"
+        ports:
+            - "5436:5432"
+        environment:
+            POSTGRES_PASSWORD: "postgres"
+            POSTGRES_USER: "postgres"
+            POSTGRES_DB: "gym_avail_ms"
+        volumes:
+            - ./gym-avail-ms/db:/docker-entrypoint-initdb.d
+        networks:
+            - gd-network
 
 networks:
   gd-network:

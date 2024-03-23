@@ -25,6 +25,15 @@ docker build -t gd-telemessager-ms gym-daddy-telemessenger-ms/.
 
 echo " "
 
+echo "Building Docker User MS..."
+docker build -t gd-users-ms gd-users-ms        
+
+echo " "
+
+echo "Building Docker Gym Avail MS..."
+docker build -t gd-gym-avail-ms gd-gym-avail-ms 
+
+echo " "
 # Add more docker build commands for additional images if needed
 
 echo "Building Docker Log MS..."
@@ -35,7 +44,6 @@ echo " "
 
 echo "Building Docker Kong Gateway..."
 docker build -t gd-kong-gateway gym-daddy-kong-gateway/.
-
 
 echo " "
 
