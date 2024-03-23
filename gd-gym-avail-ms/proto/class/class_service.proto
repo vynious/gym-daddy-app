@@ -1,0 +1,22 @@
+syntax = 'proto3';
+
+package class;
+option go_package = "/proto/class";
+
+import "google/protobuf/timestamp.proto";
+import "class/class_message.proto";
+
+service ClassService {
+  rpc CreateClass (CreateClassRequest) returns (CreateClassResponse) {}
+}
+
+message CreateClassRequest {
+  string class_type = 1;
+  string name = 2;
+  string duration = 3;
+  string description = 4;
+}
+
+message CreateClassResponse {
+  Class class = 1;
+}

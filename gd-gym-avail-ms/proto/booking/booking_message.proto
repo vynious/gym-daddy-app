@@ -1,0 +1,13 @@
+syntax="proto3";
+
+package booking;
+
+import "google/protobuf/timestamp.proto";
+import "class/class_message.proto";
+
+message Booking {
+  string id = 1;
+  string user_id = 2;
+  string class_id = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
