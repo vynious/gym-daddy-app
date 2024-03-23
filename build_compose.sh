@@ -6,7 +6,7 @@ echo "Building Docker images..."
 echo " "
 
 echo "Building Docker Queue CMS..."
-docker build -t gd-join-queue-cms gd-joinqueue-cms
+docker build -t gd-join-queue-cms gd-joinqueue-cms/.
 
 echo " "
 
@@ -21,29 +21,25 @@ docker build -t gd-queue-ms gd-queue-ms/.
 echo " "
 
 echo "Building Docker Telemessenger MS..."
-docker build -t gd-telemessager-ms gd-telemessenger-ms/.
-
-echo " "
-
-echo "Building Docker User MS..."
-docker build -t gd-users-ms gd-users-ms        
+docker build -t gd-telemessenger-ms gd-telemessenger-ms/.
 
 echo " "
 
 echo "Building Docker Gym Avail MS..."
-docker build -t gd-gym-avail-ms gd-gym-avail-ms 
+docker build -t gd-gym-avail-ms gd-gym-avail-ms
 
 echo " "
 # Add more docker build commands for additional images if needed
-
-echo "Building Docker Log MS..."
-docker build -t gd-log-ms gd-log-ms/.
+#
+#echo "Building Docker Log MS..."
+#docker build -t gd-log-ms gd-log-ms/.
 
 
 echo " "
 
 echo "Building Docker Kong Gateway..."
 docker build -t gd-kong-gateway gd-kong-gateway/.
+
 
 echo " "
 

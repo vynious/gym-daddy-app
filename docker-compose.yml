@@ -53,8 +53,8 @@ services:
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_PASSWORD: "shawntyw"
-      POSTGRES_USER: "shawntyw"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
     volumes:
       - ./gd-notification-ms/db:/docker-entrypoint-initdb.d
     networks:
@@ -79,8 +79,8 @@ services:
     ports:
       - '3000:3000'
     environment:
-      POSTGRES_PASSWORD: "shawntyw"
-      POSTGRES_USER: "shawntyw"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
       POSTGRES_HOST: "notification-db"
       POSTGRES_DBNAME: "gd-notification-ms"
       KAFKA_URL: "kafka:9092"
@@ -126,37 +126,37 @@ services:
     networks:
       - gd-network
 
-  log-ms:
-    image: "gd-log-ms"
-    ports:
-      - "3004:3004"
-    environment:
-      MONGO_CONN_URI: 'mongodb://mongo-store:27017'
-      MONGO_DB_NAME: 'logs'
-      MONGO_COLL_NAME: 'request_response_error'
-      KAFKA_URL: "kafka:9092"
-    networks:
-      - gd-network
-  
+#  log-ms:
+#    image: "gd-log-ms"
+#    ports:
+#      - "3004:3004"
+#    environment:
+#      MONGO_CONN_URI: 'mongodb://mongo-store:27017'
+#      MONGO_DB_NAME: 'logs'
+#      MONGO_COLL_NAME: 'request_response_error'
+#      KAFKA_URL: "kafka:9092"
+#    networks:
+#      - gd-network
+
+
   user-ms:
         image: "gd-users-ms"
         ports:
             - "3005:3005"
         volumes:
-            - ./users-ms/db/migrations:/app/db/migrations
-            - ./users-ms/scripts:/app/scripts
+            - ./gd-users-ms/db/migrations:/app/db/migrations
+            - ./gd-users-ms/scripts:/app/scripts
         environment:
             DB_PASSWORD: "postgres"
             DB_USER: "postgres"
             DB_HOST: "user-db"
             DB_NAME: "users_ms"
-
         depends_on:
             - user-db
         networks:
             - gd-network
 
-    user-db:
+  user-db:
         image: "postgres"
         ports:
             - "5435:5432"
@@ -165,17 +165,17 @@ services:
             POSTGRES_USER: "postgres"
             POSTGRES_DB: "users_ms"
         volumes:
-            - ./users-ms/db:/docker-entrypoint-initdb.d
+            - ./gd-users-ms/db:/docker-entrypoint-initdb.d
         networks:
             - gd-network
 
-    gym-avail-ms:
+  gym-avail-ms:
         image: "gd-gym-avail-ms"
         ports:
             - "3006:3006"
         volumes:
-            - ./gym-avail-ms/db/migrations:/app/db/migrations
-            - ./gym-avail-ms/scripts:/app/scripts
+            - ./gd-avail-ms/db/migrations:/app/db/migrations
+            - ./gd-avail-ms/scripts:/app/scripts
         environment:
             DB_PASSWORD: "postgres"
             DB_USER: "postgres"
@@ -187,7 +187,7 @@ services:
         networks:
             - gd-network
 
-    gym-avail-db:
+  gym-avail-db:
         image: "postgres"
         ports:
             - "5436:5432"
@@ -196,7 +196,7 @@ services:
             POSTGRES_USER: "postgres"
             POSTGRES_DB: "gym_avail_ms"
         volumes:
-            - ./gym-avail-ms/db:/docker-entrypoint-initdb.d
+            - ./gd-avail-ms/db:/docker-entrypoint-initdb.d
         networks:
             - gd-network
 
