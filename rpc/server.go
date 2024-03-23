@@ -78,6 +78,25 @@ func (s *BookingServer) ListBookings(ctx context.Context, req *booking.ListBooki
 	return &booking.ListBookingsResponse{Bookings: bookingList}, nil
 }
 
+func (s *BookingServer) GetBookingByUser(ctx context.Context, req *booking.GetBookingByUserRequest) (*booking.GetBookingByUserResponse, error) {
+	bookings, err := s.repo.GetBookingByUserId(req.UserId)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Error getting bookings: %v", err)
+	}
+
+	bookingList := make([]*booking.Booking, 0, len(bookings))
+	for _, b := range bookings {
+		bookingList = append(bookingList, &booking.Booking{
+			Id:        b.ID,
+			UserId:    b.UserID,
+			ClassId:   b.ClassID,
+			CreatedAt: timestamppb.New(b.CreatedAt),
+		})
+	}
+	return &booking.GetBookingByUserResponse{Bookings: bookingList}, nil
+}
+
+
 func (s *BookingServer) GetBooking(ctx context.Context, req *booking.GetBookingRequest) (*booking.GetBookingResponse, error) {
 	bookingEntry, err := s.repo.GetBooking(req.Id)
 	if err != nil {

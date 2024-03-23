@@ -110,6 +110,15 @@ func (r *Repository) GetBooking(bookingID string) (BookingEntry, error) {
 	}
 	return booking, nil
 }
+func (r *Repository) GetBookingByUserId(userID string) ([]BookingEntry, error) {
+	var bookings []BookingEntry
+	err := r.DB.Where("user_id = ?", userID).Find(&bookings).Error
+	if err != nil {
+		return nil, fmt.Errorf("failed to get booking: %w", err)
+	}
+	return bookings, nil
+}
+
 
 func (r *Repository) ListBookings() ([]BookingEntry, error) {
 	var bookings []BookingEntry

@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	BookingService_CreateBooking_FullMethodName = "/booking.BookingService/CreateBooking"
-	BookingService_ListBookings_FullMethodName  = "/booking.BookingService/ListBookings"
-	BookingService_GetBooking_FullMethodName    = "/booking.BookingService/GetBooking"
-	BookingService_UpdateBooking_FullMethodName = "/booking.BookingService/UpdateBooking"
-	BookingService_CancelBooking_FullMethodName = "/booking.BookingService/CancelBooking"
+	BookingService_CreateBooking_FullMethodName    = "/booking.BookingService/CreateBooking"
+	BookingService_ListBookings_FullMethodName     = "/booking.BookingService/ListBookings"
+	BookingService_GetBooking_FullMethodName       = "/booking.BookingService/GetBooking"
+	BookingService_GetBookingByUser_FullMethodName = "/booking.BookingService/GetBookingByUser"
+	BookingService_UpdateBooking_FullMethodName    = "/booking.BookingService/UpdateBooking"
+	BookingService_CancelBooking_FullMethodName    = "/booking.BookingService/CancelBooking"
 )
 
 // BookingServiceClient is the client API for BookingService service.
@@ -33,6 +34,7 @@ type BookingServiceClient interface {
 	CreateBooking(ctx context.Context, in *CreateBookingRequest, opts ...grpc.CallOption) (*CreateBookingResponse, error)
 	ListBookings(ctx context.Context, in *ListBookingsRequest, opts ...grpc.CallOption) (*ListBookingsResponse, error)
 	GetBooking(ctx context.Context, in *GetBookingRequest, opts ...grpc.CallOption) (*GetBookingResponse, error)
+	GetBookingByUser(ctx context.Context, in *GetBookingByUserRequest, opts ...grpc.CallOption) (*GetBookingByUserResponse, error)
 	UpdateBooking(ctx context.Context, in *UpdateBookingRequest, opts ...grpc.CallOption) (*UpdateBookingResponse, error)
 	CancelBooking(ctx context.Context, in *CancelBookingRequest, opts ...grpc.CallOption) (*CancelBookingResponse, error)
 }
@@ -72,6 +74,15 @@ func (c *bookingServiceClient) GetBooking(ctx context.Context, in *GetBookingReq
 	return out, nil
 }
 
+func (c *bookingServiceClient) GetBookingByUser(ctx context.Context, in *GetBookingByUserRequest, opts ...grpc.CallOption) (*GetBookingByUserResponse, error) {
+	out := new(GetBookingByUserResponse)
+	err := c.cc.Invoke(ctx, BookingService_GetBookingByUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *bookingServiceClient) UpdateBooking(ctx context.Context, in *UpdateBookingRequest, opts ...grpc.CallOption) (*UpdateBookingResponse, error) {
 	out := new(UpdateBookingResponse)
 	err := c.cc.Invoke(ctx, BookingService_UpdateBooking_FullMethodName, in, out, opts...)
@@ -97,6 +108,7 @@ type BookingServiceServer interface {
 	CreateBooking(context.Context, *CreateBookingRequest) (*CreateBookingResponse, error)
 	ListBookings(context.Context, *ListBookingsRequest) (*ListBookingsResponse, error)
 	GetBooking(context.Context, *GetBookingRequest) (*GetBookingResponse, error)
+	GetBookingByUser(context.Context, *GetBookingByUserRequest) (*GetBookingByUserResponse, error)
 	UpdateBooking(context.Context, *UpdateBookingRequest) (*UpdateBookingResponse, error)
 	CancelBooking(context.Context, *CancelBookingRequest) (*CancelBookingResponse, error)
 	mustEmbedUnimplementedBookingServiceServer()
@@ -114,6 +126,9 @@ func (UnimplementedBookingServiceServer) ListBookings(context.Context, *ListBook
 }
 func (UnimplementedBookingServiceServer) GetBooking(context.Context, *GetBookingRequest) (*GetBookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBooking not implemented")
+}
+func (UnimplementedBookingServiceServer) GetBookingByUser(context.Context, *GetBookingByUserRequest) (*GetBookingByUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBookingByUser not implemented")
 }
 func (UnimplementedBookingServiceServer) UpdateBooking(context.Context, *UpdateBookingRequest) (*UpdateBookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBooking not implemented")
@@ -188,6 +203,24 @@ func _BookingService_GetBooking_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BookingService_GetBookingByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBookingByUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BookingServiceServer).GetBookingByUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BookingService_GetBookingByUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BookingServiceServer).GetBookingByUser(ctx, req.(*GetBookingByUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _BookingService_UpdateBooking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateBookingRequest)
 	if err := dec(in); err != nil {
@@ -242,6 +275,10 @@ var BookingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBooking",
 			Handler:    _BookingService_GetBooking_Handler,
+		},
+		{
+			MethodName: "GetBookingByUser",
+			Handler:    _BookingService_GetBookingByUser_Handler,
 		},
 		{
 			MethodName: "UpdateBooking",
