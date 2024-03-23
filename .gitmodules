@@ -7,3 +7,6 @@
 [submodule "gd-joinqueue-cms/proto"]
 	path = gd-joinqueue-cms/proto
 	url = https://github.com/vynious/gd-protorepo.git
+[submodule "gd-gym-avail-ms/proto"]
+	path = gd-gym-avail-ms/proto
+	url = https://github.com/vynious/gd-protorepo.git

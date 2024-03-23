@@ -29,7 +29,7 @@ echo "Building Docker Gym Avail MS..."
 docker build -t gd-gym-avail-ms gd-gym-avail-ms/.
 
 echo "Building Docker User MS..."
-docker build -t gd-user-ms gd-user-ms
+docker build -t gd-users-ms gd-users-ms
 
 # Add more docker build commands for additional images if needed
 #
