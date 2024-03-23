@@ -78,8 +78,8 @@ def create_booking():
 
         notification_request = notification_pb2.CreateNotificationRequest(
             user_ticket=user_ticket,
-            current_queue_number=123,  # This should be replaced with the actual queue number
             notification_type="Booking-Confirmation",
+            
         )
 
         notification_response = notification_grpc_client.CreateNotification(
