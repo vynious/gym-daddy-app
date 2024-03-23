@@ -56,7 +56,7 @@ services:
       POSTGRES_PASSWORD: "shawntyw"
       POSTGRES_USER: "shawntyw"
     volumes:
-      - ./gym-daddy-notification-ms/db:/docker-entrypoint-initdb.d
+      - ./gd-notification-ms/db:/docker-entrypoint-initdb.d
     networks:
       - gd-network
 
