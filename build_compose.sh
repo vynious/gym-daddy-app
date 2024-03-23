@@ -26,9 +26,11 @@ docker build -t gd-telemessenger-ms gd-telemessenger-ms/.
 echo " "
 
 echo "Building Docker Gym Avail MS..."
-docker build -t gd-gym-avail-ms gd-gym-avail-ms
+docker build -t gd-gym-avail-ms gd-gym-avail-ms/.
 
-echo " "
+echo "Building Docker User MS..."
+docker build -t gd-user-ms gd-user-ms
+
 # Add more docker build commands for additional images if needed
 #
 #echo "Building Docker Log MS..."
