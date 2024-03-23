@@ -1,0 +1,38 @@
+_format_version: "2.1"
+_transform: true
+
+services:
+  - name: join-queue-cms
+    protocol: http
+    url: http://join-queue-cms:3003
+    routes:
+      - name: join-queue
+        paths:
+          - /api/queue/join
+        methods:
+          - POST
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: get-upcoming
+        paths:
+          - /api/queue/upcoming
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: retrieve-next
+        paths:
+          - /api/queue/next
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+

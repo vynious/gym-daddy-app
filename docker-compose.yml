@@ -53,8 +53,8 @@ services:
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_PASSWORD: "shawntyw"
-      POSTGRES_USER: "shawntyw"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
     volumes:
       - ./gd-notification-ms/db:/docker-entrypoint-initdb.d
     networks:
@@ -79,8 +79,8 @@ services:
     ports:
       - '3000:3000'
     environment:
-      POSTGRES_PASSWORD: "shawntyw"
-      POSTGRES_USER: "shawntyw"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
       POSTGRES_HOST: "notification-db"
       POSTGRES_DBNAME: "gd-notification-ms"
       KAFKA_URL: "kafka:9092"
@@ -126,17 +126,17 @@ services:
     networks:
       - gd-network
 
-  log-ms:
-    image: "gd-log-ms"
-    ports:
-      - "3004:3004"
-    environment:
-      MONGO_CONN_URI: 'mongodb://mongo-store:27017'
-      MONGO_DB_NAME: 'logs'
-      MONGO_COLL_NAME: 'request_response_error'
-      KAFKA_URL: "kafka:9092"
-    networks:
-      - gd-network
+#  log-ms:
+#    image: "gd-log-ms"
+#    ports:
+#      - "3004:3004"
+#    environment:
+#      MONGO_CONN_URI: 'mongodb://mongo-store:27017'
+#      MONGO_DB_NAME: 'logs'
+#      MONGO_COLL_NAME: 'request_response_error'
+#      KAFKA_URL: "kafka:9092"
+#    networks:
+#      - gd-network
 
 networks:
   gd-network:
