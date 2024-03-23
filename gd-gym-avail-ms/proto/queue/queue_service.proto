@@ -1,0 +1,32 @@
+syntax = "proto3";
+package queue;
+option go_package = "/proto_files/queue";
+import "queue/queue_message.proto";
+
+service QueueService {
+  rpc JoinQueue (JoinQueueRequest) returns (JoinQueueResponse) {}
+  rpc RetrieveNext (RetrieveNextRequest) returns (RetrieveNextResponse) {}
+  rpc GetUpcomingTickets (GetUpcomingTicketsRequest) returns (GetUpcomingTicketsResponse) {}
+}
+
+message JoinQueueRequest {
+  string user_id = 1;
+}
+
+message JoinQueueResponse {
+  Ticket ticket = 1;
+}
+
+message RetrieveNextRequest {}
+
+message RetrieveNextResponse {
+  Ticket ticket = 1;
+}
+
+message GetUpcomingTicketsRequest {
+  int64 quantity = 1;
+}
+
+message GetUpcomingTicketsResponse {
+  repeated Ticket tickets = 1;
+}

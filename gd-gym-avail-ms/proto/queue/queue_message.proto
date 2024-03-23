@@ -1,0 +1,13 @@
+syntax = "proto3";
+package queue;
+option go_package = "/proto_files/queue";
+import "google/protobuf/timestamp.proto";
+
+
+
+
+message Ticket {
+  int64  queue_number = 2;
+  string user_id = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
