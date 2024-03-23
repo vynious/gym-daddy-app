@@ -10,3 +10,6 @@
 [submodule "gd-gym-avail-ms/proto"]
 	path = gd-gym-avail-ms/proto
 	url = https://github.com/vynious/gd-protorepo.git
+[submodule "proto"]
+	path = gd-booking-ms/proto
+	url = https://github.com/vynious/gd-protorepo.git
