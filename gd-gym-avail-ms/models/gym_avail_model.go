@@ -2,7 +2,7 @@ package models
 
 import (
 	"errors"
-
+	"fmt"
 	"github.com/go-pg/pg/v10"
 )
 
@@ -16,7 +16,21 @@ type GymAvail struct {
 // TODO: db should be deprecated. compute availability dynamically
 
 func (gymAvail *GymAvail) GetCurrentAvailability(db *pg.DB) error {
-	return db.Model(gymAvail).Limit(1).Select()
+	//if gymAvail == nil {
+	//	return errors.New("gymAvail is nil")
+	//}
+
+	err := db.Model(gymAvail).Limit(1).Select()
+	if err != nil {
+		fmt.Printf("Error fetching current availability: %v", err)
+		if gymAvail == nil {
+			fmt.Println("gym avail is nil")
+		}
+		return err
+	}
+
+	fmt.Printf("Fetched gym availability: %+v", gymAvail)
+	return nil
 }
 
 func (gymAvail *GymAvail) DecrementCurrentAvailability(db *pg.DB, qty int) error {

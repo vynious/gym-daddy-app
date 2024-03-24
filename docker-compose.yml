@@ -85,7 +85,6 @@ services:
       POSTGRES_DBNAME: "gd-notification-ms"
       KAFKA_URL: "kafka:9092"
       KAFKA_TOPIC: "notification"
-
     depends_on:
       - notification-db
     networks:
@@ -101,6 +100,8 @@ services:
       MONGO_DB_NAME: 'users'
       MONGO_COLL_NAME: 'telegram_subscribers'
       KAFKA_URL: "kafka:9092"
+    depends_on:
+      - mongo-store
     networks:
       - gd-network
 
@@ -110,6 +111,8 @@ services:
       - "3002:3002"
     environment:
       REDIS_URL: "redis://queue-db:6379"
+    depends_on:
+      - queue-db
     networks:
       - gd-network
 
@@ -123,71 +126,136 @@ services:
       GPRC_SERVER_NOTIFICATION: "notification-ms:3000"
       KAFKA_URL:  "kafka:9092"
       KAFKA_TOPIC:  "logs"
+    depends_on:
+      - queue-ms
+      - notification-ms
     networks:
       - gd-network
 
 
-
   user-ms:
-        image: "gd-users-ms"
-        ports:
-            - "3005:3005"
-        volumes:
-            - ./gd-users-ms/db/migrations:/app/db/migrations
-            - ./gd-users-ms/scripts:/app/scripts
-        environment:
-            DB_PASSWORD: "postgres"
-            DB_USER: "postgres"
-            DB_HOST: "user-db"
-            DB_NAME: "users_ms"
-        depends_on:
-            - user-db
-        networks:
-            - gd-network
+    image: "gd-users-ms"
+    ports:
+        - "3005:3005"
+#    volumes:
+#        - ./gd-users-ms/db/migrations:/app/db/migrations
+#        - ./gd-users-ms/scripts:/app/scripts
+    environment:
+        DB_PASSWORD: "postgres"
+        DB_USER: "postgres"
+        DB_HOST: "user-db"
+        DB_NAME: "users_ms"
+    depends_on:
+        - user-db
+    networks:
+        - gd-network
 
   user-db:
-        image: "postgres"
-        ports:
-            - "5435:5432"
-        environment:
-            POSTGRES_PASSWORD: "postgres"
-            POSTGRES_USER: "postgres"
-            POSTGRES_DB: "users_ms"
-        volumes:
-            - ./gd-users-ms/db:/docker-entrypoint-initdb.d
-        networks:
-            - gd-network
+    image: "postgres"
+    ports:
+        - "5433:5432"
+    environment:
+        POSTGRES_PASSWORD: "postgres"
+        POSTGRES_USER: "postgres"
+        POSTGRES_DB: "users_ms"
+    volumes:
+        - ./gd-users-ms/db:/docker-entrypoint-initdb.d
+    networks:
+        - gd-network
 
   gym-avail-ms:
-        image: "gd-gym-avail-ms"
-        ports:
-            - "3006:3006"
-        volumes:
-            - ./gd-avail-ms/db/migrations:/app/db/migrations
-            - ./gd-avail-ms/scripts:/app/scripts
-        environment:
-            DB_PASSWORD: "postgres"
-            DB_USER: "postgres"
-            DB_HOST: "gym-avail-db"
-            DB_NAME: "gym_avail_ms"
-
-        depends_on:
-            - gym-avail-db
-        networks:
-            - gd-network
+    image: "gd-gym-avail-ms"
+    ports:
+        - "3006:3006"
+#    volumes:
+#        - ./gd-avail-ms/db/migrations:/app/db/migrations
+#        - ./gd-avail-ms/scripts:/app/scripts
+    environment:
+        DB_PASSWORD: "postgres"
+        DB_USER: "postgres"
+        DB_HOST: "gym-avail-db"
+        DB_NAME: "gym_avail_ms"
+    depends_on:
+        - gym-avail-db
+    networks:
+        - gd-network
 
   gym-avail-db:
-        image: "postgres"
-        ports:
-            - "5436:5432"
-        environment:
-            POSTGRES_PASSWORD: "postgres"
-            POSTGRES_USER: "postgres"
-            POSTGRES_DB: "gym_avail_ms"
-        volumes:
-            - ./gd-avail-ms/db:/docker-entrypoint-initdb.d
-        networks:
-            - gd-network
+    image: "postgres"
+    ports:
+        - "5434:5432"
+    environment:
+        POSTGRES_PASSWORD: "postgres"
+        POSTGRES_USER: "postgres"
+        POSTGRES_DB: "gym_avail_ms"
+    volumes:
+        - ./gd-avail-ms/db:/docker-entrypoint-initdb.d
+    networks:
+        - gd-network
+
+  booking-ms:
+    image: "gd-booking-ms"
+    ports:
+      - "6000:6000"
+    environment:
+      POSTGRES_HOST: "booking-db"
+      POSTGRES_DB: "gd_booking_ms"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    command: [ "postgres", "-c", "shared_preload_libraries=uuid-ossp" ]
+    depends_on:
+      - booking-db
+    networks:
+      - gd-network
+
+  createbooking-cms:
+    image: "gd-createbooking-cms"
+    ports:
+      - "5002:5002"
+    environment:
+      FLASK_CLASS_SERVER: "classes-ms:5200"
+      BOOKING_GRPC_SERVER: "booking-ms:6000"
+      NOTIFICATION_GRPC_SERVER: "notification-ms:3000"
+    depends_on:
+      - booking-ms
+      - classes-ms
+      - notification-ms
+
+  booking-db:
+    image: "postgres"
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "gd_booking_ms"
+    volumes:
+      - ./gd-booking-ms/db:/docker-entrypoint-initdb.d
+    networks:
+      - gd-network
+
+  classes-ms:
+    image: "gd-classes-ms"
+    ports:
+      - "5200:5200"
+    environment:
+        dbURL: "mysql+mysqlconnector://is213@host.docker.internal:3306/classes"
+    depends_on:
+      - classes-db
+    networks:
+      - gd-network
+
+  classes-db:
+    image: "mysql"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "rootpassword"
+      MYSQL_DATABASE: "classes_db"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+    networks:
+      - gd-network
 
 networks:
   gd-network:

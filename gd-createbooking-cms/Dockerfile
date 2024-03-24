@@ -5,6 +5,7 @@ RUN python -m pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire 'pb' directory into the image
 COPY pb/ pb/
+COPY .env .
 
 COPY create_booking.py .
 CMD [ "python", "./create_booking.py" ]

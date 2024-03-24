@@ -22,7 +22,7 @@ type UpdateCurrentAvailRequestBody struct {
 }
 
 func RetrieveCurrentAvail(c *gin.Context, db *pg.DB) {
-	var gymAvail *models.GymAvail
+	gymAvail := new(models.GymAvail) // Allocate memory for gymAvail
 
 	err := gymAvail.GetCurrentAvailability(db)
 	if err != nil {

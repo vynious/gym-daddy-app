@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Wait for the database to be ready
-until timeout 1 bash -c "echo > /dev/tcp/user-db/5432"; do
+until timeout 1 bash -c "echo > /dev/tcp/gym-avail-db/5432"; do
   echo "Waiting for database..."
   sleep 5
 done

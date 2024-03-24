@@ -15,18 +15,17 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading .env: %s", err)
 	}
-	db := db.InitDBConnection()
+	dbc := db.InitDBConnection()
 	router := gin.Default()
-	gym := router.Group("/gym")
+	gym := router.Group("/api/gym")
 	{
 		gym.GET("/avail", func(c *gin.Context) {
-			controllers.RetrieveCurrentAvail(c, db.DB)
+			controllers.RetrieveCurrentAvail(c, dbc.DB)
 		})
 		gym.POST("/update-avail", func(c *gin.Context) {
-			controllers.UpdateCurrentAvail(c, db.DB)
+			controllers.UpdateCurrentAvail(c, dbc.DB)
 		})
 	}
 
 	router.Run("0.0.0.0:3006")
-
 }
