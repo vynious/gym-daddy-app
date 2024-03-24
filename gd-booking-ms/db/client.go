@@ -5,7 +5,7 @@ package db
 import (
 	"errors"
 	"fmt"
-	"gd-booking-ms/types"
+	"github.com/syahmimscs/gd-booking-ms/types"
 	"log"
 	"os"
 	"strconv"
@@ -35,6 +35,7 @@ func LoadDatabaseConfig() types.GormConfig {
 		DBName:   types.DatabaseName(dbname),
 	}
 }
+
 // Here you would define methods to interact with the Booking data.
 // For example, a method to create a booking entry:
 
@@ -64,7 +65,6 @@ func SpawnRepository(cfg types.GormConfig) (*Repository, error) {
 		timeout: time.Duration(2) * time.Second,
 	}, nil
 }
-
 
 // CreateBooking creates a new booking record in the database.
 func (r *Repository) CreateBooking(userID, classID string) (BookingEntry, error) {
@@ -98,7 +98,6 @@ func (r *Repository) CancelBooking(bookingID string) error {
 	return nil
 }
 
-
 func (r *Repository) GetBooking(bookingID string) (BookingEntry, error) {
 	var booking BookingEntry
 	err := r.DB.Where("id = ?", bookingID).First(&booking).Error
@@ -118,7 +117,6 @@ func (r *Repository) GetBookingByUserId(userID string) ([]BookingEntry, error) {
 	}
 	return bookings, nil
 }
-
 
 func (r *Repository) ListBookings() ([]BookingEntry, error) {
 	var bookings []BookingEntry
@@ -144,8 +142,6 @@ func (r *Repository) UpdateBooking(bookingID, classID string) (BookingEntry, err
 
 	return booking, nil
 }
-
-
 
 // CloseConnection closes the database connection.
 func (r *Repository) CloseConnection() error {

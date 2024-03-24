@@ -1,10 +1,10 @@
 package main
 
 import (
-	"gd-booking-ms/db"                     // Assuming this is the correct path to your db package
-	"gd-booking-ms/pb/proto_files/booking" // Adjust the path to where the booking proto Go files are generated
-	"gd-booking-ms/rpc"                    // Correct the path according to your actual rpc package
 	"github.com/joho/godotenv"
+	"github.com/syahmimscs/gd-booking-ms/db"                     // Assuming this is the correct path to your db package
+	"github.com/syahmimscs/gd-booking-ms/pb/proto_files/booking" // Adjust the path to where the booking proto Go files are generated
+	"github.com/syahmimscs/gd-booking-ms/rpc"                    // Correct the path according to your actual rpc package
 	"google.golang.org/grpc"
 	"log"
 	"net"

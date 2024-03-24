@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gd-queue
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-db
+  namespace: gd-queue  # Updated namespace here
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queue-db
+  template:
+    metadata:
+      labels:
+        app: queue-db
+    spec:
+      containers:
+        - name: queue-db
+          image: redis
+          ports:
+            - containerPort: 6379
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: queue-db
+  namespace: gd-queue  # Updated namespace here
+spec:
+  selector:
+    app: queue-db
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-ms
+  namespace: gd-queue  # Updated namespace here
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: queue-ms
+  template:
+    metadata:
+      labels:
+        app: queue-ms
+    spec:
+      containers:
+        - name: queue-ms
+          image: gd-queue-ms
+          env:
+            - name: REDIS_URL
+              value: "redis://queue-db:6379"
+          ports:
+            - containerPort: 3002
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: queue-ms
+  namespace: gd-queue  # Updated namespace here
+spec:
+  selector:
+    app: queue-ms
+  ports:
+    - protocol: TCP
+      port: 3002
+      targetPort: 3002

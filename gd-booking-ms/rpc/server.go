@@ -4,10 +4,10 @@ package rpc
 
 import (
 	"context"
+	"github.com/syahmimscs/gd-booking-ms/db"
+	"github.com/syahmimscs/gd-booking-ms/pb/proto_files/booking"
 	"net"
 
-	"gd-booking-ms/db"
-	"gd-booking-ms/pb/proto_files/booking"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"google.golang.org/grpc"
@@ -58,7 +58,6 @@ func (s *BookingServer) CreateBooking(ctx context.Context, req *booking.CreateBo
 	}, nil
 }
 
-
 func (s *BookingServer) ListBookings(ctx context.Context, req *booking.ListBookingsRequest) (*booking.ListBookingsResponse, error) {
 	bookings, err := s.repo.ListBookings()
 	if err != nil {
@@ -95,7 +94,6 @@ func (s *BookingServer) GetBookingByUser(ctx context.Context, req *booking.GetBo
 	}
 	return &booking.GetBookingByUserResponse{Bookings: bookingList}, nil
 }
-
 
 func (s *BookingServer) GetBooking(ctx context.Context, req *booking.GetBookingRequest) (*booking.GetBookingResponse, error) {
 	bookingEntry, err := s.repo.GetBooking(req.Id)
@@ -140,14 +138,6 @@ func (s *BookingServer) UpdateBooking(ctx context.Context, req *booking.UpdateBo
 	}, nil
 }
 
-
-
-
-
-
-
-
-
 func (s *BookingServer) CancelBooking(ctx context.Context, req *booking.CancelBookingRequest) (*booking.CancelBookingResponse, error) {
 	err := s.repo.CancelBooking(req.Id)
 	if err != nil {
@@ -156,6 +146,3 @@ func (s *BookingServer) CancelBooking(ctx context.Context, req *booking.CancelBo
 
 	return &booking.CancelBookingResponse{}, nil
 }
-
-
-

@@ -1,4 +1,4 @@
-module gd-booking-ms
+module github.com/syahmimscs/gd-booking-ms
 
 go 1.21.6
 

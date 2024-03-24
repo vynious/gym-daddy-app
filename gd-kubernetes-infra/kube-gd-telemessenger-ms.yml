@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemessenger-ms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telemessenger-ms
+  template:
+    metadata:
+      labels:
+        app: telemessenger-ms
+    spec:
+      containers:
+        - name: telemessenger-ms
+          image: gd-telemessenger-ms
+          ports:
+            - containerPort: 3001
+          env:
+            - name: TELEGRAM_BOT_KEY
+              value: '6440570082:AAEydONrrATMun4ccOeCDcTe6YyShNVq_zs'
+            - name: MONGO_CONN_URI
+              value: 'mongodb://mongo-store:27017'
+            - name: MONGO_DB_NAME
+              value: 'users'
+            - name: MONGO_COLL_NAME
+              value: 'telegram_subscribers'
+            - name: KAFKA_URL
+              value: "kafka:9092"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: telemessenger-ms
+spec:
+  selector:
+    app: telemessenger-ms
+  ports:
+    - protocol: TCP
+      port: 3001
+      targetPort: 3001
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-store
+  template:
+    metadata:
+      labels:
+        app: mongo-store
+    spec:
+      containers:
+        - name: mongo-store
+          image: mongo
+          ports:
+            - containerPort: 27017
+      volumes:
+        - name: mongo-store-volume
+          persistentVolumeClaim:
+            claimName: mongo-store-pvc
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-store-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-store
+spec:
+  selector:
+    app: mongo-store
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017

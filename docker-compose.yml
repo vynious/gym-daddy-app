@@ -126,17 +126,6 @@ services:
     networks:
       - gd-network
 
-#  log-ms:
-#    image: "gd-log-ms"
-#    ports:
-#      - "3004:3004"
-#    environment:
-#      MONGO_CONN_URI: 'mongodb://mongo-store:27017'
-#      MONGO_DB_NAME: 'logs'
-#      MONGO_COLL_NAME: 'request_response_error'
-#      KAFKA_URL: "kafka:9092"
-#    networks:
-#      - gd-network
 
 
   user-ms:
