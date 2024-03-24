@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"errors"
+	"github.com/ljlimjk10/gym-avail-ms/rpc"
 	"log"
 	"net/http"
 
@@ -9,7 +10,6 @@ import (
 	"github.com/go-pg/pg/v10"
 
 	"github.com/ljlimjk10/gym-avail-ms/models"
-	"github.com/ljlimjk10/gym-avail-ms/rpc"
 )
 
 // type AvailabilityResponse struct {
@@ -47,15 +47,26 @@ func UpdateCurrentAvail(c *gin.Context, db *pg.DB) {
 		return
 	}
 
-	var gymAvail *models.GymAvail
+	gymAvail := new(models.GymAvail)
 
 	if reqBody.UpdateType == "increment" {
-		gymAvail.IncrementCurrentAvailability(db, reqBody.Quantity)
-		rpc.GRPCGetNextInQueue(c)
+		if err = gymAvail.IncrementCurrentAvailability(db, reqBody.Quantity); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		go func() {
+			if _, err := rpc.GRPCGetNextInQueue(c); err != nil {
+				log.Println(err.Error())
+			}
+		}()
 	} else if reqBody.UpdateType == "decrement" {
-		gymAvail.DecrementCurrentAvailability(db, reqBody.Quantity)
+		if err = gymAvail.DecrementCurrentAvailability(db, reqBody.Quantity); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "provide update_type (increment/decrement)"})
+		return
 	}
-
+	c.JSON(http.StatusCreated, gymAvail.CurrentAvail)
 }

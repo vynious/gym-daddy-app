@@ -175,6 +175,8 @@ services:
         DB_USER: "postgres"
         DB_HOST: "gym-avail-db"
         DB_NAME: "gym_avail_ms"
+        GRPC_SERVER_QUEUE: "queue-ms:3002"
+        GRPC_SERVER_NOTIFICATION: "notification-ms:3000"
     depends_on:
         - gym-avail-db
     networks:
