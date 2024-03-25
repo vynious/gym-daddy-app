@@ -16,6 +16,7 @@ import (
 type authCustomClaims struct {
 	Username string `json:"username"`
 	RoleID   int    `json:"role_id"`
+	TelegramHandle string `json:"telegram_handle"`
 	jwt.RegisteredClaims
 }
 
@@ -31,7 +32,7 @@ func JWTAuthService() *JwtService {
 	}
 }
 
-func (service *JwtService) TokenGenerate(username string, roleID int) (string, error) {
+func (service *JwtService) TokenGenerate(username string, roleID int, telegramHandle string) (string, error) {
 	expirationTime, err := strconv.Atoi(os.Getenv("JWT_EXPIRATION_TIME"))
 	if err != nil {
 		log.Fatalln(err)
@@ -39,6 +40,7 @@ func (service *JwtService) TokenGenerate(username string, roleID int) (string, e
 	claims := &authCustomClaims{
 		Username: username,
 		RoleID:   roleID,
+		TelegramHandle: telegramHandle,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * time.Duration(expirationTime))),
 			Issuer:    service.issuedBy,
@@ -63,7 +65,6 @@ func (service *JwtService) TokenValidate(c *gin.Context) error {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
-
 		return []byte(service.privateKey), nil
 	})
 
@@ -72,7 +73,7 @@ func (service *JwtService) TokenValidate(c *gin.Context) error {
 	}
 
 	if claims, ok := token.Claims.(*authCustomClaims); ok && token.Valid {
-		fmt.Println("Token validated:", claims.Username, claims.RoleID, claims.Issuer)
+		fmt.Println("Token validated:", claims.Username, claims.RoleID, claims.Issuer, claims.TelegramHandle)
 		return nil
 	} else {
 		return fmt.Errorf("invalid token or claims")

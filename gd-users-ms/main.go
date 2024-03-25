@@ -19,7 +19,7 @@ func main() {
 	db := db.InitDBConnection()
 	jwtAuthService := auth.JWTAuthService()
 	router := gin.Default()
-	users := router.Group("/users")
+	users := router.Group("/api/users")
 	{
 		users.POST("/register", func(c *gin.Context) {
 			users_controllers.RegisterUser(c, db.DB)
@@ -32,6 +32,9 @@ func main() {
 		})
 		users.GET("/user", jwtAuthService.JwtAuthMiddleware(), func(c *gin.Context) {
 			users_controllers.GetUser(c, db.DB)
+		})
+		users.GET("/telegram", func(c *gin.Context) {
+			users_controllers.GetTelegramHandle(c, db.DB)
 		})
 		users.GET("/validatejwt", jwtAuthService.JwtAuthMiddleware())
 	}

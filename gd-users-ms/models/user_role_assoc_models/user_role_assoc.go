@@ -13,7 +13,7 @@ import (
 type UserRoleAssociation struct {
 	tableName  struct{}          `pg:"user_role_association"`
 	UserRoleID int               `pg:"user_role_id, pk"`
-	UserID     int               `pg:"user_id, notnull"`
+	UserID     string               `pg:"user_id, notnull"`
 	RoleID     int               `pg:"role_id, notnull"`
 	User       *user_models.User `pg:"rel:has-one"`
 	Role       *role_models.Role `pg:"rel:has-one"`
@@ -24,7 +24,7 @@ func CreateUserRoleAssoc(db *pg.DB, newUserRoleAssoc *UserRoleAssociation) error
 	return err
 }
 
-func GetUserRoleID(db *pg.DB, userID int) (int, error) {
+func GetUserRoleID(db *pg.DB, userID string) (int, error) {
 	userRoleAssoc := new(UserRoleAssociation)
 	err := db.Model(userRoleAssoc).Where("user_id = ?", userID).Select()
 

@@ -59,3 +59,71 @@ services:
           - http
           - https
         strip_path: false
+
+  - name: createbooking-cms
+    protocol: http
+    url: http://createbooking-cms:5002
+    routes:
+      - name: make-booking
+        paths:
+          - /api/booking
+        methods:
+          - POST
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: cancel-booking
+        paths:
+          - /api/booking/:booking_id
+        methods:
+          - DELETE
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: get-booking
+        paths:
+          - /api/booking/:booking_id
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: list-bookings
+        paths:
+          - /api/booking
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: list-user-bookings
+        paths:
+          - /api/booking/user/:user_id
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: update-bookings
+        paths:
+          - /api/booking/:booking_id
+        methods:
+          - PUT
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+# plugins:
+#   - name: jwt
+#   - route:

@@ -49,7 +49,7 @@ func LoginUser(c *gin.Context, db *pg.DB, jwtAuthService *auth.JwtService) {
 
 	roleId, err := user_role_assoc_models.GetUserRoleID(db, user.UserID)
 
-	signedToken, err := jwtAuthService.TokenGenerate(loginPayload.Username, roleId)
+	signedToken, err := jwtAuthService.TokenGenerate(loginPayload.Username, roleId, user.TelegramHandle)
 
 	if err != nil {
 		log.Println(err)

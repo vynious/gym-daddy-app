@@ -166,6 +166,7 @@ def manage_class(id):
                     }
                 ), 404
         except Exception as e:
+            print(str(e))
             return jsonify(
                 {
                     "code": 500,
@@ -220,6 +221,7 @@ def get_schedule_for_specific_day(date):
             }
         ), 400
     except Exception as e:
+        
         return jsonify(
             {
                 "code": 500,

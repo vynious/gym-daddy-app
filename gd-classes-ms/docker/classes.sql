@@ -12,11 +12,10 @@ SET time_zone = "+00:00";
 --
 -- Database: `classes`
 --
-DROP DATABASE IF EXISTS classes;
-CREATE DATABASE IF NOT EXISTS `classes` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `classes`;
+DROP DATABASE IF EXISTS classes_db;
+CREATE DATABASE IF NOT EXISTS `classes_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-
+USE `classes_db`;
 
 DROP TABLE IF EXISTS classes;
 CREATE TABLE IF NOT EXISTS classes (

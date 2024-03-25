@@ -36,22 +36,28 @@ channel = grpc.insecure_channel(NOTIFICATION_GRPC_SERVER)
 notification_grpc_client = notification_pb2_grpc.NotificationServiceStub(channel)
 
 
-@app.route("/booking", methods=["POST"])
+@app.route("/api/booking", methods=["POST"])
 def create_booking():
+    print("start creating booking", flush=True)
+
     # Extract necessary info from the request
     user_id = request.json.get("user_id")
     class_id = request.json.get("class_id")
     res = requests.patch(
-        f"{FLASK_CLASS_SERVER}/classes/{int(class_id)}", json={"action": "book"}
+        f"http://{FLASK_CLASS_SERVER}/classes/{int(class_id)}", json={"action": "book"}
     )
 
     if res.status_code != 201:
+        print("checking for error", flush=True)
+        print(res.json(), flush=True)
         return jsonify({"message": "Failed to create booking", "error": str(res)}), 500
 
     # Create a new booking request message
     booking_request = booking_message_pb2.CreateBookingRequest(
         user_id=user_id, class_id=class_id
     )
+    
+    print("completed booking", flush=True)
 
     # Make a gRPC call to the server to create a booking
     try:
@@ -65,21 +71,10 @@ def create_booking():
 
     # Create a new notification request message
     try:
-        booking_id = response.booking.id
-        # Construct the user_ticket object required by CreateNotificationRequest
-        current_queue_number = (
-            123  # This should be replaced with the actual queue number
-        )
-        user_ticket = queue_pb2.Ticket(
-            user_id=user_id, queue_number=current_queue_number
-        )
-
         # Create a new notification request message
-
+        
         notification_request = notification_pb2.CreateNotificationRequest(
-            user_ticket=user_ticket,
-            notification_type="Booking-Confirmation",
-            
+            notification_type="Booking-Confirmation",   
         )
 
         notification_response = notification_grpc_client.CreateNotification(
@@ -104,7 +99,7 @@ def create_booking():
     )
 
 
-@app.route("/booking/<string:booking_id>", methods=["DELETE"])
+@app.route("/api/booking/<string:booking_id>", methods=["DELETE"])
 def cancel_booking(booking_id):
     booking_res,err = get_booking(booking_id=booking_id)
     if err == 500:
@@ -114,7 +109,7 @@ def cancel_booking(booking_id):
     class_id = booking_res["booking"]["class_id"]
 
     res = requests.patch(
-        f"{FLASK_CLASS_SERVER}/classes/{int(class_id)}", json={"action": "cancel"}
+        f"http://{FLASK_CLASS_SERVER}/classes/{int(class_id)}", json={"action": "cancel"}
     )
 
     if res.status_code != 201:
@@ -134,7 +129,7 @@ def cancel_booking(booking_id):
 
     return jsonify({"message": "Booking cancelled successfully"})
 
-@app.route("/booking/<string:booking_id>", methods=["GET"])
+@app.route("/api/booking/<string:booking_id>", methods=["GET"])
 def get_booking(booking_id):
     # Create a new get booking request message
     get_booking_request = booking_message_pb2.GetBookingRequest(id=booking_id)
@@ -160,7 +155,7 @@ def get_booking(booking_id):
     return jsonify(booking_info),200
 
 
-@app.route("/booking", methods=["GET"])
+@app.route("/api/booking", methods=["GET"])
 def list_bookings():
 
     # Create a new list bookings request message
@@ -189,7 +184,7 @@ def list_bookings():
     return jsonify({"bookings": bookings})
 
 
-@app.route("/booking/user/<string:user_id>", methods=["GET"])
+@app.route("/api/booking/user/<string:user_id>", methods=["GET"])
 def get_booking_by_user(user_id):
     # Create a new get booking by user request message
     get_booking_by_user_request = booking_message_pb2.GetBookingByUserRequest(
@@ -219,7 +214,7 @@ def get_booking_by_user(user_id):
     return jsonify({"bookings": bookings})
 
 
-@app.route("/booking/<string:booking_id>", methods=["PUT"])
+@app.route("/api/booking/<string:booking_id>", methods=["PUT"])
 def update_booking(booking_id):
     # Extract necessary info from the request
     class_id = request.json.get("class_id")

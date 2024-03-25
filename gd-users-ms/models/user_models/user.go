@@ -8,12 +8,13 @@ import (
 
 type User struct {
 	tableName  struct{}  `pg:"users"`
-	UserID     int       `pg:"user_id, pk"`
+	UserID     string       `pg:"user_id, pk"`
 	Username   string    `pg:"username, unique, notnull"`
 	Email      string    `pg:"email, unique, notnull"`
 	HashedPass string    `pg:"hashed_pass, notnull"`
 	FirstName  string    `pg:"first_name"`
 	LastName   string    `pg:"last_name"`
+	TelegramHandle string `pg:"telegram_handle, unique, notnull"`
 	CreatedAt  time.Time `pg:"created_at"`
 	ModifiedAt time.Time `pg:"modified_at"`
 }
@@ -39,4 +40,23 @@ func GetAllUsers(db *pg.DB) ([]*User, error) {
 		return nil, err
 	}
 	return allUsers, nil
+}
+
+func GetUserById(db *pg.DB, username string) (*User, error) {
+	user := new(User)
+	err := db.Model(user).Where("user_id = ?", username).Select()
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+
+func GetTelegramHandleByUsername(db *pg.DB, userId string) (string, error) {
+	user := new(User)
+	err := db.Model(user).Where("user_id = ?", userId).Select()
+	if err != nil {
+		return "", err
+	}
+	return user.TelegramHandle, nil
 }

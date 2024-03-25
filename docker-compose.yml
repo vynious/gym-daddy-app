@@ -116,7 +116,6 @@ services:
     networks:
       - gd-network
 
-
   join-queue-cms:
     image: "gd-join-queue-cms"
     ports:
@@ -124,76 +123,75 @@ services:
     environment:
       GPRC_SERVER_QUEUE: "queue-ms:3002"
       GPRC_SERVER_NOTIFICATION: "notification-ms:3000"
-      KAFKA_URL:  "kafka:9092"
-      KAFKA_TOPIC:  "logs"
+      KAFKA_URL: "kafka:9092"
+      KAFKA_TOPIC: "logs"
     depends_on:
       - queue-ms
       - notification-ms
     networks:
       - gd-network
 
-
   user-ms:
     image: "gd-users-ms"
     ports:
-        - "3005:3005"
-#    volumes:
-#        - ./gd-users-ms/db/migrations:/app/db/migrations
-#        - ./gd-users-ms/scripts:/app/scripts
+      - "3005:3005"
+    #    volumes:
+    #        - ./gd-users-ms/db/migrations:/app/db/migrations
+    #        - ./gd-users-ms/scripts:/app/scripts
     environment:
-        DB_PASSWORD: "postgres"
-        DB_USER: "postgres"
-        DB_HOST: "user-db"
-        DB_NAME: "users_ms"
+      DB_PASSWORD: "postgres"
+      DB_USER: "postgres"
+      DB_HOST: "user-db"
+      DB_NAME: "users_ms"
     depends_on:
-        - user-db
+      - user-db
     networks:
-        - gd-network
+      - gd-network
 
   user-db:
     image: "postgres"
     ports:
-        - "5433:5432"
+      - "5433:5432"
     environment:
-        POSTGRES_PASSWORD: "postgres"
-        POSTGRES_USER: "postgres"
-        POSTGRES_DB: "users_ms"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "users_ms"
     volumes:
-        - ./gd-users-ms/db:/docker-entrypoint-initdb.d
+      - ./gd-users-ms/db:/docker-entrypoint-initdb.d
     networks:
-        - gd-network
+      - gd-network
 
   gym-avail-ms:
     image: "gd-gym-avail-ms"
     ports:
-        - "3006:3006"
-#    volumes:
-#        - ./gd-avail-ms/db/migrations:/app/db/migrations
-#        - ./gd-avail-ms/scripts:/app/scripts
+      - "3006:3006"
+    #    volumes:
+    #        - ./gd-avail-ms/db/migrations:/app/db/migrations
+    #        - ./gd-avail-ms/scripts:/app/scripts
     environment:
-        DB_PASSWORD: "postgres"
-        DB_USER: "postgres"
-        DB_HOST: "gym-avail-db"
-        DB_NAME: "gym_avail_ms"
-        GRPC_SERVER_QUEUE: "queue-ms:3002"
-        GRPC_SERVER_NOTIFICATION: "notification-ms:3000"
+      DB_PASSWORD: "postgres"
+      DB_USER: "postgres"
+      DB_HOST: "gym-avail-db"
+      DB_NAME: "gym_avail_ms"
+      GRPC_SERVER_QUEUE: "queue-ms:3002"
+      GRPC_SERVER_NOTIFICATION: "notification-ms:3000"
     depends_on:
-        - gym-avail-db
+      - gym-avail-db
     networks:
-        - gd-network
+      - gd-network
 
   gym-avail-db:
     image: "postgres"
     ports:
-        - "5434:5432"
+      - "5434:5432"
     environment:
-        POSTGRES_PASSWORD: "postgres"
-        POSTGRES_USER: "postgres"
-        POSTGRES_DB: "gym_avail_ms"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "gym_avail_ms"
     volumes:
-        - ./gd-avail-ms/db:/docker-entrypoint-initdb.d
+      - ./gd-avail-ms/db:/docker-entrypoint-initdb.d
     networks:
-        - gd-network
+      - gd-network
 
   booking-ms:
     image: "gd-booking-ms"
@@ -222,6 +220,8 @@ services:
       - booking-ms
       - classes-ms
       - notification-ms
+    networks:
+      - gd-network
 
   booking-db:
     image: "postgres"
@@ -241,7 +241,7 @@ services:
     ports:
       - "5200:5200"
     environment:
-        dbURL: "mysql+mysqlconnector://is213@host.docker.internal:3306/classes"
+      dbURL: "mysql+mysqlconnector://root:rootpassword@classes-db:3306/classes_db"
     depends_on:
       - classes-db
     networks:
@@ -253,13 +253,14 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "rootpassword"
-      MYSQL_DATABASE: "classes_db"
+      MYSQL_DATABASE: "classes"
       MYSQL_USER: "user"
       MYSQL_PASSWORD: "password"
+    volumes:
+      - ./gd-classes-ms/docker:/docker-entrypoint-initdb.d
     networks:
       - gd-network
 
 networks:
   gd-network:
     driver: bridge
-

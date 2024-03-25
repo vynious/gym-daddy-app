@@ -16,105 +16,69 @@ type QueueHandler struct {
 
 func SpawnQueueHandler(lp *logger.LogProducer) *QueueHandler {
 	return &QueueHandler{
-		Logger: lp,
+		Logger: lp, // not in use...
 	}
 }
 
 func (qh *QueueHandler) JoinQueue(c *gin.Context) {
 
 	var requestBody struct {
-		UserId string `json:"user_Id"`
+		UserID string `json:"user_id"`
 	}
 
 	if err := c.BindJSON(&requestBody); err != nil {
-		//go func() {
-		//	if err := qh.Logger.SendLog(c, "error", err.Error()); err != nil {
-		//		log.Println(err.Error())
-		//	}
-		//}()
 		c.JSON(http.StatusBadRequest, utils.NewError(err))
 		return
 	}
 
-	userId := requestBody.UserId
+	userId := requestBody.UserID
 
 	if userId == "" {
 		log.Println("Error: no User ID provided")
-		//var err error
-		//err = errors.New("no user id")
-		//go func() {
-		//	if err := qh.Logger.SendLog(c, "error", err.Error()); err != nil {
-		//		log.Println(err.Error())
-		//	}
-		//}()
 		c.JSON(http.StatusBadRequest, utils.NewError(errors.New("no user id")))
 		return
 	}
 
+	// join queue 
 	ticket, err := rpc.GRPCJoinQueue(c, userId)
 
-	//go func() {
-	//	if err := qh.Logger.SendLog(c, "default", "created ticket"); err != nil {
-	//		log.Println(err.Error())
-	//	}
-	//}()
+	// send notification 
+	go rpc.GRPCSendNotification(c, nil, ticket, "Join-Queue")
 
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, utils.NewError(err))
-		//go func() {
-		//	if err := qh.Logger.SendLog(c, "error", err.Error()); err != nil {
-		//		log.Println(err.Error())
-		//	}
-		//}()
+
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{"data": ticket})
-	return
 }
 
 func (qh *QueueHandler) GetUpcomingTicketsInQueue(c *gin.Context) {
 	tickets, err := rpc.GRPCGetUpcomingTickets(c)
 
-	//go func() {
-	//	if err := qh.Logger.SendLog(c, "default", "get upcoming tickets"); err != nil {
-	//		log.Println(err.Error())
-	//	}
-	//}()
 
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, utils.NewError(err))
-		//go func() {
-		//	if err := qh.Logger.SendLog(c, "error", err.Error()); err != nil {
-		//		log.Println(err.Error())
-		//	}
-		//}()
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{"data": tickets})
-	return
 }
 
 func (qh *QueueHandler) RetrieveNextInQueue(c *gin.Context) {
 	tickets, err := rpc.GRPCGetNextInQueue(c)
 
-	//go func() {
-	//	if err := qh.Logger.SendLog(c, "default", "retrieved next in line"); err != nil {
-	//		log.Println(err.Error())
-	//	}
-	//}()
 
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, utils.NewError(err))
-		//go func() {
-		//	if err := qh.Logger.SendLog(c, "error", err.Error()); err != nil {
-		//		log.Println(err.Error())
-		//	}
-		//}()
+
 		return
 	}
+
+
 	c.JSON(http.StatusOK, gin.H{"data": tickets})
-	return
 }

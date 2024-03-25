@@ -3,15 +3,17 @@ package rpc
 import (
 	"context"
 	"fmt"
+	"log"
+	"sync"
+
 	"github.com/google/uuid"
 	"github.com/vynious/gym-daddy/gd-notification-ms/db"
 	"github.com/vynious/gym-daddy/gd-notification-ms/kafka"
 	"github.com/vynious/gym-daddy/gd-notification-ms/pb/proto_files/notification"
+	"github.com/vynious/gym-daddy/gd-notification-ms/util"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
-	"log"
-	"sync"
 )
 
 type Server struct {
@@ -44,18 +46,25 @@ func (c *Server) CreateNotification(ctx context.Context, req *notification.Creat
 	notificationProto.NotificationType = req.GetNotificationType()
 	notificationProto.CreatedAt = timestamppb.Now()
 
-	userTicket := req.GetUserTicket()
-	if userTicket == nil {
-		return nil, fmt.Errorf("missing ticket in request")
+	
+	telegramHandle, err := util.GetTelegramHandleFromUserMS(req.GetUserTicket().GetUserId())
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "get telegram handle: %v", err)
 	}
-	// todo: make call to get telegram_handle
-	notificationProto.TelegramHandle = "shawntyw" // default
+	
+	notificationProto.TelegramHandle = telegramHandle
 
 	switch req.GetNotificationType() {
 	case "Join-Queue":
+		userTicket := req.GetUserTicket()
+		if userTicket == nil {
+			return nil, fmt.Errorf("missing ticket in request")
+		}
 		notificationProto.Content = fmt.Sprintf("You have joined the queue! Your ticket number is %v", userTicket.QueueNumber)
 	case "Coming-Soon":
-		notificationProto.Content = fmt.Sprintf("It's almost your turn soon! Prepare to come down ~")
+		notificationProto.Content = fmt.Sprintln("It's almost your turn soon! Prepare to come down ~")
+	case "Booking-Confirmation":
+		notificationProto.Content = fmt.Sprintln("We would like to notify you that you've made a new class booking, please refer to your account find out more.")
 	}
 
 	errCh := make(chan error, 2)

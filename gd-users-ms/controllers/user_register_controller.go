@@ -18,6 +18,7 @@ type RegisterUserPayload struct {
 	Password  string `json:"password" binding:"required"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
+	TelegramHandle string `json:"telegram_handle"`
 }
 
 func RegisterUser(c *gin.Context, db *pg.DB) {
@@ -42,6 +43,7 @@ func RegisterUser(c *gin.Context, db *pg.DB) {
 		HashedPass: hashedPwd,
 		FirstName:  newUserPayload.FirstName,
 		LastName:   newUserPayload.LastName,
+		TelegramHandle: newUserPayload.TelegramHandle,
 		CreatedAt:  currentTime,
 		ModifiedAt: currentTime,
 	}

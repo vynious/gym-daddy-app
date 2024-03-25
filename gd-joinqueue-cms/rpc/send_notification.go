@@ -15,24 +15,30 @@ func GRPCSendNotification(ctx context.Context, currentNumber *int64, ticket *que
 	grpcServerNotification := os.Getenv("GRPC_SERVER_NOTIFICATION")
 	if grpcServerNotification == "" {
 		log.Println("missing .env url for notification grpc server")
+		return
 	}
 
-	ncc, err := grpc.Dial(grpcServerNotification, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// Establish a connection to the gRPC server
+	ncc, err := grpc.Dial(grpcServerNotification, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
 	if err != nil {
-		log.Println("failed to create grpc connection")
+		log.Printf("failed to create grpc connection: %v", err)
+		return
 	}
+	defer ncc.Close()
 
 	nClient := notification.NewNotificationServiceClient(ncc)
 
+	// Send a CreateNotification request
 	_, err = nClient.CreateNotification(ctx, &notification.CreateNotificationRequest{
-		CurrentQueueNumber: currentNumber,
 		UserTicket:         ticket,
+		CurrentQueueNumber: currentNumber,
 		NotificationType:   nType,
 	})
 
 	if err != nil {
-		log.Println(err.Error())
-		log.Println("failed to send notification")
+		log.Printf("failed to send notification: %v", err)
+		return
 	}
 
+	log.Println("Notification sent successfully")
 }

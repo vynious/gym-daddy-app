@@ -32,7 +32,7 @@ func GRPCJoinQueue(ctx context.Context, userId string) (*queue.Ticket, error) {
 	}
 	ticket = response.GetTicket()
 
-	go GRPCSendNotification(ctx, nil, ticket, "Join-Queue")
+	
 
 	return ticket, nil
 }
