@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import grpc
 import requests
 from os import environ
+
 # Import the generated protobuf code.
 from pb.booking import booking_service_pb2 as booking_pb2
 from pb.booking import booking_service_pb2_grpc as booking_pb2_grpc
@@ -23,7 +24,7 @@ from pb.queue import queue_message_pb2_grpc as queue_message_pb2_grpc
 
 app = Flask(__name__)
 
-FLASK_CLASS_SERVER =  environ.get("FLASK_CLASS_SERVER") or "http://localhost:5200"
+FLASK_CLASS_SERVER = environ.get("FLASK_CLASS_SERVER") or "http://localhost:5200"
 # Assuming the gRPC server is running on localhost:6000
 BOOKING_GRPC_SERVER = environ.get("BOOKING_GRPC_SERVER") or "localhost:6000"
 # Create a gRPC channel and client stub for the booking server
@@ -56,7 +57,7 @@ def create_booking():
     booking_request = booking_message_pb2.CreateBookingRequest(
         user_id=user_id, class_id=class_id
     )
-    
+
     print("completed booking", flush=True)
 
     # Make a gRPC call to the server to create a booking
@@ -74,8 +75,7 @@ def create_booking():
         # Create a new notification request message
 
         notification_request = notification_pb2.CreateNotificationRequest(
-            notification_type="Booking-Confirmation",
-            user_id=user_id
+            notification_type="Booking-Confirmation", user_id=user_id
         )
 
         notification_response = notification_grpc_client.CreateNotification(
@@ -83,8 +83,9 @@ def create_booking():
         )
 
         print(
-            f"Received response from notification gRPC server: {notification_response}"
-        ,flush=True)
+            f"Received response from notification gRPC server: {notification_response}",
+            flush=True,
+        )
     except grpc.RpcError as e:
         print(f"gRPC call failed: {e}", flush=True)
         return jsonify({"error": str(e)}), 500
@@ -102,7 +103,7 @@ def create_booking():
 
 @app.route("/api/booking/<string:booking_id>", methods=["DELETE"])
 def cancel_booking(booking_id):
-    booking_res,err = get_booking(booking_id=booking_id)
+    booking_res, err = get_booking(booking_id=booking_id)
     if err == 500:
         return jsonify({"message": "Failed to cancel booking", "error": str(err)}), 500
 
@@ -110,7 +111,8 @@ def cancel_booking(booking_id):
     class_id = booking_res["booking"]["class_id"]
 
     res = requests.patch(
-        f"http://{FLASK_CLASS_SERVER}/classes/{int(class_id)}", json={"action": "cancel"}
+        f"http://{FLASK_CLASS_SERVER}/classes/{int(class_id)}",
+        json={"action": "cancel"},
     )
 
     if res.status_code != 201:
@@ -130,6 +132,7 @@ def cancel_booking(booking_id):
 
     return jsonify({"message": "Booking cancelled successfully"})
 
+
 @app.route("/api/booking/<string:booking_id>", methods=["GET"])
 def get_booking(booking_id):
     # Create a new get booking request message
@@ -143,6 +146,14 @@ def get_booking(booking_id):
     except grpc.RpcError as e:
         print(f"gRPC call failed: {e}")
         return jsonify({"error": str(e)}), 500
+    class_response = requests.get(
+        f"{FLASK_CLASS_SERVER}/classes/{int(response.booking.class_id)}"
+    )
+    if class_response.status_code != 200:
+        return (
+            jsonify({"message": "Failed to get class", "error": str(class_response)}),
+            500,
+        )
 
     booking_info = {
         "booking": {
@@ -150,10 +161,11 @@ def get_booking(booking_id):
             "user_id": response.booking.user_id,
             "class_id": response.booking.class_id,
             "created_at": response.booking.created_at.ToJsonString(),
+            "class": class_response.json()["data"],
         }
     }
 
-    return jsonify(booking_info),200
+    return jsonify(booking_info), 200
 
 
 @app.route("/api/booking", methods=["GET"])
@@ -173,12 +185,16 @@ def list_bookings():
 
     bookings = []
     for booking in response.bookings:
+        current_class = requests.get(
+            f"{FLASK_CLASS_SERVER}/classes/{int(booking.class_id)}"
+        )
         bookings.append(
             {
                 "id": booking.id,
                 "user_id": booking.user_id,
                 "class_id": booking.class_id,
                 "created_at": booking.created_at.ToJsonString(),
+                "class": current_class.json()["data"],
             }
         )
 
@@ -203,12 +219,16 @@ def get_booking_by_user(user_id):
 
     bookings = []
     for booking in response.bookings:
+        current_class = requests.get(
+            f"{FLASK_CLASS_SERVER}/classes/{int(booking.class_id)}"
+        )
         bookings.append(
             {
                 "id": booking.id,
                 "user_id": booking.user_id,
                 "class_id": booking.class_id,
                 "created_at": booking.created_at.ToJsonString(),
+                "class": current_class.json()["data"],
             }
         )
 
@@ -233,7 +253,9 @@ def update_booking(booking_id):
     except grpc.RpcError as e:
         print(f"gRPC call failed: {e}")
         return jsonify({"error": str(e)}), 500
-
+    class_response = requests.get(
+        f"{FLASK_CLASS_SERVER}/classes/{int(response.booking.class_id)}"
+    )
     return jsonify(
         {
             "booking": {
@@ -241,9 +263,11 @@ def update_booking(booking_id):
                 "user_id": response.booking.user_id,
                 "class_id": response.booking.class_id,
                 "created_at": response.booking.created_at.ToJsonString(),
+                "class": class_response.json()["data"],
             }
         }
     )
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5002, debug=True)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5002, debug=True)
