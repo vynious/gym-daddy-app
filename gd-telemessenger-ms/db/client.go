@@ -66,6 +66,7 @@ func (r *Repository) CreateSubscription(th types.TelegramHandle, cid types.ChatI
 
 func (r *Repository) GetSubscription(th types.TelegramHandle) (types.ChatID, error) {
 	var user types.UserDocument
+	fmt.Printf("%v", th)
 	if err := r.mg.Database(dbname).Collection(collname).FindOne(context.TODO(), bson.D{
 		{"TelegramHandle", th},
 	}).Decode(&user); err != nil {

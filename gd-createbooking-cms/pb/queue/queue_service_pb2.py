@@ -12,7 +12,7 @@ from google.protobuf.internal import builder as _builder
 _sym_db = _symbol_database.Default()
 
 
-from pb.queue import queue_message_pb2 as queue_dot_queue__message__pb2
+from queue import queue_message_pb2 as queue_dot_queue__message__pb2
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x19queue/queue_service.proto\x12\x05queue\x1a\x19queue/queue_message.proto\"#\n\x10JoinQueueRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\"2\n\x11JoinQueueResponse\x12\x1d\n\x06ticket\x18\x01 \x01(\x0b\x32\r.queue.Ticket\"\x15\n\x13RetrieveNextRequest\"5\n\x14RetrieveNextResponse\x12\x1d\n\x06ticket\x18\x01 \x01(\x0b\x32\r.queue.Ticket\"-\n\x19GetUpcomingTicketsRequest\x12\x10\n\x08quantity\x18\x01 \x01(\x03\"<\n\x1aGetUpcomingTicketsResponse\x12\x1e\n\x07tickets\x18\x01 \x03(\x0b\x32\r.queue.Ticket2\xf8\x01\n\x0cQueueService\x12@\n\tJoinQueue\x12\x17.queue.JoinQueueRequest\x1a\x18.queue.JoinQueueResponse\"\x00\x12I\n\x0cRetrieveNext\x12\x1a.queue.RetrieveNextRequest\x1a\x1b.queue.RetrieveNextResponse\"\x00\x12[\n\x12GetUpcomingTickets\x12 .queue.GetUpcomingTicketsRequest\x1a!.queue.GetUpcomingTicketsResponse\"\x00\x42\x14Z\x12/proto_files/queueb\x06proto3')

@@ -72,9 +72,10 @@ def create_booking():
     # Create a new notification request message
     try:
         # Create a new notification request message
-        
+
         notification_request = notification_pb2.CreateNotificationRequest(
-            notification_type="Booking-Confirmation",   
+            notification_type="Booking-Confirmation",
+            user_id=user_id
         )
 
         notification_response = notification_grpc_client.CreateNotification(
@@ -83,9 +84,9 @@ def create_booking():
 
         print(
             f"Received response from notification gRPC server: {notification_response}"
-        )
+        ,flush=True)
     except grpc.RpcError as e:
-        print(f"gRPC call failed: {e}")
+        print(f"gRPC call failed: {e}", flush=True)
         return jsonify({"error": str(e)}), 500
 
     return (

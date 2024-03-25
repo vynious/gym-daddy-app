@@ -15,6 +15,7 @@ _sym_db = _symbol_database.Default()
 from pb.booking import booking_message_pb2 as booking_dot_booking__message__pb2
 
 
+
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1d\x62ooking/booking_service.proto\x12\x07\x62ooking\x1a\x1d\x62ooking/booking_message.proto2\xf9\x03\n\x0e\x42ookingService\x12P\n\rCreateBooking\x12\x1d.booking.CreateBookingRequest\x1a\x1e.booking.CreateBookingResponse\"\x00\x12M\n\x0cListBookings\x12\x1c.booking.ListBookingsRequest\x1a\x1d.booking.ListBookingsResponse\"\x00\x12G\n\nGetBooking\x12\x1a.booking.GetBookingRequest\x1a\x1b.booking.GetBookingResponse\"\x00\x12Y\n\x10GetBookingByUser\x12 .booking.GetBookingByUserRequest\x1a!.booking.GetBookingByUserResponse\"\x00\x12P\n\rUpdateBooking\x12\x1d.booking.UpdateBookingRequest\x1a\x1e.booking.UpdateBookingResponse\"\x00\x12P\n\rCancelBooking\x12\x1d.booking.CancelBookingRequest\x1a\x1e.booking.CancelBookingResponse\"\x00\x42\x16Z\x14/proto_files/bookingb\x06proto3')
 
 _globals = globals()

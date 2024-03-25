@@ -33,6 +33,7 @@ func GRPCSendNotification(ctx context.Context, currentNumber *int64, ticket *que
 		UserTicket:         ticket,
 		CurrentQueueNumber: currentNumber,
 		NotificationType:   nType,
+		UserId: ticket.GetUserId(),
 	})
 
 	if err != nil {

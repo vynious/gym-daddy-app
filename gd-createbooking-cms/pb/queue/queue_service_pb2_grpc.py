@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from pb.queue import queue_service_pb2 as queue_dot_queue__service__pb2
+from queue import queue_service_pb2 as queue_dot_queue__service__pb2
 
 
 class QueueServiceStub(object):

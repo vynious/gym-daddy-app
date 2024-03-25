@@ -49,16 +49,12 @@ func UpdateCurrentAvail(c *gin.Context, db *pg.DB) {
 
 	gymAvail := new(models.GymAvail)
 
+	
 	if reqBody.UpdateType == "increment" {
 		if err = gymAvail.IncrementCurrentAvailability(db, reqBody.Quantity); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		go func() {
-			if _, err := rpc.GRPCGetNextInQueue(c); err != nil {
-				log.Println(err.Error())
-			}
-		}()
 	} else if reqBody.UpdateType == "decrement" {
 		if err = gymAvail.DecrementCurrentAvailability(db, reqBody.Quantity); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -68,5 +64,15 @@ func UpdateCurrentAvail(c *gin.Context, db *pg.DB) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "provide update_type (increment/decrement)"})
 		return
 	}
+
+	go func() {
+		if _, err := rpc.GRPCGetNextInQueue(c); err != nil {
+			log.Println(err.Error())
+		}
+		if _, err := rpc.GRPCGetUpcomingTickets(c); err != nil {
+			log.Println(err.Error())
+		}
+	}()
+	
 	c.JSON(http.StatusCreated, gymAvail.CurrentAvail)
 }
