@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <NavigationBar></NavigationBar>
   <div class="login-container">
     <div class="form-section">
@@ -316,4 +316,11 @@ input {
   max-width: 100%;
   height: 55vh;
 }
+</style> -->
+
+<template>
+  hello
+</template>
+
+<style scoped>
 </style>
