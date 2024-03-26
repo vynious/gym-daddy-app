@@ -77,7 +77,7 @@ services:
   notification-ms:
     image: 'gd-notification-ms'
     ports:
-      - '3000:3000'
+      - '3000:3010'
     environment:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_USER: "postgres"
@@ -260,7 +260,55 @@ services:
       - ./gd-classes-ms/docker:/docker-entrypoint-initdb.d
     networks:
       - gd-network
+      
+
+
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.1
+    hostname: cadvisor
+    platform: linux/aarch64
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:ro"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+      - "/dev/disk/:/dev/disk:ro"
+    ports:
+      - "8080:8080"
+    networks:
+      - gd-network
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./gd-monitoring-infra/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - gd-network
+
+  grafana:
+    image: grafana/grafana
+    environment: 
+      GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: "true"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      GF_AUTH_DISABLE_SIGNOUT_MENU: "true"
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+    volumes:
+      - ./gd-monitoring-infra/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+      - "grafana-data:/var/lib/grafana"
+      - "./gd-monitoring-infra/dashboard.json:/var/lib/grafana/dashboards/dashboard.json"
+      - "./gd-monitoring-infra/default.yml:/etc/grafana/provisioning/dashboards/default.yml"
+    ports:
+      - "3010:3000"
+    networks:
+      - gd-network
 
 networks:
   gd-network:
     driver: bridge
+
+volumes:
+  grafana-data:

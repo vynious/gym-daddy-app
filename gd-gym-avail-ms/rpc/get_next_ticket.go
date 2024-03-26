@@ -35,7 +35,5 @@ func GRPCGetNextInQueue(ctx context.Context) (*queue.Ticket, error) {
 		return nil, fmt.Errorf("failed to get next ticket")
 	}
 
-	go GRPCSendNotification(ctx, nil, ticket, "Coming-Soon")
-
 	return ticket, nil
 }

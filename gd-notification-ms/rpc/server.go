@@ -31,7 +31,6 @@ func SpawnGrpcServer(repo *db.Repository, notifier *kafka.NotificationProducer) 
 
 func (c *Server) CreateNotification(ctx context.Context, req *notification.CreateNotificationRequest) (*notification.CreateNotificationResponse, error) {
 
-	fmt.Println("receiving create notification request")
 
 	var notificationProto notification.Notification
 
@@ -48,6 +47,7 @@ func (c *Server) CreateNotification(ctx context.Context, req *notification.Creat
 	notificationProto.NotificationType = req.GetNotificationType()
 	notificationProto.CreatedAt = timestamppb.Now()
 
+
 	telegramHandle, err := util.GetTelegramHandleFromUserMS(req.GetUserId())
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "get telegram handle: %v", err)
@@ -55,7 +55,6 @@ func (c *Server) CreateNotification(ctx context.Context, req *notification.Creat
 
 	notificationProto.TelegramHandle = telegramHandle
 
-	fmt.Printf("partial notification proto created %+v", &notificationProto)
 
 	switch req.GetNotificationType() {
 	case "Join-Queue":

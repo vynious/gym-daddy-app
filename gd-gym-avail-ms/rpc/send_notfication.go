@@ -26,6 +26,7 @@ func GRPCSendNotification(ctx context.Context, currentNumber *int64, ticket *que
 	nClient := notification.NewNotificationServiceClient(ncc)
 
 	_, err = nClient.CreateNotification(ctx, &notification.CreateNotificationRequest{
+		UserId: ticket.GetUserId(),
 		CurrentQueueNumber: currentNumber,
 		UserTicket:         ticket,
 		NotificationType:   nType,

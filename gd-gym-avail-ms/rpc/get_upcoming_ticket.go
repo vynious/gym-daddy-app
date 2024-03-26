@@ -32,8 +32,8 @@ func GRPCGetUpcomingTickets(ctx context.Context) ([]*queue.Ticket, error) {
 	}
 
 	go func() {
-		for _, ticket := range tickets {
-			currentNumber := tickets[0].GetQueueNumber()
+		for _, ticket := range response.GetTickets() {
+			currentNumber := ticket.GetQueueNumber()
 			GRPCSendNotification(ctx, &currentNumber, ticket, "Coming-Soon")
 		}
 	}()

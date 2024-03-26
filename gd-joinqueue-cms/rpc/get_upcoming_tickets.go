@@ -32,7 +32,7 @@ func GRPCGetUpcomingTickets(ctx context.Context) ([]*queue.Ticket, error) {
 
 	go func() {
 		for _, ticket := range tickets {
-			currentNumber := tickets[0].GetQueueNumber()
+			currentNumber := ticket.GetQueueNumber()
 			GRPCSendNotification(ctx, &currentNumber, ticket, "Coming-Soon")
 		}
 	}()

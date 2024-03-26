@@ -186,7 +186,7 @@ def list_bookings():
     bookings = []
     for booking in response.bookings:
         current_class = requests.get(
-            f"{FLASK_CLASS_SERVER}/classes/{int(booking.class_id)}"
+            f"http://{FLASK_CLASS_SERVER}/classes/{int(booking.class_id)}"
         )
         bookings.append(
             {
@@ -220,7 +220,7 @@ def get_booking_by_user(user_id):
     bookings = []
     for booking in response.bookings:
         current_class = requests.get(
-            f"{FLASK_CLASS_SERVER}/classes/{int(booking.class_id)}"
+            f"http://{FLASK_CLASS_SERVER}/classes/{int(booking.class_id)}"
         )
         bookings.append(
             {
@@ -254,7 +254,7 @@ def update_booking(booking_id):
         print(f"gRPC call failed: {e}")
         return jsonify({"error": str(e)}), 500
     class_response = requests.get(
-        f"{FLASK_CLASS_SERVER}/classes/{int(response.booking.class_id)}"
+        f"http://{FLASK_CLASS_SERVER}/classes/{int(response.booking.class_id)}"
     )
     return jsonify(
         {

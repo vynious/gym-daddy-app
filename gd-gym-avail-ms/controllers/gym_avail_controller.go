@@ -55,7 +55,11 @@ func UpdateCurrentAvail(c *gin.Context, db *pg.DB) {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+
 	} else if reqBody.UpdateType == "decrement" {
+		if _, err := rpc.GRPCGetNextInQueue(c); err != nil {
+			log.Println(err.Error())
+		}
 		if err = gymAvail.DecrementCurrentAvailability(db, reqBody.Quantity); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -65,14 +69,8 @@ func UpdateCurrentAvail(c *gin.Context, db *pg.DB) {
 		return
 	}
 
-	go func() {
-		if _, err := rpc.GRPCGetNextInQueue(c); err != nil {
-			log.Println(err.Error())
-		}
-		if _, err := rpc.GRPCGetUpcomingTickets(c); err != nil {
-			log.Println(err.Error())
-		}
-	}()
+	go rpc.GRPCGetUpcomingTickets(c)
+
 	
 	c.JSON(http.StatusCreated, gymAvail.CurrentAvail)
 }
