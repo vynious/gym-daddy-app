@@ -1,5 +1,5 @@
 <script>
-  import HomePageDesign from '@/components/HomePageDesign.vue'
+  import HomePageDesign from '../components/HomePageDesign.vue'
   export default {
     components: {
       HomePageDesign

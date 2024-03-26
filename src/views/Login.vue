@@ -1,5 +1,5 @@
 <template>
-  <NavigationBar></NavigationBar>
+  <!-- <NavigationBar></NavigationBar> -->
   <div class="login-container">
     <div class="form-section">
       <div class="form-container">

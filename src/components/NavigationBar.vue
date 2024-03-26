@@ -79,7 +79,7 @@
   </nav>
 </template>
 
-<script>
+<!-- <script>
 export default {
   name: "NavigationBar",
 };
@@ -146,4 +146,4 @@ export default {
     width: 75px;
     height: auto;
   }
-</style>
+</style> -->

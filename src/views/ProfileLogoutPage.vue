@@ -1,6 +1,6 @@
 <script>
-  import ProfileSidebar from '@/components/ProfileSidebar.vue'
-  import ProfileLogout from '@/components/ProfileLogout.vue'
+  import ProfileSidebar from '../components/ProfileSidebar.vue'
+  import ProfileLogout from '../components/ProfileLogout.vue'
   export default {
     components: {
       ProfileSidebar,

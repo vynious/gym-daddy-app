@@ -77,45 +77,21 @@ const router = createRouter({
             path: '/classSearch',
             name: 'classSearch',
             component: () => import('../views/ClassSearch.vue')
+          },
+          {
+            path: '/login',
+            name: 'login',
+            component: () => import('../views/Login.vue')
+          },
+          {
+            path: '/sign-up',
+            name: 'sign-up',
+            component: () => import('../views/SignUp.vue')
           }
     ]
 })
 
-export default router
-import { createRouter, createWebHistory } from 'vue-router';
-import Login from '../views/Login.vue';
-import SignUp from '../views/SignUp.vue';
 
 
-
-const routes = [
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-  },
-  {
-    path: '/sign-up',
-    name: 'SignUp',
-    component: SignUp,
-  },
-];
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    if (to.hash) {
-      return {
-        el: to.hash,
-        behavior: 'smooth',
-      };
-    } else if (savedPosition) {
-      return savedPosition;
-    } else {
-      return { top: 0 };
-    }
-  },
-});
 
 export default router;

@@ -1,6 +1,6 @@
 <script>
-  import ProfileSidebar from '@/components/ProfileSidebar.vue'
-  import ProfileRefer from '@/components/ProfileRefer.vue'
+  import ProfileSidebar from '../components/ProfileSidebar.vue'
+  import ProfileRefer from '../components/ProfileRefer.vue'
   export default {
     components: {
       ProfileSidebar,

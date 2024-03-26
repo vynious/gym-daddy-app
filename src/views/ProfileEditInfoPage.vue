@@ -1,6 +1,6 @@
 <script>
-  import ProfileSidebar from '@/components/ProfileSidebar.vue'
-  import ProfileEditInfo from '@/components/ProfileEditInfo.vue'
+  import ProfileSidebar from '../components/ProfileSidebar.vue'
+  import ProfileEditInfo from '../components/ProfileEditInfo.vue'
   export default {
     components: {
       ProfileSidebar,
