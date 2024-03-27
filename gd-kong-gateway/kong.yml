@@ -124,6 +124,60 @@ services:
           - https
         strip_path: false
 
+  - name: user-ms
+    protocol: http
+    url: http://user-ms:3005
+    routes:
+      - name: register-user
+        paths:
+          - /api/users/register
+        methods:
+          - POST
+        protocols:
+          - http
+          - https
+        strip_path: false
+  
+      - name: login-user
+        paths:
+          - /api/users/login
+        methods:
+          - POST
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: get-user
+        paths: 
+          - /api/users/user
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      - name: get-telegram-handle
+        paths: 
+          - /api/users/telegram
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      
+      - name: validate-jwt
+        paths: 
+          - /api/users/validatejwt
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
 # plugins:
 #   - name: jwt
 #   - route:
