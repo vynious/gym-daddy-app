@@ -78,6 +78,7 @@ services:
     image: 'gd-notification-ms'
     ports:
       - '3000:3010'
+      - "9101:9101"
     environment:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_USER: "postgres"
@@ -94,6 +95,7 @@ services:
     image: "gd-telemessenger-ms"
     ports:
       - "3001:3001"
+      - "9102:9102"
     environment:
       TELEGRAM_BOT_KEY: '6440570082:AAEydONrrATMun4ccOeCDcTe6YyShNVq_zs'
       MONGO_CONN_URI: 'mongodb://mongo-store:27017'
@@ -109,6 +111,7 @@ services:
     image: "gd-queue-ms"
     ports:
       - "3002:3002"
+      - "9100:9100"
     environment:
       REDIS_URL: "redis://queue-db:6379"
     depends_on:
@@ -120,6 +123,7 @@ services:
     image: "gd-join-queue-cms"
     ports:
       - "3003:3003"
+
     environment:
       GPRC_SERVER_QUEUE: "queue-ms:3002"
       GPRC_SERVER_NOTIFICATION: "notification-ms:3000"
@@ -135,6 +139,7 @@ services:
     image: "gd-users-ms"
     ports:
       - "3005:3005"
+
     #    volumes:
     #        - ./gd-users-ms/db/migrations:/app/db/migrations
     #        - ./gd-users-ms/scripts:/app/scripts
@@ -197,6 +202,7 @@ services:
     image: "gd-booking-ms"
     ports:
       - "6000:6000"
+      - "9103:9103"
     environment:
       POSTGRES_HOST: "booking-db"
       POSTGRES_DB: "gd_booking_ms"
@@ -297,7 +303,7 @@ services:
       GF_AUTH_DISABLE_SIGNOUT_MENU: "true"
       GF_AUTH_DISABLE_LOGIN_FORM: "true"
     volumes:
-      - ./gd-monitoring-infra/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+      - "./gd-monitoring-infra/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml"
       - "grafana-data:/var/lib/grafana"
       - "./gd-monitoring-infra/dashboard.json:/var/lib/grafana/dashboards/dashboard.json"
       - "./gd-monitoring-infra/default.yml:/etc/grafana/provisioning/dashboards/default.yml"

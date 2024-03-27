@@ -7,6 +7,7 @@ import (
 	"github.com/joho/godotenv"
 
 	"github.com/ljlimjk10/users-ms/auth"
+
 	users_controllers "github.com/ljlimjk10/users-ms/controllers"
 	"github.com/ljlimjk10/users-ms/db"
 )
@@ -19,6 +20,8 @@ func main() {
 	db := db.InitDBConnection()
 	jwtAuthService := auth.JWTAuthService()
 	router := gin.Default()
+
+
 	users := router.Group("/api/users")
 	{
 		users.POST("/register", func(c *gin.Context) {

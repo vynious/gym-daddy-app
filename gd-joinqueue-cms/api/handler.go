@@ -55,17 +55,14 @@ func (qh *QueueHandler) JoinQueue(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": ticket})
 }
 
-func (qh *QueueHandler) GetUpcomingTicketsInQueue(c *gin.Context) {
-	tickets, err := rpc.GRPCGetUpcomingTickets(c)
-
-
+func (qh *QueueHandler) GetCurrentQueueNumber(c *gin.Context) {
+	tickets, err := rpc.GRPCGetUpcomingTickets(c, false)
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, utils.NewError(err))
 		return
 	}
-
-	c.JSON(http.StatusOK, gin.H{"data": tickets})
+	c.JSON(http.StatusOK, gin.H{"data": tickets[0]})
 }
 
 func (qh *QueueHandler) RetrieveNextInQueue(c *gin.Context) {
@@ -82,3 +79,4 @@ func (qh *QueueHandler) RetrieveNextInQueue(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": tickets})
 }
+

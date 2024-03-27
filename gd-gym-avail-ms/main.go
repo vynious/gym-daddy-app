@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/ljlimjk10/gym-avail-ms/controllers"
 	"github.com/ljlimjk10/gym-avail-ms/db"
@@ -17,6 +18,7 @@ func main() {
 	}
 	dbc := db.InitDBConnection()
 	router := gin.Default()
+	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	gym := router.Group("/api/gym")
 	{
 		gym.GET("/avail", func(c *gin.Context) {

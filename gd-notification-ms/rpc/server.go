@@ -67,6 +67,9 @@ func (c *Server) CreateNotification(ctx context.Context, req *notification.Creat
 		notificationProto.Content = fmt.Sprintln("It's almost your turn soon! Prepare to come down ~")
 	case "Booking-Confirmation":
 		notificationProto.Content = fmt.Sprintln("We would like to notify you that you've made a new class booking, please refer to your account find out more.")
+	case "New-Class":
+		// todo: send to all subscribers ??
+		notificationProto.Content = fmt.Sprintln("We have an upcoming class! Open our app to find out more.")
 	}
 
 	errCh := make(chan error, 2)

@@ -1,10 +1,12 @@
 package api
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/vynious/gd-joinqueue-cms/logger"
-	"log"
 )
 
 type Server struct {
@@ -23,13 +25,16 @@ func SpawnServer() *Server {
 }
 
 func (s *Server) MountHandlers() {
+	s.Router.GET("/metrics", gin.WrapH(promhttp.Handler()))
+
 	api := s.Router.Group("/api/queue")
 
 	api.Use(s.GenerateRequestID)
 
 	api.POST("/join", s.qh.JoinQueue)
-	api.GET("/upcoming", s.qh.GetUpcomingTicketsInQueue)
+	api.GET("/upcoming", s.qh.GetCurrentQueueNumber)
 	api.GET("/next", s.qh.RetrieveNextInQueue)
+
 }
 
 func (s *Server) GenerateRequestID(c *gin.Context) {

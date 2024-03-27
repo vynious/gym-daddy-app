@@ -6,6 +6,9 @@ import (
 	"github.com/vynious/gd-telemessenger-ms/bot"
 	"github.com/vynious/gd-telemessenger-ms/db"
 	"github.com/vynious/gd-telemessenger-ms/kafka"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"net/http"
+
 	"log"
 	"os"
 	"os/signal"
@@ -44,6 +47,14 @@ func main() {
 	go telegramBot.Start()
 	go sub.Start()
 
+	    // Start HTTP server for Prometheus metrics
+    http.Handle("/metrics", promhttp.Handler())
+    metricsPort := ":9102"
+    log.Printf("Prometheus metrics server listening at %v", metricsPort)
+    if err := http.ListenAndServe(metricsPort, nil); err != nil {
+        log.Fatalf("failed to start Prometheus metrics server: %v", err)
+    }
+
 	// Block main goroutine until an OS signal is received
 	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, os.Interrupt, syscall.SIGTERM)
@@ -51,7 +62,11 @@ func main() {
 
 	fmt.Println("Termination signal received, shutting down.")
 
+
 	// Clean up resources
 	sub.CloseConnections()
+
+
+	
 
 }

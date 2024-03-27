@@ -9,7 +9,9 @@ import (
 	"os"
 )
 
-func GRPCGetUpcomingTickets(ctx context.Context) ([]*queue.Ticket, error) {
+
+
+func GRPCGetUpcomingTickets(ctx context.Context, sendNotification bool) ([]*queue.Ticket, error) {
 
 	var tickets []*queue.Ticket
 	grpcServerQueue := os.Getenv("GRPC_SERVER_QUEUE")
@@ -30,12 +32,15 @@ func GRPCGetUpcomingTickets(ctx context.Context) ([]*queue.Ticket, error) {
 		return nil, fmt.Errorf("failed to get upcoming")
 	}
 
-	go func() {
+	if sendNotification {
+		go func() {
 		for _, ticket := range tickets {
 			currentNumber := ticket.GetQueueNumber()
 			GRPCSendNotification(ctx, &currentNumber, ticket, "Coming-Soon")
-		}
-	}()
+			}
+		}()
+	}
+	
 
 	tickets = response.GetTickets()
 	return tickets, nil

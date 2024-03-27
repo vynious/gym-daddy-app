@@ -1,13 +1,53 @@
 global:
   scrape_interval: 15s #Scrape interval to every 15 seconds.
   evaluation_interval: 15s #Evaluate rules every 15 seconds.
-  
+
+
 scrape_configs:
   - job_name: "prometheus"
-    # metrics_path defaults to '/metrics'
     static_configs:
       - targets: ["prometheus:9090"]
 
   - job_name: "cadvisor"
     static_configs:
       - targets: ["cadvisor:8080"]
+
+  - job_name: "kong"
+    static_configs:
+      - targets: ["kong:8001"]
+
+  - job_name: "notification-ms"
+    static_configs:
+      - targets: ["notification-ms:9101"]
+
+  - job_name: "telemessenger-ms"
+    static_configs:
+      - targets: ["telemessenger-ms:9102"]
+
+  - job_name: "queue-ms"
+    static_configs:
+      - targets: ["queue-ms:9100"]
+
+  - job_name: "join-queue-cms"
+    static_configs:
+      - targets: ["join-queue-cms:3003"]
+
+  - job_name: "user-ms"
+    static_configs:
+      - targets: ["user-ms:3005"]
+
+  - job_name: "gym-avail-ms"
+    static_configs:
+      - targets: ["gym-avail-ms:3006"]
+
+  - job_name: "booking-ms"
+    static_configs:
+      - targets: ["booking-ms:9103"]
+
+  # - job_name: "createbooking-cms"
+  #   static_configs:
+  #     - targets: ["createbooking-cms:5002"]
+
+  # - job_name: "classes-ms"
+  #   static_configs:
+  #     - targets: ["classes-ms:5200"]
