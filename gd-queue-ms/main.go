@@ -52,3 +52,4 @@ func main() {
         log.Fatalf("failed to start Prometheus metrics server: %v", err)
     }
 }
+

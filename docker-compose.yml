@@ -218,7 +218,7 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "gym_avail_ms"
     volumes:
-      - ./gd-avail-ms/db:/docker-entrypoint-initdb.d
+      - ./gd-gym-avail-ms/db:/docker-entrypoint-initdb.d
     restart: always
 
     networks:
