@@ -15,6 +15,8 @@ services:
       KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
       KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
       KONG_PROXY_LISTEN: 0.0.0.0:8000, 0.0.0.0:8443 ssl, 0.0.0.0:9080 http2, 0.0.0.0:9081 http2 ssl
+    restart: always
+
     ports:
       - "8001:8001"
       - "8444:8444"
@@ -29,6 +31,8 @@ services:
       - '2181:2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    restart: always
+
     networks:
       - gd-network
 
@@ -45,6 +49,8 @@ services:
       - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
     depends_on:
       - zookeeper
+    restart: always
+
     networks:
       - gd-network
 
@@ -57,6 +63,8 @@ services:
       POSTGRES_USER: "postgres"
     volumes:
       - ./gd-notification-ms/db:/docker-entrypoint-initdb.d
+    restart: always
+
     networks:
       - gd-network
 
@@ -64,6 +72,8 @@ services:
     image: "redis"
     ports:
       - "6379:6379"
+    restart: always
+
     networks:
       - gd-network
 
@@ -71,6 +81,8 @@ services:
     image: "mongo"
     ports:
       - "27017:27017"
+    restart: always
+
     networks:
       - gd-network
 
@@ -86,6 +98,8 @@ services:
       POSTGRES_DBNAME: "gd-notification-ms"
       KAFKA_URL: "kafka:9092"
       KAFKA_TOPIC: "notification"
+    restart: always
+
     depends_on:
       - notification-db
     networks:
@@ -102,6 +116,8 @@ services:
       MONGO_DB_NAME: 'users'
       MONGO_COLL_NAME: 'telegram_subscribers'
       KAFKA_URL: "kafka:9092"
+    restart: always
+
     depends_on:
       - mongo-store
     networks:
@@ -114,6 +130,8 @@ services:
       - "9100:9100"
     environment:
       REDIS_URL: "redis://queue-db:6379"
+    restart: always
+
     depends_on:
       - queue-db
     networks:
@@ -123,6 +141,7 @@ services:
     image: "gd-join-queue-cms"
     ports:
       - "3003:3003"
+    restart: always
 
     environment:
       GPRC_SERVER_QUEUE: "queue-ms:3002"
@@ -139,6 +158,7 @@ services:
     image: "gd-users-ms"
     ports:
       - "3005:3005"
+    restart: always
 
     #    volumes:
     #        - ./gd-users-ms/db/migrations:/app/db/migrations
@@ -163,6 +183,8 @@ services:
       POSTGRES_DB: "users_ms"
     volumes:
       - ./gd-users-ms/db:/docker-entrypoint-initdb.d
+    restart: always
+
     networks:
       - gd-network
 
@@ -182,6 +204,8 @@ services:
       GRPC_SERVER_NOTIFICATION: "notification-ms:3000"
     depends_on:
       - gym-avail-db
+    restart: always
+
     networks:
       - gd-network
 
@@ -194,7 +218,9 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_DB: "gym_avail_ms"
     volumes:
-      - ./gd-avail-ms/db:/docker-entrypoint-initdb.d
+      - ./gd-gym-avail-ms/db:/docker-entrypoint-initdb.d
+    restart: always
+
     networks:
       - gd-network
 
@@ -211,6 +237,8 @@ services:
     command: [ "postgres", "-c", "shared_preload_libraries=uuid-ossp" ]
     depends_on:
       - booking-db
+    restart: always
+
     networks:
       - gd-network
 
@@ -226,6 +254,8 @@ services:
       - booking-ms
       - classes-ms
       - notification-ms
+    restart: always
+
     networks:
       - gd-network
 
@@ -239,6 +269,8 @@ services:
       POSTGRES_DB: "gd_booking_ms"
     volumes:
       - ./gd-booking-ms/db:/docker-entrypoint-initdb.d
+    restart: always
+
     networks:
       - gd-network
 
@@ -250,6 +282,8 @@ services:
       dbURL: "mysql+mysqlconnector://root:rootpassword@classes-db:3306/classes_db"
     depends_on:
       - classes-db
+    restart: always
+
     networks:
       - gd-network
 
@@ -264,6 +298,8 @@ services:
       MYSQL_PASSWORD: "password"
     volumes:
       - ./gd-classes-ms/docker:/docker-entrypoint-initdb.d
+    restart: always
+
     networks:
       - gd-network
       

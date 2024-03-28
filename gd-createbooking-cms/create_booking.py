@@ -37,7 +37,26 @@ channel = grpc.insecure_channel(NOTIFICATION_GRPC_SERVER)
 notification_grpc_client = notification_pb2_grpc.NotificationServiceStub(channel)
 
 
+def authenticate(f):
+    def wrapper(*args, **kwargs):
+        token = request.headers.get('Authorisation')
+        if not token:
+            return jsonify({"error": "Missing Authorisation header"}), 401
+
+        validate_jwt_url = "http://user-ms:3005/api/users/validatejwt"
+        headers = {"Authorisation": token}
+        response = requests.get(validate_jwt_url, headers=headers)
+
+        if response.status_code != 200:
+            return jsonify({"error": "Unauthorised"}), 401
+
+        return f(*args, **kwargs)
+    wrapper.__name__ = f.__name__
+    return wrapper
+
+
 @app.route("/api/booking", methods=["POST"])
+@authenticate
 def create_booking():
     print("start creating booking", flush=True)
 
@@ -102,6 +121,7 @@ def create_booking():
 
 
 @app.route("/api/booking/<string:booking_id>", methods=["DELETE"])
+@authenticate
 def cancel_booking(booking_id):
     booking_res, err = get_booking(booking_id=booking_id)
     if err == 500:
@@ -134,6 +154,7 @@ def cancel_booking(booking_id):
 
 
 @app.route("/api/booking/<string:booking_id>", methods=["GET"])
+@authenticate
 def get_booking(booking_id):
     # Create a new get booking request message
     get_booking_request = booking_message_pb2.GetBookingRequest(id=booking_id)
@@ -169,6 +190,7 @@ def get_booking(booking_id):
 
 
 @app.route("/api/booking", methods=["GET"])
+@authenticate
 def list_bookings():
 
     # Create a new list bookings request message
@@ -202,6 +224,7 @@ def list_bookings():
 
 
 @app.route("/api/booking/user/<string:user_id>", methods=["GET"])
+@authenticate
 def get_booking_by_user(user_id):
     # Create a new get booking by user request message
     get_booking_by_user_request = booking_message_pb2.GetBookingByUserRequest(
@@ -236,6 +259,7 @@ def get_booking_by_user(user_id):
 
 
 @app.route("/api/booking/<string:booking_id>", methods=["PUT"])
+@authenticate
 def update_booking(booking_id):
     # Extract necessary info from the request
     class_id = request.json.get("class_id")

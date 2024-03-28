@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/ljlimjk10/users-ms/auth"
 	"github.com/ljlimjk10/users-ms/models/user_models"
 	"github.com/ljlimjk10/users-ms/models/user_role_assoc_models"
@@ -37,7 +38,11 @@ func RegisterUser(c *gin.Context, db *pg.DB) {
 
 	currentTime := time.Now()
 
+
+	
+
 	newUser := &user_models.User{
+		UserID:  	uuid.New().String(),
 		Username:   newUserPayload.Username,
 		Email:      newUserPayload.Email,
 		HashedPass: hashedPwd,
