@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY . .
 
-COPY .env .
+# COPY .env .
 
 RUN go build -o main main.go
 
