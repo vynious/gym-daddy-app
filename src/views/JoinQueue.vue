@@ -117,13 +117,12 @@
             </div>
 
             <!-- Generation of QR code after person enters gym-->
-            <div class="card-body m-auto" v-if="isTurn && showQR">
+            <div class="card-body m-auto" v-else-if="isTurn && showQR">
                 <div class="card-title header">Checkout QR Code</div>
                 <div class="qr-modal-body">
-                    <img :src="qrCodeUrl" alt="QR Code">
-                    <p>Remember to scan this QR code to sign out after exiting the gym. Thank you!</p>
+                    <img :src="QRcodeURL" height="300px" alt="QR Code">
                 </div>
-                <!-- <div class="card-body wording">Remember to scan this QR code to sign out after exiting the gym. Thank you!</div> -->
+                <div class="card-body" style="font-size: 30px;">Remember to scan this QR code to sign out after exiting the gym. Thank you!</div>
             </div>
 
             <!-- Waiting in line -->
@@ -159,17 +158,17 @@
     export default {
         data() {
             return {
-                currentQueue: 29,  // numerator
+                currentQueue: 35,  // numerator
                 userQueue: 36,  // denominator (100%)
                 progressBar: "0%",
                 isTurn: false,
                 showQR: false,
-                QRcodeURL: ""
+                QRcodeURL: "https://www.google.com/" // URL here too
             };
         },
         created() {
             // call backend here
-            this.fetchQueueData();
+            // this.fetchQueueData();
 
             this.callQueueNo();
 
