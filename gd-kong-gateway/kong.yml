@@ -158,6 +158,16 @@ services:
           - https
         strip_path: false
 
+      - name: get-all-users
+        paths: 
+          - /api/users/allusers
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      
       - name: get-telegram-handle
         paths: 
           - /api/users/telegram
