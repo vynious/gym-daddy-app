@@ -16,3 +16,6 @@
 [submodule "gd-createbooking-cms/proto"]
 	path = gd-createbooking-cms/proto
 	url = https://github.com/vynious/gd-protorepo.git
+[submodule "gd-createclass-cms/proto"]
+	path = proto
+	url = https://github.com/vynious/gd-protorepo.git
