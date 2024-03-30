@@ -30,16 +30,17 @@ func main() {
 		users.POST("/login", func(c *gin.Context) {
 			users_controllers.LoginUser(c, db.DB, jwtAuthService)
 		})
-		users.GET("/allusers", jwtAuthService.JwtAuthMiddleware(), func(c *gin.Context) {
+		users.GET("/allusers", jwtAuthService.JwtAuthMiddlewareAdmin(), func(c *gin.Context) {
 			users_controllers.GetAllUsers(c, db.DB)
 		})
-		users.GET("/user", jwtAuthService.JwtAuthMiddleware(), func(c *gin.Context) {
+		users.GET("/user", jwtAuthService.JwtAuthMiddlewareDefault(), func(c *gin.Context) {
 			users_controllers.GetUser(c, db.DB)
 		})
 		users.GET("/telegram", func(c *gin.Context) {
 			users_controllers.GetTelegramHandle(c, db.DB)
 		})
-		users.GET("/validatejwt", jwtAuthService.JwtAuthMiddleware())
+		users.GET("/validatejwt/admin", jwtAuthService.JwtAuthMiddlewareAdmin())
+		users.GET("/validatejwt/default", jwtAuthService.JwtAuthMiddlewareDefault())
 	}
 
 	router.Run("0.0.0.0:3005")

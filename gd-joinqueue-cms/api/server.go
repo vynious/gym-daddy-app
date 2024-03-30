@@ -31,10 +31,11 @@ func (s *Server) MountHandlers() {
 	api := s.Router.Group("/api/queue")
 
 	api.Use(s.GenerateRequestID)
-	api.Use(s.Authenticate)
-	api.POST("/join", s.qh.JoinQueue)
-	api.GET("/upcoming", s.qh.GetCurrentQueueNumber)
-	api.GET("/next", s.qh.RetrieveNextInQueue)
+
+	
+	api.POST("/join",s.AuthenticateDefault, s.qh.JoinQueue)
+	api.GET("/upcoming",s.AuthenticateDefault, s.qh.GetCurrentQueueNumber)
+	api.GET("/next", s.AuthenticateAdmin ,s.qh.RetrieveNextInQueue)
 
 }
 
@@ -47,10 +48,10 @@ func (s *Server) GenerateRequestID(c *gin.Context) {
 	c.Next()
 }
 
-func (s *Server) Authenticate(c *gin.Context) {
+func (s *Server) AuthenticateDefault(c *gin.Context) {
 	log.Println("authenticating user...")
 
-	req, err := http.NewRequestWithContext(c, "GET", "http://user-ms:3005/api/users/validatejwt", nil)
+	req, err := http.NewRequestWithContext(c, "GET", "http://user-ms:3005/api/users/validatejwt/default", nil)
 	if err != nil {
 		c.String(http.StatusInternalServerError, "try again later.")
 		c.Abort()
@@ -71,6 +72,51 @@ func (s *Server) Authenticate(c *gin.Context) {
 	resp, err := client.Do(req)
 	if err != nil {
 		c.String(http.StatusInternalServerError, "try again later.")
+		c.Abort()
+		return
+	}
+
+	defer resp.Body.Close()
+
+	log.Printf("res %+v", resp)
+	if resp.Status == http.StatusText(http.StatusUnauthorized) {
+		c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+		c.Abort()
+		return
+	}
+	c.Next()
+}
+
+
+func (s *Server) AuthenticateAdmin(c *gin.Context) {
+	log.Println("authenticating user...")
+
+	req, err := http.NewRequestWithContext(c, "GET", "http://user-ms:3005/api/users/validatejwt/admin", nil)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "try again later.")
+		c.Abort()
+		return
+	}
+
+	// extract the "Bearer XXXX" and set as header
+	token := c.GetHeader("Authorisation")
+	if token == "" {
+		c.String(http.StatusBadRequest, "missing auth token please login.")
+		c.Abort()
+		return
+	}
+
+	req.Header.Set("Authorisation", token)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "try again later.")
+		c.Abort()
+		return
+	}
+	if resp.StatusCode == 401 {
+		c.String(http.StatusUnauthorized, "only admin")
 		c.Abort()
 		return
 	}

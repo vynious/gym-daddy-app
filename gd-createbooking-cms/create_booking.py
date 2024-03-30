@@ -43,7 +43,7 @@ def authenticate(f):
         if not token:
             return jsonify({"error": "Missing Authorisation header"}), 401
 
-        validate_jwt_url = "http://user-ms:3005/api/users/validatejwt"
+        validate_jwt_url = "http://user-ms:3005/api/users/validatejwt/default"
         headers = {"Authorisation": token}
         response = requests.get(validate_jwt_url, headers=headers)
 

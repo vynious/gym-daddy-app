@@ -80,11 +80,55 @@ func (service *JwtService) TokenValidate(c *gin.Context) error {
 	}
 }
 
-func (service *JwtService) JwtAuthMiddleware() gin.HandlerFunc {
+func (service *JwtService) JwtAuthMiddlewareDefault() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		err := service.TokenValidate(c)
 		if err != nil {
 			c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+			c.Abort()
+			return
+		}
+		c.Next()
+	}
+}
+
+
+func DecodeToken(c *gin.Context) (*authCustomClaims, error) {
+	tokenString := ExtractToken(c)
+	privateKey := os.Getenv("PRIVATE_KEY") // Ensure the private key is available
+	token, err := jwt.ParseWithClaims(tokenString, &authCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte(privateKey), nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	if claims, ok := token.Claims.(*authCustomClaims); ok && token.Valid {
+		if claims.RoleID != 2 {
+			return nil, fmt.Errorf("only admin can access")
+		}
+		return claims, nil
+	} else {
+		return nil, fmt.Errorf("invalid token or claims")
+	}
+}
+
+
+func (service *JwtService) JwtAuthMiddlewareAdmin() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		err := service.TokenValidate(c)
+		if err != nil {
+			c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+			c.Abort()
+			return
+		}
+		// check admin
+		if _,err := DecodeToken(c); err != nil {
+			c.String(http.StatusUnauthorized, err.Error())
 			c.Abort()
 			return
 		}

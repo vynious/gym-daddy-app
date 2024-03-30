@@ -168,6 +168,8 @@ services:
       DB_USER: "postgres"
       DB_HOST: "user-db"
       DB_NAME: "users_ms"
+      PRIVATE_KEY: "bCBwLyl2EZph0O4CxRqbaHCN1uNngvhIP8jcJIwaUvA="
+      JWT_EXPIRATION_TIME: 1
     depends_on:
       - user-db
     networks:
@@ -288,20 +290,20 @@ services:
     networks:
       - gd-network
 
-  createclass-cms:
-    image: "gd-createclass-cms"
-    ports:
-      - "5001:5001"
-    environment:
-      FLASK_CLASS_SERVER: "classes-ms:5200"
-      NOTIFICATION_GRPC_SERVER: "notification-ms:3000"
-      REST_USER_SERVER: "user-ms:3005"
-    depends_on:
-      - classes-ms
-    restart: always
+  # createclass-cms:
+  #   image: "gd-createclass-cms"
+  #   ports:
+  #     - "5001:5001"
+  #   environment:
+  #     FLASK_CLASS_SERVER: "classes-ms:5200"
+  #     NOTIFICATION_GRPC_SERVER: "notification-ms:3000"
+  #     REST_USER_SERVER: "user-ms:3005"
+  #   depends_on:
+  #     - classes-ms
+  #   restart: always
 
-    networks:
-      - gd-network
+  #   networks:
+  #     - gd-network
 
   classes-db:
     image: "mysql"

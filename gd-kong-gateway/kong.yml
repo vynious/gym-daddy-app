@@ -178,9 +178,20 @@ services:
           - https
         strip_path: false
       
-      - name: validate-jwt
+      - name: validate-jwt-default
         paths: 
-          - /api/users/validatejwt
+          - /api/users/validatejwt/default
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+      
+      - name: validate-jwt-admin
+        paths: 
+          - /api/users/validatejwt/admin
         methods:
           - GET
         protocols:
