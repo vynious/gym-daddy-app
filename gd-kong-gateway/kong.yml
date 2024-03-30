@@ -60,6 +60,20 @@ services:
           - https
         strip_path: false
 
+  - name: createclass-cms
+    protocol: http
+    url: http://createclass-cms:5001
+    routes:
+      - name: create-class
+        paths:
+          - /api/class
+        methods:
+          - POST
+        protocols:
+          - http
+          - https
+        strip_path: false
+
   - name: createbooking-cms
     protocol: http
     url: http://createbooking-cms:5002
@@ -158,6 +172,16 @@ services:
           - https
         strip_path: false
 
+      - name: get-all-users
+        paths: 
+          - /api/users/allusers
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      
       - name: get-telegram-handle
         paths: 
           - /api/users/telegram

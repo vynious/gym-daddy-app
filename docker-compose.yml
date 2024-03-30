@@ -273,6 +273,7 @@ services:
 
     networks:
       - gd-network
+    
 
   classes-ms:
     image: "gd-classes-ms"
@@ -282,6 +283,21 @@ services:
       dbURL: "mysql+mysqlconnector://root:rootpassword@classes-db:3306/classes_db"
     depends_on:
       - classes-db
+    restart: always
+
+    networks:
+      - gd-network
+
+  createclass-cms:
+    image: "gd-createclass-cms"
+    ports:
+      - "5001:5001"
+    environment:
+      FLASK_CLASS_SERVER: "classes-ms:5200"
+      NOTIFICATION_GRPC_SERVER: "notification-ms:3000"
+      REST_USER_SERVER: "user-ms:3005"
+    depends_on:
+      - classes-ms
     restart: always
 
     networks:

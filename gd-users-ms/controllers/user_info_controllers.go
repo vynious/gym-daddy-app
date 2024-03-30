@@ -71,7 +71,7 @@ func GetAllUsers(c *gin.Context, db *pg.DB) {
 	}
 
 	var sanitisedUsers []*SanitisedUser
-	for _, user := range allUsers {
+	for _, user := range *allUsers {
 		userRoleID, err := user_role_assoc_models.GetUserRoleID(db, user.UserID)
 		if err != nil {
 			log.Println(err)

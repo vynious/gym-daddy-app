@@ -2,7 +2,7 @@ package user_models
 
 import (
 	"time"
-
+	"log"
 	"github.com/go-pg/pg/v10"
 )
 
@@ -33,13 +33,15 @@ func GetUser(db *pg.DB, username string) (*User, error) {
 	return user, nil
 }
 
-func GetAllUsers(db *pg.DB) ([]*User, error) {
-	var allUsers []*User
+func GetAllUsers(db *pg.DB) (*[]User, error) {
+	var allUsers []User
+	
 	err := db.Model(&allUsers).Select()
 	if err != nil {
+		log.Printf("error: %v", err)
 		return nil, err
 	}
-	return allUsers, nil
+	return &allUsers, nil
 }
 
 func GetUserById(db *pg.DB, username string) (*User, error) {

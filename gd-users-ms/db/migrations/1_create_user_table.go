@@ -45,9 +45,6 @@ func init() {
 		if err != nil {
 			return err
 		}
-
-		fmt.Println("inserting dummy data into users table...")
-		_, err = db.Exec(`INSERT INTO users (user_id, username, email, hashed_pass, first_name, last_name, telegram_handle, created_at, modified_at) VALUES ('shawn-thiah','shawn-thiah', 'shawn@example.com', 'hashedpassword', 'Shawn', 'Thiah', 'shawntyw', NOW(), NOW())`)
 		return err
 	}, func(db migrations.DB) error {
 		fmt.Println("dropping table users...")

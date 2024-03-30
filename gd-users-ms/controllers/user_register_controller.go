@@ -14,12 +14,13 @@ import (
 )
 
 type RegisterUserPayload struct {
-	Username  string `json:"username" binding:"required"`
-	Email     string `json:"email" binding:"required"`
-	Password  string `json:"password" binding:"required"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
+	Username       string `json:"username" binding:"required"`
+	Email          string `json:"email" binding:"required"`
+	Password       string `json:"password" binding:"required"`
+	FirstName      string `json:"first_name"`
+	LastName       string `json:"last_name"`
 	TelegramHandle string `json:"telegram_handle"`
+	RoleID         int    `json:"role_id"`
 }
 
 func RegisterUser(c *gin.Context, db *pg.DB) {
@@ -38,19 +39,16 @@ func RegisterUser(c *gin.Context, db *pg.DB) {
 
 	currentTime := time.Now()
 
-
-	
-
 	newUser := &user_models.User{
-		UserID:  	uuid.New().String(),
-		Username:   newUserPayload.Username,
-		Email:      newUserPayload.Email,
-		HashedPass: hashedPwd,
-		FirstName:  newUserPayload.FirstName,
-		LastName:   newUserPayload.LastName,
+		UserID:         uuid.New().String(),
+		Username:       newUserPayload.Username,
+		Email:          newUserPayload.Email,
+		HashedPass:     hashedPwd,
+		FirstName:      newUserPayload.FirstName,
+		LastName:       newUserPayload.LastName,
 		TelegramHandle: newUserPayload.TelegramHandle,
-		CreatedAt:  currentTime,
-		ModifiedAt: currentTime,
+		CreatedAt:      currentTime,
+		ModifiedAt:     currentTime,
 	}
 
 	// TODO: use tx instead of db in case of user role association creation failure
@@ -61,7 +59,7 @@ func RegisterUser(c *gin.Context, db *pg.DB) {
 
 	newUserRoleAssoc := &user_role_assoc_models.UserRoleAssociation{
 		UserID: newUser.UserID,
-		RoleID: 1,
+		RoleID: newUserPayload.RoleID,
 	}
 
 	if err := user_role_assoc_models.CreateUserRoleAssoc(db, newUserRoleAssoc); err != nil {
