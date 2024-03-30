@@ -44,6 +44,11 @@ echo ""
 echo "Building Docker CreateBooking CMS..."
 docker build -t gd-createbooking-cms gd-createbooking-cms/.
 
+echo ""
+echo "Building Docker CreateClass CMS..."
+docker build -t gd-createclass-cms gd-createclass-cms/.
+
+
 echo " "
 echo "Running Docker Compose..."
 docker-compose up -d
