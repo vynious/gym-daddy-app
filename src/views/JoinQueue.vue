@@ -158,7 +158,7 @@
     export default {
         data() {
             return {
-                currentQueue: 35,  // numerator
+                currentQueue: 36,  // numerator
                 userQueue: 36,  // denominator (100%)
                 progressBar: "0%",
                 isTurn: false,
