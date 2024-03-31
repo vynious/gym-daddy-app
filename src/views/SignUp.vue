@@ -4,30 +4,32 @@
     <div class="form-section">
       <div class="form-container">
         <div class="gym-logo">
-          <img
-            src="../images/icons-8-dumbbell-32-removebg-preview-10.png"
-            alt="Gym Logo"
-          />
+          <img src="../images/icons-8-dumbbell-32-removebg-preview-10.png" alt="Gym Logo" />
         </div>
         <p class="sign-up-status" v-if="signupStatus">{{ signupStatus }}</p>
+        <div class="form-group">
+          <input type="text" v-model="username" placeholder="Username" required />
+        </div>
+        <div class="form-group">
+          <input type="text" v-model="firstName" placeholder="First Name" required />
+        </div>
+        <div class="form-group">
+          <input type="text" v-model="lastName" placeholder="Last Name" required />
+        </div>
+        <div class="form-group">
+          <input type="text" v-model="telegramHandle" placeholder="Telegram Handle" required />
+        </div>
+        <!-- <div class="form-group"> -->
+        <!-- <input type="text" v-model="roleId" placeholder="Role ID" required /> -->
+        <!-- </div> -->
         <div class="form-group">
           <input type="email" v-model="email" placeholder="Email" required />
         </div>
         <div class="form-group">
-          <input
-            type="password"
-            v-model="password"
-            placeholder="Password"
-            required
-          />
+          <input type="password" v-model="password" placeholder="Password" required />
         </div>
         <div class="form-group">
-          <input
-            type="password"
-            v-model="confirmPassword"
-            placeholder="Confirm password"
-            required
-          />
+          <input type="password" v-model="confirmPassword" placeholder="Confirm password" required />
         </div>
         <button class="btn-signup" @click="handleSignup">SIGN UP</button>
         <p class="login-link">
@@ -44,6 +46,7 @@
 
 <script>
 
+import axios from 'axios';
 
 export default {
   
@@ -54,6 +57,11 @@ export default {
       password: "",
       confirmPassword: "",
       signupStatus: "",
+      username: "",
+      firstName: "",
+      lastName: "",
+      telegramHandle: "",
+      roleId: 1, // Ensure you have a way to set this, e.g., based on user selection or a default value
     };
   },
   methods: {
@@ -65,12 +73,43 @@ export default {
 
       // Perform validation and submit the form data to the server
 
+
       // Example: Check if email and password already exist
-      if (this.email === "existingemail@example.com" && this.password === "existingpassword") {
-        this.signupStatus = "You already have an account.";
-      } else {
-        this.signupStatus = "You've successfully signed up!";
+      if (!this.email || !this.password || !this.confirmPassword) {
+        this.signupStatus = "Please fill in all fields.";
+        return;
       }
+      if (this.password !== this.confirmPassword) {
+        this.signupStatus = "Passwords do not match.";
+        return;
+      }
+      const payload = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        first_name: this.firstName,
+        last_name: this.lastName,
+        telegram_handle: this.telegramHandle,
+        role_id: this.roleId,
+      };
+      axios.post(process.env.VUE_APP_REGISTER_USER_URL, payload)
+        .then((response) => {
+          console.log(response.data);
+          this.signupStatus = "Sign up successful!";
+          // Redirect to login page or another page
+          this.$router.push("/login");
+        })
+        .catch((error) => {
+          if (error.response && error.response.data) {
+            // Now safely access error.response.data
+            console.error("Signup error:", error.response.data.message);
+            this.signupStatus = error.response.data.message || "An error occurred. Please try again.";
+          } else {
+            console.error("Signup error:", error.message);
+            this.signupStatus = "An error occurred. Please try again.";
+          }
+        });
+
     },
   },
 };

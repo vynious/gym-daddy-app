@@ -71,8 +71,7 @@
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/queue">Queue</router-link></li>
         <li><router-link to="/book">Classes</router-link></li>
-        <li><router-link to="/profile">Profile</router-link></li>
-        <li><router-link to="/profile">{{ loggedIn ? 'Profile' : 'Login' }}</router-link></li>
+        <li><router-link to="/login">{{ loggedIn ? 'Profile' : 'Login' }}</router-link></li>
       </ul>
     </div>
   </nav>

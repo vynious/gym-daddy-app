@@ -38,6 +38,7 @@ const router = createRouter({
             component: () => import('../views/BookYoga.vue')
 
         },
+        
         {
             path: '/bookdance',
             name: 'bookdance',

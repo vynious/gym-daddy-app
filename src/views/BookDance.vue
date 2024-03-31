@@ -47,6 +47,57 @@ export default {
   </div>
 </template>
 
+<!-- <template>
+  <div>
+    <div v-if="selectedClass">
+      <h2>Selected Class: {{ selectedClass.name }}</h2>
+      <h3>Select a Date:</h3>
+      <DatePicker v-model:value="selectedDate" />
+      <div v-if="selectedDate">
+        <h3>Available Timings:</h3>
+        <ul>
+          <li v-for="timing in availableTimings" :key="timing.id">{{ timing.time }}</li>
+        </ul>
+      </div>
+      <a-button type="primary" style="margin-top: 10px;" @click="bookClass">Book Class</a-button>
+    </div>
+    <div v-else>
+      <h2>No class selected</h2>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref } from 'vue';
+import DatePicker from '@/components/DatePicker.vue';
+import axios from 'axios';
+
+export default {
+  components: {
+    DatePicker,
+  },
+  data() {
+    return {
+      selectedClass: null,
+      selectedDate: null,
+      availableTimings: [],
+    };
+  },
+  methods: {
+    async bookClass() {
+      try {
+        // Make an HTTP request to fetch available timings based on selected class and date
+        const response = await axios.get(`/api/timings?classId=${this.selectedClass.id}&date=${this.selectedDate}`);
+        this.availableTimings = response.data;
+      } catch (error) {
+        console.error('Error fetching timings:', error);
+      }
+    },
+  },
+};
+</script> -->
+
+
 <style scoped>
 @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
 @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
