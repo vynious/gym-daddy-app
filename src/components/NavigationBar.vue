@@ -1,3 +1,66 @@
+<style scoped>
+@import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
+
+@font-face {
+  font-family: "Poppins Bold";
+  src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot");
+  src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold")
+      format("svg");
+}
+
+.navbar {
+  background-color: transparent;
+  color: #fff;
+  padding: 10px 20px;
+  font-family: "Poppins Bold";
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-menu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.navbar-menu li {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.navbar-menu li:not(:last-child) {
+  margin-right: 30px;
+}
+
+.navbar-menu a {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-logo {
+  width: 75px;
+  height: auto;
+}
+</style>
+
 <template>
   <nav class="navbar">
     <div class="navbar-container">
@@ -8,56 +71,14 @@
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/queue">Queue</router-link></li>
         <li><router-link to='/book'>Book</router-link></li>
-        <li><router-link to='/profile'>Profile</router-link></li>
+        <li><router-link to="/login">Login</router-link></li>
       </ul>
     </div>
   </nav>
 </template>
-  
+
 <script>
   export default {
-    name: 'NavigationBar'
-  }
+    name: "NavigationBar",
+  };
 </script>
-
-<style scoped>
-  .navbar {
-    background-color: black;
-    color: #fff;
-    padding: 10px 20px;
-  }
-
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-  }
-
-  .navbar-menu {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    font-weight: bold;
-    font-size: 28px;
-    margin-left: auto;
-  }
-
-  .navbar-menu li {
-    display: inline-block;
-  }
-
-  .navbar-menu li:not(:last-child) {
-    margin-right: 30px;
-  }
-
-  .navbar-menu a {
-    text-decoration: none;
-    color: white;
-  }
-
-  .navbar-logo {
-    width: 75px;
-    height: auto;
-  }
-</style>

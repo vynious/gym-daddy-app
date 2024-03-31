@@ -1,4 +1,4 @@
-# gymdaddy
+# esd-vue
 
 ## Project setup
 ```

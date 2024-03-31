@@ -3,7 +3,7 @@
         background-image: url("../assets/background.png");
         background-size: cover;
         background-position: center;
-        height: 90.9vh;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -64,13 +64,13 @@
 <template>
     <div class="background">
        
-        <div class="card cardPos" style="width: 800px; background-color: white;"> 
+        <div class="card cardPos" style="width: 800px; background-color: white; margin-top: 100px;"> 
 
             <div class="card-body m-auto"> 
                 <div class="card-title header">Virtual Queue</div> 
                 <div class="card-text subheader">
                     There are currently
-                    <span class="circle">35</span>
+                    <span class="circle"> {{ queueNo }} </span>
                     people in line.
                 </div>  
             </div> 
@@ -89,9 +89,26 @@
 <script>
     export default {
         name: 'JoinQueue',
+        data() {
+            return {
+                queueNo: 0
+            }
+        },
         methods: {
             joinqueue() {
-                this.$router.push({name: 'joinqueue'})
+                this.$router.push({name: 'joinqueue'});
+                // const baseURL = "";
+
+                // this.$axios.get(`${baseURL}/`,{  // to check path
+                //     // headers: {
+                //     //     Authorization: ``
+                //     // }
+                // }) 
+                // .then(response => {
+                //     console.log(response.data);
+                //     // this.queueNo = 
+                // })
+                
             }
         }
     };
