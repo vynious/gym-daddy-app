@@ -1,44 +1,45 @@
 <!-- admin side -->
 <template>
-  <div class="background">
-    <h1>Create a Class <router-link to="/classSearch">Class search</router-link></h1>
-    <a-form
-      ref="formRef"
-      :model="formState"
-      :rules="rules"
-      :label-col="labelCol"
-      :wrapper-col="wrapperCol"
-    >
-      <a-form-item label="Class name" name="className"  style="font-family: 'Poppins Medium';">
-        <a-input v-model:value="formState.className" />
-      </a-form-item>
-
-      <a-form-item label="Activity time" required name="activityTime">
-        <a-date-picker
-          v-model:value="formState.activityTime"
-          show-time
-          type="datetime"
-          placeholder="Pick a date and time"
-          style="width: 100%"
-        />
-      </a-form-item>
-      <a-form-item label="Duration" name="duration">
-        <a-input-number v-model:value="formState.duration" />
-      </a-form-item>
-      <a-form-item label="Suitable level" name="suitableLevel">
-        <a-input v-model:value="formState.suitableLevel" />
-      </a-form-item>
-      <a-form-item label="Max Capacity" name="maxCapacity">
-        <a-input-number v-model:value="formState.maxCapacity" />
-      </a-form-item>
-      <a-form-item label="Activity description" name="activityDescription">
-        <a-textarea v-model:value="formState.activityDescription" />
-      </a-form-item>
-      <a-form-item :wrapper-col="{ span: 14, offset: 5 }">
-        <a-button type="primary" @click="onSubmit" style="font-family: 'Poppins Medium';">Create</a-button>
-        <a-button style="font-family: 'Poppins Medium'; margin-left: 10px" @click="resetForm" >Reset</a-button>
-      </a-form-item>
-    </a-form>
+  <div class="background" >
+    <a-card style="width: 800px">
+      <h1>Create a Class <router-link to="/classSearch">Class search</router-link></h1>
+      <a-form
+        ref="formRef"
+        :model="formState"
+        :rules="rules"
+        :label-col="labelCol"
+        :wrapper-col="wrapperCol"
+      >
+        <a-form-item label="Class name" name="className"  style="font-family: 'Poppins Medium';">
+          <a-input v-model:value="formState.className" />
+        </a-form-item>
+        <a-form-item label="Activity time" required name="activityTime">
+          <a-date-picker
+            v-model:value="formState.activityTime"
+            show-time
+            type="datetime"
+            placeholder="Pick a date and time"
+            style="width: 100%"
+          />
+        </a-form-item>
+        <a-form-item label="Duration" name="duration">
+          <a-input-number v-model:value="formState.duration" />
+        </a-form-item>
+        <a-form-item label="Suitable level" name="suitableLevel">
+          <a-input v-model:value="formState.suitableLevel" />
+        </a-form-item>
+        <a-form-item label="Max Capacity" name="maxCapacity">
+          <a-input-number v-model:value="formState.maxCapacity" />
+        </a-form-item>
+        <a-form-item label="Activity description" name="activityDescription">
+          <a-textarea v-model:value="formState.activityDescription" />
+        </a-form-item>
+        <a-form-item :wrapper-col="{ span: 14, offset: 5 }">
+          <a-button type="primary" @click="onSubmit" style="font-family: 'Poppins Medium';">Create</a-button>
+          <a-button style="font-family: 'Poppins Medium'; margin-left: 10px" @click="resetForm" >Reset</a-button>
+        </a-form-item>
+      </a-form>
+    </a-card>
   </div>
 </template>
 
@@ -120,7 +121,25 @@ const resetForm = () => {
 };
 </script>
 
-<style scoped>
+<style>
+  .background {
+        background-image: url("../assets/background.png");
+        background-size: cover;
+        background-position: center;
+        height: 90.9vh;
+        display: flex;
+        flex-direction: column; /* Align items in a column */
+        justify-content: flex-start; /* Start from the top */
+        align-items: center;
+        font-family: "Poppins Medium";
+    }
+h1{
+  font-family: "Poppins Bold";
+}
+.background .ant-form-item-label {
+  font-family: 'Poppins Medium';
+}
+
 @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
 @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
 
