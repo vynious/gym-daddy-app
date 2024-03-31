@@ -199,6 +199,23 @@ services:
           - https
         strip_path: false
 
+
+
+  - name: createclass-cms
+    protocol: http
+    url : http://createclass-cms:5001
+    routes:
+      - name: create-class
+        paths: 
+          - /api/class
+        methods:
+          - POST
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+
 # plugins:
 #   - name: jwt
 #   - route:
