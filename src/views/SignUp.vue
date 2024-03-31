@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import NavigationBar from '../components/NavigationBar.vue';
+
 import axios from 'axios';
 
 export default {
