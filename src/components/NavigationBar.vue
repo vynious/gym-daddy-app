@@ -88,7 +88,7 @@ export default {
   },
   created() {
     // Check if user is already logged in (you would replace this with your actual login check logic)
-    // const userLoggedIn = localStorage.getItem("loggedIn");
+    const userLoggedIn = localStorage.getItem("loggedIn");
     this.loggedIn = userLoggedIn === "true";
   },
 };
