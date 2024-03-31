@@ -44,7 +44,7 @@
     }
     #choice1 {
       font-size: 25px;
-      font-family: 'Poppins';
+      /* font-family: 'Poppins'; */
       color: #C7FF9C;
       background-color: black;      
       padding: 15px 40px;
@@ -58,7 +58,7 @@
     }
     #choice2 {
       font-size: 25px;
-      font-family: 'Poppins';
+      /* font-family: 'Poppins'; */
       color: #C7FF9C;
       background-color: #D9D9D920;      
       padding: 15px 40px;
