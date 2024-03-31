@@ -28,7 +28,7 @@
     }
     h1 {
         color: white;
-        font-family: 'Poppins';
+        font-family: 'Poppins Bold';
         margin-top: 15px;
         margin-bottom: 30px;
     }
@@ -46,7 +46,7 @@
         margin-top: 14px;
         margin-bottom: 14px;
         font-size: 28px ;
-        font-family: 'Poppins';
+        /* font-family: 'Poppins'; */
         border: 0px;
         width: 70%;
         border-radius: 12px;
@@ -56,8 +56,8 @@
         background-color: #C7FF9C20;
         color: white;
     }
-    /* .button:focus {
+    .button:focus {
         background-color: #C7FF9C20;
         color: white;
-    } */
+    }
   </style>

@@ -125,7 +125,7 @@
     }
     .glow {
         font-size: 70px;
-        font-family: 'Poppins';
+        /* font-family: 'Poppins Medium'; */
         color: white;
         /* Add glow effect using text-shadow */
         text-shadow: 0 0 10px #C7FF9C, 0 0 20px #C7FF9C, 0 0 30px #C7FF9C, 0 0 40px #C7FF9C, 0 0 50px #C7FF9C, 0 0 60px #C7FF9C, 0 0 70px #C7FF9C;
@@ -144,7 +144,7 @@
     
     #explore {
       font-size: 25px;
-      font-family: 'Poppins';
+      /* font-family: 'Poppins'; */
       color: #C7FF9C;
       background-color: black;      
       padding: 15px 30px;
@@ -183,7 +183,7 @@
     }
     .level {
         /* background-color: green ; */
-        padding: 30px;
+        padding: 20px;
         margin: 70px;
     }
     .level h1 {
@@ -259,7 +259,7 @@
     }
     #joinqueue {
         font-size: 27px;
-        font-family: 'Poppins';
+        /* font-family: 'Poppins'; */
         color: #C7FF9C;
         background-color: black;   
         width: 280px;   
@@ -271,7 +271,7 @@
     }
     #bookclass {
         font-size: 27px;
-        font-family: 'Poppins';
+        /* font-family: 'Poppins'; */
         color: #C7FF9C;
         background-color: black;  
         width: 280px;   
