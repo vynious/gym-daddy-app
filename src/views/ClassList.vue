@@ -28,14 +28,14 @@ export default {
         flex-direction: column; /* Align items in a column */
         justify-content: flex-start; /* Start from the top */
         align-items: center;
-        font-family: Poppins Medium;
+        font-family: "Poppins Medium";
     }
     .heading {
       margin-top: 20px; /* Add some margin to the top */
     }
     h1 {
       color: #c7ff9c;
-      font-family: Poppins Bold;
+      font-family: "Poppins Bold";
     }
     @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
     @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
