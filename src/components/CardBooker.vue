@@ -38,6 +38,48 @@
       </a-row>
     </div>
   </template>
+
+<!-- <template>
+  <div style="padding: 20px;">
+    <a-row :gutter="16">
+      <a-col :span="8" v-for="class in classes" :key="class.id">
+        <a-card :title="class.name" :bordered="false" style="font-family: 'Poppins Bold';">
+          <p style="font-family: 'Poppins Medium';">{{ class.description }}</p>
+          <b>Difficulty: {{ class.suitable_level }}</b>
+          <br>
+          <router-link :to="'/book' + class.name" >
+            <a-button type="primary" style="font-family: 'Poppins Medium';">Book Now</a-button>
+          </router-link>
+        </a-card>
+      </a-col>
+    </a-row>
+  </div>
+</template> -->
+
+<!-- <script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      classes: [],
+    };
+  },
+  mounted() {
+    this.fetchClasses();
+  },
+  methods: {
+    async fetchClasses() {
+      try {
+        const response = await axios.get('http://localhost:3000/api/classes');
+        this.classes = response.data;
+      } catch (error) {
+        console.error('Error fetching classes:', error);
+      }
+    },
+  },
+};
+</script> -->
   
 <style scoped>
 @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
