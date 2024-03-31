@@ -1,7 +1,7 @@
 <!-- admin side -->
 <template>
   <div class="background" >
-    <a-card style="width: 800px">
+    <a-card style="width: 800px; margin-top: 5%;">
       <h1>Create a Class <router-link to="/classSearch">Class search</router-link></h1>
       <a-form
         ref="formRef"
@@ -122,24 +122,6 @@ const resetForm = () => {
 </script>
 
 <style>
-  .background {
-        background-image: url("../assets/background.png");
-        background-size: cover;
-        background-position: center;
-        height: 90.9vh;
-        display: flex;
-        flex-direction: column; /* Align items in a column */
-        justify-content: flex-start; /* Start from the top */
-        align-items: center;
-        font-family: "Poppins Medium";
-    }
-h1{
-  font-family: "Poppins Bold";
-}
-.background .ant-form-item-label {
-  font-family: 'Poppins Medium';
-}
-
 @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
 @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
 
@@ -172,6 +154,26 @@ h1{
     url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold")
       format("svg");
 }
+
+  .background {
+        background-image: url("../assets/background.png");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        flex-direction: column; /* Align items in a column */
+        justify-content: flex-start; /* Start from the top */
+        align-items: center;
+        font-family: "Poppins Medium";
+    }
+h1{
+  font-family: "Poppins Bold";
+}
+.background .ant-form-item-label {
+  font-family: 'Poppins Medium';
+}
+
+
 h1{
   font-family: "Poppins Bold";
 }
