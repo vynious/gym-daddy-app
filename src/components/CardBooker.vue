@@ -14,17 +14,12 @@
 						{{ classItem.suitable_level.toUpperCase() }}</b
 					>
 					<br />
-					<router-link
-						:to="`/book${classItem.name
-							.toLowerCase()
-							.replace(/\s+/g, '')}`"
+					<a-button
+						type="primary"
+						style="font-family: 'Poppins Medium'"
+						@click="bookClass(classItem.id)"
+						>Book Now</a-button
 					>
-						<a-button
-							type="primary"
-							style="font-family: 'Poppins Medium'"
-							>Book Now</a-button
-						>
-					</router-link>
 				</a-card>
 			</a-col>
 		</a-row>
@@ -38,6 +33,7 @@ export default {
 	data() {
 		return {
 			classes: [],
+			userId: 1, // This should be dynamically set based on the logged-in user
 		};
 	},
 	created() {
@@ -56,6 +52,29 @@ export default {
 						"There was an error fetching the classes data:",
 						error
 					);
+				});
+		},
+		bookClass(classId) {
+			const bookingURL = "http://localhost:8000/api/booking";
+			const bookingData = {
+				user_id: this.userId,
+				class_id: classId,
+			};
+
+			axios
+				.post(bookingURL, bookingData)
+				.then((response) => {
+					// Handle success response
+					console.log(response.data);
+					alert("Booking successful!");
+				})
+				.catch((error) => {
+					// Handle error
+					console.error(
+						"There was an error creating the booking:",
+						error
+					);
+					alert("Booking failed. Please try again.");
 				});
 		},
 	},
