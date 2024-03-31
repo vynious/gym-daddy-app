@@ -1,6 +1,8 @@
 <template>
-    <div style="font-family: 'Poppins Medium';">
-      <a-table :columns="columns" :data-source="data" @change="onChange" style="font-family: 'Poppins Medium';"></a-table>
+    <div class="background" style="font-family: 'Poppins Medium';">
+      <a-card style="width: 1000px">
+        <a-table :columns="columns" :data-source="data" @change="onChange" style="font-family: 'Poppins Medium';"></a-table>
+      </a-card>
     </div>
   </template>
   
@@ -91,6 +93,17 @@
   </script>
   
 <style>
+  .background {
+        background-image: url("../assets/background.png");
+        background-size: cover;
+        background-position: center;
+        height: 90.9vh;
+        display: flex;
+        flex-direction: column; /* Align items in a column */
+        justify-content: flex-start; /* Start from the top */
+        align-items: center;
+        font-family: "Poppins Medium";
+    }
 @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
 @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
 
