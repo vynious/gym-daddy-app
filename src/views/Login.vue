@@ -4,22 +4,14 @@
     <div class="form-section">
       <div class="form-container">
         <div class="gym-logo">
-          <img
-            src="../images/icons-8-dumbbell-32-removebg-preview-10.png"
-            alt="Gym Logo"
-          />
+          <img src="../images/icons-8-dumbbell-32-removebg-preview-10.png" alt="Gym Logo" />
         </div>
         <div class="error-message" v-if="error">{{ error }}</div>
         <div class="form-group">
-          <input type="email" v-model="email" placeholder="Email" required />
+          <input type="text" v-model="username" placeholder="Username" required />
         </div>
         <div class="form-group">
-          <input
-            type="password"
-            v-model="password"
-            placeholder="Password"
-            required
-          />
+          <input type="password" v-model="password" placeholder="Password" required />
         </div>
         <div class="form-check">
           <label class="checkbox-container">
@@ -43,49 +35,56 @@
 </template>
 
 <script>
+import NavigationBar from '../components/NavigationBar.vue';
+import axios from 'axios';
 
 export default {
   
   name: "LoginPage",
   data() {
     return {
-      email: "",
+      username: "",
       password: "",
       isChecked: false,
       error: "",
     };
   },
   methods: {
-    async handleLogin() {
-      try {
-        // Implement your login logic here
-        // For example, check if the email exists in the database
-
-        if (!this.email || !this.password) {
-          throw new Error("Please enter both email and password.");
-        }
-
-        // Assuming loginUser is a function that checks the email and password in the database
-        const user = await this.loginUser(this.email, this.password);
-
-        // If user is null or undefined, show an error message
-        if (!user) {
-          this.error = "Invalid email or password. Please try again.";
-          return;
-        }
-
-        // Reset error message if login is successful
-        this.error = "";
-
-        // Continue with your login logic, e.g., redirect to another page
-      } catch (error) {
-        console.error("Login error:", error.message);
+    handleLogin() {
+      if (!this.username || !this.password) {
+        this.error = "Please enter both username and password.";
+        return;
       }
-    },
-    async loginUser(email, password) {
-      // Implement your logic to check email and password in the database
-      // This is a placeholder function, replace it with your actual logic
-      return null; // Return null if the email and password do not match
+
+      const loginPayload = {
+        username: this.username,
+        password: this.password,
+      };
+
+      axios.post(process.env.VUE_APP_LOGIN_USER_URL, loginPayload)
+        .then(response => {
+          // Handle success
+          console.log("Login successful", response.data);
+          this.error = "";
+
+          // You might want to save the received token in local storage
+          localStorage.setItem('token', response.data.token);
+
+          // Redirect the user to another page after login
+          this.$router.push('/');
+        })
+        .catch(error => {
+          // Handle error
+          if (error.response && error.response.data) {
+            // Server responded with a status other than 2xx
+            console.error("Login error:", error.response.data.message);
+            this.error = error.response.data.message;
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error("Login error:", error.message);
+            this.error = "An error occurred. Please try again.";
+          }
+        });
     },
   },
 };
@@ -98,31 +97,21 @@ export default {
 @font-face {
   font-family: "Poppins Medium";
   src: url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.eot");
-  src: url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff2")
-      format("woff2"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff")
-      format("woff"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.ttf")
-      format("truetype"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.svg#Poppins Medium")
-      format("svg");
+  src: url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.eot?#iefix") format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff") format("woff"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.ttf") format("truetype"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.svg#Poppins Medium") format("svg");
 }
 
 @font-face {
   font-family: "Poppins Bold";
   src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot");
-  src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff2")
-      format("woff2"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff")
-      format("woff"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.ttf")
-      format("truetype"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold")
-      format("svg");
+  src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot?#iefix") format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff") format("woff"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.ttf") format("truetype"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold") format("svg");
 }
 
 .login-container {
@@ -160,7 +149,8 @@ export default {
 }
 
 .gym-logo img {
-  max-width: 200px; /* Adjust size as needed */
+  max-width: 200px;
+  /* Adjust size as needed */
   height: auto;
 }
 
@@ -198,6 +188,7 @@ input {
 .remember {
   margin-left: 0.5rem;
 }
+
 /* .remember-me-label input[type="checkbox"] {
   margin-right: 0.5rem;
 } */
@@ -239,11 +230,11 @@ input {
   border-radius: 3px;
 }
 
-.checkbox-container input:checked ~ .checkmark-icon {
+.checkbox-container input:checked~.checkmark-icon {
   background-color: #000000;
 }
 
-.checkbox-container input:checked ~ .checkmark-icon:after {
+.checkbox-container input:checked~.checkmark-icon:after {
   content: "\2705";
   font-size: 20px;
   color: white;
@@ -252,6 +243,7 @@ input {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 /* .forgot-password {
   color: #fff;
   text-decoration: none;
