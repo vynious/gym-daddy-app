@@ -72,11 +72,27 @@
         <li><router-link to="/queue">Queue</router-link></li>
         <li><router-link to="/book">Classes</router-link></li>
         <li><router-link to="/profile">Profile</router-link></li>
-        <li><router-link to="/login">Login</router-link></li>
+        <li><router-link to="/profile">{{ loggedIn ? 'Profile' : 'Login' }}</router-link></li>
       </ul>
     </div>
   </nav>
 </template>
+
+<script>
+export default {
+  name: "NavigationBar",
+  data() {
+    return {
+      loggedIn: false, // Assuming the user is not logged in initially
+    };
+  },
+  created() {
+    // Check if user is already logged in (you would replace this with your actual login check logic)
+    const userLoggedIn = localStorage.getItem("loggedIn");
+    this.loggedIn = userLoggedIn === "true";
+  },
+};
+</script>
 
 <!-- <script>
 export default {
