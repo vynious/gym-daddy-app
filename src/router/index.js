@@ -27,7 +27,7 @@ const router = createRouter({
             }
 
         },
-        {
+        {   
             path: '/book',
             name: 'book',
             component: () => import('../views/ClassList.vue')
@@ -36,6 +36,7 @@ const router = createRouter({
             path: '/bookyoga',
             name: 'bookyoga',
             component: () => import('../views/BookYoga.vue')
+<<<<<<< HEAD
         },
         {
           path: '/login',
@@ -60,6 +61,71 @@ const router = createRouter({
         return { top: 0 };
       }
     }
+=======
+
+        },
+        {
+            path: '/bookdance',
+            name: 'bookdance',
+            component: () => import('../views/BookDance.vue')
+
+        },
+        {
+            path: '/bookpilates',
+            name: 'bookpilates',
+            component: () => import('../views/BookPilates.vue')
+
+        },
+         {
+            path: '/profile',
+            name: 'profile',
+            component: () => import('../views/ProfileDefaultPage.vue')
+          },
+          {
+              path: '/profileEditInfo',
+              name: 'profileEditInfo',
+              component: () => import('../views/ProfileEditInfoPage.vue')
+          },
+          {
+            path: '/profileBookings',
+            name: 'profileBookings',
+            component: () => import('../views/ProfileBookingsPage.vue')
+          },
+          {
+              path: '/profileRefer',
+              name: 'profileRefer',
+              component: () => import('../views/ProfileReferPage.vue')
+          },
+          {
+              path: '/profileLogout',
+              name: 'profileLogout',
+              component: () => import('../views/ProfileLogoutPage.vue')
+          },
+          {
+            path: '/createClass',
+            name: 'createClass',
+            component: () => import('../views/CreateClass.vue')
+          },
+          {
+            path: '/classSearch',
+            name: 'classSearch',
+            component: () => import('../views/ClassSearch.vue')
+          },
+          {
+            path: '/login',
+            name: 'login',
+            component: () => import('../views/Login.vue')
+          },
+          {
+            path: '/sign-up',
+            name: 'sign-up',
+            component: () => import('../views/SignUp.vue')
+          }
+    ]
+>>>>>>> 91dc67c5fbc2a4881e4ca381627ad5c20e8208aa
 })
 
-export default router
+
+
+
+export default router;

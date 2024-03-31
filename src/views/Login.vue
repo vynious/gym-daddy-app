@@ -1,5 +1,5 @@
 <template>
-  <NavigationBar></NavigationBar>
+  <!-- <NavigationBar></NavigationBar> -->
   <div class="login-container">
     <div class="form-section">
       <div class="form-container">
@@ -175,6 +175,7 @@ input {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  padding-left: 0%;
 }
 
 /* .checkbox-container {
@@ -184,11 +185,12 @@ input {
   font-size: 13px;
   white-space: nowrap;
   margin-bottom: 2.5rem;
-}
+} */
 
 .remember {
   margin-left: 0.5rem;
-} */
+}
+
 /* .remember-me-label input[type="checkbox"] {
   margin-right: 0.5rem;
 } */
@@ -211,6 +213,7 @@ input {
   height: 3px;
   white-space: nowrap;
   margin-bottom: 3.5rem;
+  left: 0;
 }
 
 .checkbox-container input {
@@ -304,10 +307,3 @@ input {
   height: 55vh;
 }
 </style>
-<!-- 
-<template>
-  hello
-</template>
-
-<style scoped>
-</style> -->
