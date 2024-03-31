@@ -5,7 +5,7 @@
             <div id="overlap1"></div>
             <div id="overlap2"></div>
             <div class="info">
-                <h1 class="glow">GYM DADDY</h1>
+                <h1 class="gymname">GYM DADDY</h1>
                 <p>Your Ultimate Gym Stop</p>
                 <p>We Provide You with the Best Experience and Qualified Trainers</p>
                 <br>
@@ -123,15 +123,15 @@
         left: 770px;
         color: white;
     }
-    .glow {
+    /* .glow {
         font-size: 70px;
         /* font-family: 'Poppins Medium'; */
-        color: white;
+        /* color: white; */
         /* Add glow effect using text-shadow */
-        text-shadow: 0 0 10px #C7FF9C, 0 0 20px #C7FF9C, 0 0 30px #C7FF9C, 0 0 40px #C7FF9C, 0 0 50px #C7FF9C, 0 0 60px #C7FF9C, 0 0 70px #C7FF9C;
+        /* text-shadow: 0 0 10px #C7FF9C, 0 0 20px #C7FF9C, 0 0 30px #C7FF9C, 0 0 40px #C7FF9C, 0 0 50px #C7FF9C, 0 0 60px #C7FF9C, 0 0 70px #C7FF9C; */
         /* Add animation to make the glow pulsate */
         /* animation: pulse 1.5s infinite alternate; */
-    }
+    /*} */
 
     /* @keyframes pulse {
         from {
@@ -141,6 +141,14 @@
             text-shadow: 0 0 20px #C7FF9C, 0 0 30px #C7FF9C, 0 0 40px #C7FF9C, 0 0 50px #C7FF9C, 0 0 60px #C7FF9C, 0 0 70px #C7FF9C, 0 0 80px #C7FF9C;
         }
     } */
+
+    .gymname {
+        font-size: 5.5rem;
+        color: #fff;
+        text-shadow: 0 0 15px #c7ff9c;
+        font-family: "Poppins Bold";
+        white-space: nowrap;
+    }
     
     #explore {
       font-size: 25px;
