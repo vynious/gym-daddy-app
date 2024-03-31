@@ -52,12 +52,15 @@
     }
     .sharelink {
       font-size: 25px;
-      font-family: 'Poppins';
+      /* font-family: 'Poppins'; */
       color: #C7FF9C;
       background-color: black;      
       padding: 15px 40px;
       border: 0px;
       border-radius: 12px;
       cursor: pointer;
+    }
+    .sharelink:hover {
+      background-color: #D9D9D920;
     }
   </style>

@@ -66,7 +66,7 @@
         padding: 15px 40px;
         margin-right: 30px ;
         font-size: 28px ;
-        font-family: 'Poppins';
+        /* font-family: 'Poppins'; */
         border: 0px;
         border-radius: 12px;
     }
