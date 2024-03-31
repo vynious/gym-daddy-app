@@ -7,6 +7,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-family: 'Poppins medium';
     }
 
     .cardPos {
@@ -18,19 +19,18 @@
     }
 
     .header {
-        font-weight: bold;
-        font-size: 48px;
+        font-family: 'Poppins bold';
+        font-size: 38px;
         margin-bottom: 0px;
     }
 
     .subheader {
-        font-weight: medium;
-        font-size: 34px;
+        font-size: 30px;
     }
 
     .wording {
         font-weight: medium;
-        font-size: 28px;
+        font-size: 22px;
     }
 
     .borderstyle {
@@ -58,7 +58,7 @@
 
     .entergymbtn {
         background-color: #C7FF9C;
-        font-size: 35px;
+        font-size: 28px;
         width: 250px;
         justify-content: center;
         margin: auto;
@@ -122,7 +122,7 @@
                 <div class="qr-modal-body">
                     <img :src="QRcodeURL" height="300px" alt="QR Code">
                 </div>
-                <div class="card-body" style="font-size: 30px;">Remember to scan this QR code to sign out after exiting the gym. Thank you!</div>
+                <div class="card-body" style="font-size: 25px;">Remember to scan this QR code to sign out after exiting the gym. Thank you!</div>
             </div>
 
             <!-- Waiting in line -->
@@ -158,7 +158,7 @@
     export default {
         data() {
             return {
-                currentQueue: 35,  // numerator
+                currentQueue: 36,  // numerator
                 userQueue: 36,  // denominator (100%)
                 progressBar: "0%",
                 isTurn: false,

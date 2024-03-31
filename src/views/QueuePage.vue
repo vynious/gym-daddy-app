@@ -7,6 +7,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-family: 'Poppins medium';
     }
 
     .cardPos {
@@ -18,12 +19,12 @@
     }
 
     .header {
-        font-weight: bold;
-        font-size: 60px;
+        font-family: 'Poppins bold';
+        font-size: 58px;
     }
 
     .subheader {
-        font-size: 34px;
+        font-size: 30px;
     }
 
     .circle {
@@ -40,7 +41,7 @@
 
     .joinbtn {
         background-color: #C7FF9C;
-        font-size: 35px;
+        font-size: 28px;
         width: 250px;
         justify-content: center;
         margin: auto;
