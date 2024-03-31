@@ -38,11 +38,12 @@
   margin: 0;
   font-weight: bold;
   font-size: 20px;
-  margin-left: auto;
+  margin-left: 20px;
 }
 
 .navbar-menu li {
   display: inline-block;
+  margin-left: 10px;
 }
 
 .navbar-menu li:not(:last-child) {
