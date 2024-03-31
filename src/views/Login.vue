@@ -87,6 +87,22 @@ export default {
             this.error = "An error occurred. Please try again.";
           }
         });
+        axios.get("http://localhost:8000/api/users/validatejwt/admin", {
+            headers: {
+              Authorisation:localStorage.getItem('token')
+            }
+        })
+            .then(response => {
+              var isAdmin = false
+              if (response.status === 200){
+               isAdmin = true 
+              }
+              localStorage.setItem('isAdmin', isAdmin);
+            })
+            .catch( error => {
+                console.log(error.message);
+            });
+
     },
   },
 };

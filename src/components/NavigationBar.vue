@@ -71,6 +71,8 @@
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/queue">Queue</router-link></li>
         <li><router-link to="/book">Classes</router-link></li>
+        <li v-show="isAdmin"><router-link to="/createClass">Create Class</router-link></li>
+        <li v-show="isAdmin"><router-link to="/classSearch">Search Classes</router-link></li>
         <li><router-link to="/login">{{ loggedIn ? 'Profile' : 'Login' }}</router-link></li>
       </ul>
     </div>
@@ -83,12 +85,14 @@ export default {
   data() {
     return {
       loggedIn: false, // Assuming the user is not logged in initially
+      isAdmin: false
     };
   },
   created() {
     // Check if user is already logged in (you would replace this with your actual login check logic)
     const userLoggedIn = localStorage.getItem("loggedIn");
     this.loggedIn = userLoggedIn === "true";
+    this.isAdmin = localStorage.getItem('isAdmin');
   },
 };
 </script>
