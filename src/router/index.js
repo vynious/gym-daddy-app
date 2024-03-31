@@ -27,7 +27,7 @@ const router = createRouter({
             }
 
         },
-        {
+        {   
             path: '/book',
             name: 'book',
             component: () => import('../views/ClassList.vue')
@@ -110,4 +110,7 @@ const router = createRouter({
     }
 })
 
-export default router
+
+
+
+export default router;

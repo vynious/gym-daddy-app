@@ -5,26 +5,30 @@
         <div class="info">
 
             <div>     <!-- div needed, if not items will be displayed in line (because of class="info") -->
-
-              <div class="infosect">
-                <p>Gender : </p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+              <br>
+              <div>
+              <!-- <div class="infosect"> -->
+                <p>Gender</p> 
                 <button id="maleButton">M</button> <button class="buttonG">F</button>
               </div> 
 
-              <div class="infosect">
-                <p>Current Goals : </p> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                <div class="goal">
-                  <button class="button">Work out for 3 hours a day</button><img src="../assets/remove.png" alt="" class="badge">
-                </div>
-                <div class="goal">
-                  <button class="button">Improve on cardio</button><img src="../assets/remove.png" alt="" class="badge">
+              <div style="margin: 30px;">
+              <!-- <div class="infosect"> -->
+                <p>Current Goals</p>
+                <div style="display: flex; justify-content: center; align-items: center;">
+                  <div class="goal">
+                    <button class="button">Work out for 3 hours a day</button><img src="../assets/remove.png" alt="" class="badge">
+                  </div>
+                  <div class="goal">
+                    <button class="button">Improve on cardio</button><img src="../assets/remove.png" alt="" class="badge">
+                  </div>
                 </div>
               </div>
 
               <div class="infosect">
                 <p>Add Workout Goal : </p> &nbsp; &nbsp; &nbsp;
                 <div class="goal">
-                  <input class="button"> <img src="../assets/add.png" alt="" class="addGoal">
+                  <input class="button" style="width: 300px;"> <img src="../assets/add.png" alt="" class="addGoal">
                 </div>
               </div>
 
@@ -81,7 +85,12 @@
     }
     .infosect{
       display: flex;
+      justify-content: center;
+      align-items: center;
       margin: 30px;
+    }
+    p {
+      margin: 0px;
     }
     .buttonG {
         background-color: #D9D9D900;
@@ -99,18 +108,19 @@
       padding: 15px 40px;
       margin: 15px ;
       font-size: 28px ;
-      font-family: 'Poppins';
+      /* font-family: 'Poppins'; */
       border: 0px;
       border-radius: 12px;
     }
     /* .buttonG::selection {
       background-color: #D9D9D920;
       color: #C7FF9C;
-    }
+    } */
     .buttonG:hover {
       background-color: #C7FF9C20;
+      cursor: pointer;
     }
-    .buttonG:focus {
+    /* .buttonG:focus {
       background-color: #C7FF9C20;
     } */
     .button {
@@ -119,16 +129,17 @@
         padding: 15px 40px;
         margin: 15px ;
         font-size: 28px ;
-        font-family: 'Poppins';
+        /* font-family: 'Poppins'; */
         border: 0px;
         border-radius: 12px;
+        width: 300px;
     }
     .badge {
       height: 40px;
       width: 40px;
       position: absolute;
       top: 4px;
-      right: 1px;
+      right: 0px;
     }
     .goal {
       position: relative;
@@ -138,17 +149,17 @@
       height: 60px;
       width: 60px;
       position: absolute;
-      top: 25px;
+      top: 15px;
       right: -50px;
     }
     .HnW {
       background-color: #D9D9D920;
       color: #C7FF9C;
-      width: 60px;
+      width: 100px;
       padding: 15px 20px;
       margin: 15px ;
       font-size: 28px ;
-      font-family: 'Poppins';
+      /* font-family: 'Poppins'; */
       border: 0px;
       border-radius: 12px;
     }

@@ -1,5 +1,5 @@
 <template>
-  <NavigationBar></NavigationBar>
+  <!-- <NavigationBar></NavigationBar> -->
   <div class="signup-container">
     <div class="form-section">
       <div class="form-container">
@@ -31,7 +31,7 @@
         </div>
         <button class="btn-signup" @click="handleSignup">SIGN UP</button>
         <p class="login-link">
-          Already have account? <router-link to="/login">Login</router-link>
+          Already have an account? <router-link to="/login">Login</router-link>
         </p>
       </div>
     </div>
