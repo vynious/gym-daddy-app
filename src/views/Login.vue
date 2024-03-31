@@ -70,6 +70,8 @@ export default {
           // You might want to save the received token in local storage
           localStorage.setItem('token', response.data.token);
 
+          localStorage.setItem('loggedIn', true);
+
           // Redirect the user to another page after login
           this.$router.push('/');
         })
