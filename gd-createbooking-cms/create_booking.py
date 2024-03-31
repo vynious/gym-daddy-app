@@ -64,7 +64,7 @@ def create_booking():
     user_id = request.json.get("user_id")
     class_id = request.json.get("class_id")
     res = requests.patch(
-        f"http://{FLASK_CLASS_SERVER}/classes/{int(class_id)}", json={"action": "book"}
+        f"http://{FLASK_CLASS_SERVER}/api/classes/{int(class_id)}", json={"action": "book"}
     )
 
     if res.status_code != 201:
@@ -131,7 +131,7 @@ def cancel_booking(booking_id):
     class_id = booking_res["booking"]["class_id"]
 
     res = requests.patch(
-        f"http://{FLASK_CLASS_SERVER}/classes/{int(class_id)}",
+        f"http://{FLASK_CLASS_SERVER}/api/classes/{int(class_id)}",
         json={"action": "cancel"},
     )
 
@@ -168,7 +168,7 @@ def get_booking(booking_id):
         print(f"gRPC call failed: {e}")
         return jsonify({"error": str(e)}), 500
     class_response = requests.get(
-        f"{FLASK_CLASS_SERVER}/classes/{int(response.booking.class_id)}"
+        f"{FLASK_CLASS_SERVER}/api/classes/{int(response.booking.class_id)}"
     )
     if class_response.status_code != 200:
         return (
@@ -208,7 +208,7 @@ def list_bookings():
     bookings = []
     for booking in response.bookings:
         current_class = requests.get(
-            f"http://{FLASK_CLASS_SERVER}/classes/{int(booking.class_id)}"
+            f"http://{FLASK_CLASS_SERVER}/api/classes/{int(booking.class_id)}"
         )
         bookings.append(
             {
@@ -243,7 +243,7 @@ def get_booking_by_user(user_id):
     bookings = []
     for booking in response.bookings:
         current_class = requests.get(
-            f"http://{FLASK_CLASS_SERVER}/classes/{int(booking.class_id)}"
+            f"http://{FLASK_CLASS_SERVER}/api/classes/{int(booking.class_id)}"
         )
         bookings.append(
             {
@@ -278,7 +278,7 @@ def update_booking(booking_id):
         print(f"gRPC call failed: {e}")
         return jsonify({"error": str(e)}), 500
     class_response = requests.get(
-        f"http://{FLASK_CLASS_SERVER}/classes/{int(response.booking.class_id)}"
+        f"http://{FLASK_CLASS_SERVER}/api/classes/{int(response.booking.class_id)}"
     )
     return jsonify(
         {

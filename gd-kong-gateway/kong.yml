@@ -214,6 +214,21 @@ services:
           - http
           - https
         strip_path: false
+  
+  - name: get-classes
+    protocol: http
+    url : http://classes-ms:5200
+    routes:
+      - name: get-classes
+        paths: 
+          - /api/classes
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
 
 
 # plugins:

@@ -94,7 +94,7 @@ def process_create_class(new_class):
     # Invoke the class microservice
     print("\n-----Invoking class microservice-----")
     create_class_result = invoke_http(
-        f"http://{FLASK_CLASS_SERVER}/classes", method="POST", json=new_class
+        f"http://{FLASK_CLASS_SERVER}/api/classes", method="POST", json=new_class
     )
     print(create_class_result)
     if create_class_result["code"] != 201:
