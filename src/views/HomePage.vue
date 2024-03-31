@@ -15,26 +15,6 @@
 </template>
 
 <style scoped>
-/* #app {
-  font-family: 'Poppins';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: black;
-} */
-
-#app {
-  font-family: 'Poppins Medium';
-}
-
-/* #app {
-    display: flex;
-    align-items: center;
-    /* background-image: url('../assets/background.png');
-    background-size : cover;
-    background-position: center; */
-/*} */
-
 @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
 @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
 
@@ -67,5 +47,25 @@
     url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold")
       format("svg");
 }
+/* #app {
+  font-family: 'Poppins';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: black;
+} */
+
+#app {
+  font-family: 'Poppins Medium';
+}
+
+/* #app {
+    display: flex;
+    align-items: center;
+    /* background-image: url('../assets/background.png');
+    background-size : cover;
+    background-position: center; */
+/*} */
+
 
 </style>

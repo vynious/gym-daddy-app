@@ -12,7 +12,7 @@
 
 <template>
   <div class="background">
-    <a-card style="width: 600px">
+    <a-card style="width: 600px; margin-top: 10%">
       <h1>Selected Class: Yoga</h1>
       <h1>Choose a date</h1>
       <DatePicker/>
@@ -21,19 +21,6 @@
 </template>
 
 <style scoped>
-    .background {
-        background-image: url("../assets/background.png");
-        background-size: cover;
-        background-position: center;
-        height: 90.9vh;
-        display: flex;
-        flex-direction: column; /* Align items in a column */
-        justify-content: flex-start; /* Start from the top */
-        align-items: center;
-    }
-    h1 {
-      font-family: "Poppins Bold";
-    }
     @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
     @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
 
@@ -66,4 +53,18 @@
         url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold")
           format("svg");
     }
+    .background {
+        background-image: url("../assets/background.png");
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        flex-direction: column; /* Align items in a column */
+        justify-content: flex-start; /* Start from the top */
+        align-items: center;
+    }
+    h1 {
+      font-family: "Poppins Bold";
+    }
+
 </style>

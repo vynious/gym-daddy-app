@@ -37,16 +37,13 @@
     </div>
     <div class="image-section">
       <h1 class="gym_name">GYM DADDY</h1>
-      <img
-        src="../images/gym-daddy-character.png"
-        alt="Gym Daddy Character"
-      />
+      <img src="../images/gym-daddy-character.png" alt="Gym Daddy Character" />
     </div>
   </div>
 </template>
 
 <script>
-import NavigationBar from '../components/NavigationBar.vue';
+import NavigationBar from "../components/NavigationBar.vue";
 
 export default {
   components: {
@@ -138,7 +135,7 @@ export default {
   color: #fff;
 }
 
-.error-message{
+.error-message {
   font-family: "Poppins Medium";
   font-size: 15px;
 }
@@ -189,6 +186,7 @@ input {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  padding-left: 0%;
 }
 
 /* .checkbox-container {
@@ -198,11 +196,11 @@ input {
   font-size: 13px;
   white-space: nowrap;
   margin-bottom: 2.5rem;
-}
+} */
 
 .remember {
   margin-left: 0.5rem;
-} */
+}
 /* .remember-me-label input[type="checkbox"] {
   margin-right: 0.5rem;
 } */
@@ -225,6 +223,7 @@ input {
   height: 3px;
   white-space: nowrap;
   margin-bottom: 3.5rem;
+  left: 0;
 }
 
 .checkbox-container input {

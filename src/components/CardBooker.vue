@@ -39,10 +39,7 @@
     </div>
   </template>
   
-<style>
-a-card .ant-card-head-title {
-  font-family: 'Poppins Bold';
-}
+<style scoped>
 @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
 @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
 
@@ -75,6 +72,10 @@ a-card .ant-card-head-title {
     url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold")
       format("svg");
 }
+a-card .ant-card-head-title {
+  font-family: 'Poppins Bold';
+}
+
 
 </style>
   

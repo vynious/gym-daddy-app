@@ -1,6 +1,6 @@
 <template>
-    <div style="font-family: 'Poppins Medium';">
-      <a-table :columns="columns" :data-source="data" @change="onChange" style="font-family: 'Poppins Medium';"></a-table>
+    <div style="font-family: 'Poppins Medium'; ">
+      <a-table :columns="columns" :data-source="data" @change="onChange" style="font-family: 'Poppins Medium'; "></a-table>
     </div>
   </template>
   
@@ -90,7 +90,7 @@
   }
   </script>
   
-<style>
+<style scoped>
 @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
 @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
 

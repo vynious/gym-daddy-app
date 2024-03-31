@@ -120,14 +120,7 @@ const resetForm = () => {
 };
 </script>
 
-<style>
-h1{
-  font-family: "Poppins Bold";
-}
-.background .ant-form-item-label {
-  font-family: 'Poppins Medium';
-}
-
+<style scoped>
 @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
 @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
 
@@ -160,4 +153,12 @@ h1{
     url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold")
       format("svg");
 }
+h1{
+  font-family: "Poppins Bold";
+}
+.background .ant-form-item-label {
+  font-family: 'Poppins Medium';
+}
+
+
 </style>
