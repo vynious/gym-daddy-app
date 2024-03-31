@@ -60,7 +60,7 @@
         align-items: center;
     }
     h1 {
-      font-family: Poppins Bold;
+      font-family: "Poppins Bold";
     }
     @import url(https://db.onlinewebfonts.com/c/0c28006f19928dfd146027cfd7024ca0?family=Poppins+Medium);
     @import url(https://db.onlinewebfonts.com/c/07ecc0aa9ce268962dea7356eeff50a6?family=Poppins+Bold);
