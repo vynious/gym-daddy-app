@@ -27,9 +27,6 @@ const router = createRouter({
             }
 
         },
-        {
-        },
-
         {   
             path: '/book',
             name: 'book',

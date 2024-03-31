@@ -28,8 +28,7 @@
 
 .navbar-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-end;
 }
 
 .navbar-menu {
@@ -38,7 +37,6 @@
   margin: 0;
   font-weight: bold;
   font-size: 20px;
-  margin-left: 20px;
 }
 
 .navbar-menu li {
@@ -63,17 +61,17 @@
 
 <template>
   <nav class="navbar">
+    <img
+      src="../images/icons-8-dumbbell-32-removebg-preview-10.png"
+      alt="logo"
+      class="navbar-logo"
+    />
     <div class="navbar-container">
-      <img
-        src="../images/icons-8-dumbbell-32-removebg-preview-10.png"
-        alt="logo"
-        class="navbar-logo"
-      />
-
       <ul class="navbar-menu">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/queue">Queue</router-link></li>
-        <li><router-link to="/queue">Classes</router-link></li>
+        <li><router-link to="/book">Classes</router-link></li>
+        <li><router-link to="/profile">Profile</router-link></li>
         <li><router-link to="/login">Login</router-link></li>
       </ul>
     </div>
