@@ -76,7 +76,7 @@ export default {
         .post(process.env.VUE_APP_LOGIN_USER_URL, loginPayload)
         .then((response) => {
           // Handle success
-          console.log("Login successful", response.data);
+          console.log("Login successful");
           this.error = "";
 
           localStorage.setItem("token", JSON.stringify(response.data));
@@ -86,12 +86,11 @@ export default {
           this.$router.push("/");
 
           var token = JSON.parse(localStorage.getItem("token"));
-          console.log("dog");
-          console.log(token);
+
           axios
             .get("http://localhost:8000/api/users/validatejwt/admin", {
               headers: {
-                Authorization: `Bearer ${token}`,
+                Authorisation: `Bearer ${token}`,
               },
             })
             .then((response) => {
