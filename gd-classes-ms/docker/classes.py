@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from os import environ
@@ -6,6 +7,7 @@ from sqlalchemy import func
 
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -49,7 +51,7 @@ class Classes(db.Model):
 
 
 
-@app.route("/classes", methods=['GET', 'POST'])
+@app.route("/api/classes", methods=['GET', 'POST'])
 def classes():
     if request.method == 'GET':
         class_list = Classes.query.all()
@@ -83,7 +85,7 @@ def classes():
 
 
 
-@app.route("/classes/<int:id>", methods=['GET', 'DELETE', 'PATCH'])
+@app.route("/api/classes/<int:id>", methods=['GET', 'DELETE', 'PATCH'])
 def manage_class(id):
     if request.method == 'GET':
         class_item = Classes.query.get(id)
@@ -176,7 +178,7 @@ def manage_class(id):
 
     
 
-@app.route("/classes/date/<string:date>", methods=['GET'])
+@app.route("/api/classes/date/<string:date>", methods=['GET'])
 def get_schedule_for_specific_day(date):
     try:
         target_date = datetime.strptime(date, '%Y-%m-%d').date()
