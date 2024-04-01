@@ -2,7 +2,10 @@
 	<div style="padding: 20px">
 		<a-row :gutter="16">
 			<a-col :span="8" v-for="classItem in classes" :key="classItem.id">
-				<a-card :bordered="false" style="font-family: 'Poppins Bold'">
+				<a-card
+					:bordered="false"
+					style="font-family: 'Poppins Bold'; margin-bottom: 10px"
+				>
 					<div class="card-title" style="font-family: 'Poppins Bold'">
 						{{ classItem.name }}
 					</div>
@@ -14,12 +17,31 @@
 						{{ classItem.suitable_level.toUpperCase() }}</b
 					>
 					<br />
+					<b>Date and Time: {{ classItem.date_time }}</b>
+					<br />
+					<b>Current Capacity: {{ classItem.capacity }}</b>
+					<br />
+					<b>Max Capacity: {{ classItem.max_capacity }}</b>
+					<br />
 					<a-button
 						type="primary"
-						style="font-family: 'Poppins Medium'"
+						style="font-family: 'Poppins Medium'; margin-right: 5px"
 						@click="bookClass(classItem.id)"
-						>Book Now</a-button
 					>
+						Book Now
+					</a-button>
+					<a-button
+						v-if="isAdmin"
+						type="danger"
+						style="
+							font-family: 'Poppins Medium';
+							background-color: #f5222d;
+							color: white;
+						"
+						@click="cancelClass(classItem.id)"
+					>
+						Delete
+					</a-button>
 				</a-card>
 			</a-col>
 		</a-row>
@@ -34,10 +56,12 @@ export default {
 		return {
 			classes: [],
 			userId: 1, // This should be dynamically set based on the logged-in user
+			isAdmin: false,
 		};
 	},
 	created() {
 		this.fetchClasses();
+		this.checkAdminStatus();
 	},
 	methods: {
 		fetchClasses() {
@@ -54,6 +78,9 @@ export default {
 					);
 				});
 		},
+		checkAdminStatus() {
+			this.isAdmin = localStorage.getItem("isAdmin") === "true";
+		},
 		bookClass(classId) {
 			const bookingURL = "http://localhost:8000/api/booking";
 			const bookingData = {
@@ -64,12 +91,10 @@ export default {
 			axios
 				.post(bookingURL, bookingData)
 				.then((response) => {
-					// Handle success response
 					console.log(response.data);
 					alert("Booking successful!");
 				})
 				.catch((error) => {
-					// Handle error
 					console.error(
 						"There was an error creating the booking:",
 						error
