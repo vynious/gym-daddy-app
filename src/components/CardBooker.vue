@@ -55,15 +55,25 @@ export default {
 	data() {
 		return {
 			classes: [],
+<<<<<<< HEAD
 			userId: 1, // This should be dynamically set based on the logged-in user
 			isAdmin: false,
+=======
+			userId: null // This should be dynamically set based on the logged-in user
+>>>>>>> 9b83c5606886f2cb3b82d5381fbde6c12a7a5d65
 		};
 	},
 	created() {
+		this.fetchUserId();
 		this.fetchClasses();
 		this.checkAdminStatus();
 	},
 	methods: {
+		fetchUserId() {
+			// This should be dynamically set based on the logged-in user
+			const userId = localStorage.getItem("user_id");
+			this.userId = userId ? JSON.parse(userId) : null;
+		},
 		fetchClasses() {
 			const baseURL = "http://localhost:8000/api/classes";
 			axios
@@ -85,7 +95,7 @@ export default {
 			const bookingURL = "http://localhost:8000/api/booking";
 			const bookingData = {
 				user_id: this.userId,
-				class_id: classId,
+				class_id: classId.toString(),
 			};
 
 			axios

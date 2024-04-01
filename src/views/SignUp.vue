@@ -92,6 +92,7 @@ export default {
         telegram_handle: this.telegramHandle,
         role_id: this.roleId,
       };
+      console.log(process.env.VUE_APP_REGISTER_USER_URL);
       axios.post(process.env.VUE_APP_REGISTER_USER_URL, payload)
         .then((response) => {
           console.log(response.data);
