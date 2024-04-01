@@ -131,8 +131,8 @@ func CheckMatchingCallerUsername(c *gin.Context, username string) error {
 		return fmt.Errorf("failed to decode auth token for checking caller id")
 	}
 	// admin auto access
-	if claims.RoleID == 2 {
-		return nil
+	if err := CheckAdmin(claims); err != nil {
+		return err
 	}
 	if claims.Username != username {
 		return fmt.Errorf("unauthorised user access")
@@ -147,8 +147,8 @@ func CheckMatchingCallerId(c *gin.Context, userId string) error {
 		return fmt.Errorf("failed to decode auth token for checking caller id")
 	}
 	// admin auto access
-	if claims.RoleID == 2 {
-		return nil
+	if err := CheckAdmin(claims); err != nil {
+		return err
 	}
 	if claims.ID != userId {
 		return fmt.Errorf("unauthorised user access")
