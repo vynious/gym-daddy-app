@@ -112,11 +112,8 @@ export default {
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/queue">Queue</router-link></li>
         <li><router-link to='/book'>Book</router-link></li>
-<<<<<<< HEAD
+        <li><router-link to="/profile">Profile</router-link></li>
         <li><router-link to="/login">Login</router-link></li>
-=======
-        <li><router-link to='/profile'>Profile</router-link></li>
->>>>>>> 91dc67c5fbc2a4881e4ca381627ad5c20e8208aa
       </ul>
     </div>
   </nav>

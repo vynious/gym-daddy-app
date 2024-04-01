@@ -51,52 +51,64 @@ const router = createRouter({
             component: () => import('../views/BookPilates.vue')
 
         },
-         {
-            path: '/profile',
-            name: 'profile',
-            component: () => import('../views/ProfileDefaultPage.vue')
-          },
-          {
-              path: '/profileEditInfo',
-              name: 'profileEditInfo',
-              component: () => import('../views/ProfileEditInfoPage.vue')
-          },
-          {
-            path: '/profileBookings',
-            name: 'profileBookings',
-            component: () => import('../views/ProfileBookingsPage.vue')
-          },
-          {
-              path: '/profileRefer',
-              name: 'profileRefer',
-              component: () => import('../views/ProfileReferPage.vue')
-          },
-          {
-              path: '/profileLogout',
-              name: 'profileLogout',
-              component: () => import('../views/ProfileLogoutPage.vue')
-          },
-          {
-            path: '/createClass',
-            name: 'createClass',
-            component: () => import('../views/CreateClass.vue')
-          },
-          {
-            path: '/classSearch',
-            name: 'classSearch',
-            component: () => import('../views/ClassSearch.vue')
-          },
-          {
-            path: '/login',
-            name: 'login',
-            component: () => import('../views/Login.vue')
-          },
-          {
-            path: '/sign-up',
-            name: 'sign-up',
-            component: () => import('../views/SignUp.vue')
-          }
-    ]
+        {
+          path: '/profile',
+          name: 'profile',
+          component: () => import('../views/ProfileDefaultPage.vue')
+        },
+        {
+            path: '/profileEditInfo',
+            name: 'profileEditInfo',
+            component: () => import('../views/ProfileEditInfoPage.vue')
+        },
+        {
+          path: '/profileBookings',
+          name: 'profileBookings',
+          component: () => import('../views/ProfileBookingsPage.vue')
+        },
+        {
+            path: '/profileRefer',
+            name: 'profileRefer',
+            component: () => import('../views/ProfileReferPage.vue')
+        },
+        {
+            path: '/profileLogout',
+            name: 'profileLogout',
+            component: () => import('../views/ProfileLogoutPage.vue')
+        },
+        {
+          path: '/createClass',
+          name: 'createClass',
+          component: () => import('../views/CreateClass.vue')
+        },
+        {
+          path: '/classSearch',
+          name: 'classSearch',
+          component: () => import('../views/ClassSearch.vue')
+        },
+        {
+          path: '/login',
+          name: 'Login',
+          component: () => import('../views/Login.vue'),
+        },
+        {
+          path: '/sign-up',
+          name: 'SignUp',
+          component: () => import('../views/SignUp.vue'),
+        }
+    ],
+    scrollBehavior(to, from, savedPosition) {
+      if (to.hash) {
+        return {
+          el: to.hash,
+          behavior: 'smooth',
+        };
+      } else if (savedPosition) {
+        return savedPosition;
+      } else {
+        return { top: 0 };
+      }
+    }
 })
 
 
