@@ -26,9 +26,10 @@
 					<a-button
 						type="primary"
 						style="font-family: 'Poppins Medium'; margin-right: 5px"
+						:disabled="isClassBooked(classItem.id)"
 						@click="bookClass(classItem.id)"
 					>
-						Book Now
+					{{ isClassBooked(classItem.id) ? 'Booked!' : 'Book Now' }}
 					</a-button>
 					<a-button
 						v-if="isAdmin"
@@ -57,12 +58,19 @@ export default {
 			classes: [],
 			isAdmin: false,
 			userId: null, // This should be dynamically set based on the logged-in user
+			bookedClasses: []
 		};
 	},
 	created() {
 		this.fetchUserId();
 		this.fetchClasses();
 		this.checkAdminStatus();
+		this.fetchBookedClasses();
+	},
+	computed: {
+		isClassBooked() {
+			return (classId) => this.bookedClasses.includes(classId.toString());
+		},
 	},
 	methods: {
 		fetchUserId() {
@@ -124,6 +132,18 @@ export default {
 						error
 					);
 					alert("delete failed. Please try again.");
+				});
+		},
+		fetchBookedClasses() {
+			const bookingURL = `http://localhost:8000/api/booking/user/${this.userId}`;
+			axios.get(bookingURL, { headers: { Authorisation: `Bearer ${JSON.parse(localStorage.getItem("token"))}` }})
+				.then((response) => {
+					this.bookedClasses = response.data.bookings.map(booking => booking.class_id);
+				})
+				.catch((error) => {
+					console.error(
+						"There was an error fetching the booked classes data:",error
+					);
 				});
 		},
 	},
