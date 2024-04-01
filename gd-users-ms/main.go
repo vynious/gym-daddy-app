@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -12,6 +13,22 @@ import (
 	"github.com/ljlimjk10/users-ms/db"
 )
 
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token, Authorisation")
+
+		// Add this line to allow preflight requests
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
+
+		c.Next()
+	}
+}
+
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -21,6 +38,7 @@ func main() {
 	jwtAuthService := auth.JWTAuthService()
 	router := gin.Default()
 
+	router.Use(CORSMiddleware())
 
 	users := router.Group("/api/users")
 	{

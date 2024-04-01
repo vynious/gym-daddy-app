@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import grpc
 import requests
 from os import environ
@@ -23,6 +24,7 @@ from pb.queue import queue_message_pb2_grpc as queue_message_pb2_grpc
 
 
 app = Flask(__name__)
+CORS(app)
 
 FLASK_CLASS_SERVER = environ.get("FLASK_CLASS_SERVER") or "http://localhost:5200"
 # Assuming the gRPC server is running on localhost:6000
@@ -54,10 +56,18 @@ def authenticate(f):
     wrapper.__name__ = f.__name__
     return wrapper
 
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorisation')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
 
-@app.route("/api/booking", methods=["POST"])
-@authenticate
+@app.route("/api/booking", methods=["POST", "OPTIONS"])
 def create_booking():
+    if request.method == 'OPTIONS':
+        return _build_cors_preflight_response()
+    
     print("start creating booking", flush=True)
 
     # Extract necessary info from the request
