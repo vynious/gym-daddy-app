@@ -28,8 +28,7 @@ class Classes(db.Model):
     capacity = db.Column(db.Integer)
     max_capacity = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, id, name, description, duration, date_time, suitable_level, capacity, max_capacity):
-        self.id = id
+    def __init__(self, name, description, duration, date_time, suitable_level, capacity, max_capacity):
         self.name = name
         self.description = description
         self.duration = duration
@@ -60,14 +59,8 @@ def classes():
 
     elif request.method == 'POST':
         data = request.get_json()
-        id = data.get('id')
-
-        existing_class = Classes.query.get(id)
-        if existing_class:
-            return jsonify({"message": "Class already exists", "class": existing_class.json()}), 400
 
         new_class = Classes(
-            id=id,
             name=data.get('name'),
             description=data.get('description'),
             duration=data.get('duration'),
