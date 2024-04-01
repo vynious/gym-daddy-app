@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: join-queue-cms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: join-queue-cms
+  template:
+    metadata:
+      labels:
+        app: join-queue-cms
+    spec:
+      containers:
+        - name: join-queue-cms
+          image: gd-join-queue-cms
+          ports:
+            - containerPort: 3003
+          env:
+            - name: GPRC_SERVER_QUEUE
+              value: "queue-ms:3002"
+            - name: GPRC_SERVER_NOTIFICATION
+              value: "notification-ms:3000"
+            - name: KAFKA_URL
+              value: "kafka:9092"
+            - name: KAFKA_TOPIC
+              value: "logs"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: join-queue-cms
+spec:
+  selector:
+    app: join-queue-cms
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3003

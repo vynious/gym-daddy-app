@@ -1,0 +1,21 @@
+[submodule "gd-notification-ms/proto"]
+	path = gd-notification-ms/proto
+	url = https://github.com/vynious/gd-protorepo.git
+[submodule "gd-queue-ms/proto"]
+	path = gd-queue-ms/proto
+	url = https://github.com/vynious/gd-protorepo.git
+[submodule "gd-joinqueue-cms/proto"]
+	path = gd-joinqueue-cms/proto
+	url = https://github.com/vynious/gd-protorepo.git
+[submodule "gd-gym-avail-ms/proto"]
+	path = gd-gym-avail-ms/proto
+	url = https://github.com/vynious/gd-protorepo.git
+[submodule "gd-booking-ms/proto"]
+	path = gd-booking-ms/proto
+	url = https://github.com/vynious/gd-protorepo.git
+[submodule "gd-createbooking-cms/proto"]
+	path = gd-createbooking-cms/proto
+	url = https://github.com/vynious/gd-protorepo.git
+[submodule "gd-createclass-cms/proto"]
+	path = proto
+	url = https://github.com/vynious/gd-protorepo.git

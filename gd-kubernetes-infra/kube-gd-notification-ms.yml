@@ -1,0 +1,98 @@
+# Combined YAML for Notification Database and Microservice
+
+# Deployment for Notification Database
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-db
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notification-db
+  template:
+    metadata:
+      labels:
+        app: notification-db
+    spec:
+      containers:
+        - name: notification-db
+          image: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_USER
+              value: "postgres"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d
+              name: init-script
+            - mountPath: /var/lib/postgresql/data
+              name: notification-db-volume
+
+
+---
+# Service for Notification Database
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-db
+spec:
+  selector:
+    app: notification-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+
+---
+# Deployment for Notification Microservice
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-ms
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notification-ms
+  template:
+    metadata:
+      labels:
+        app: notification-ms
+    spec:
+      containers:
+        - name: notification-ms
+          image: gd-notification-ms
+          env:
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_HOST
+              value: "notification-db"
+            - name: POSTGRES_DBNAME
+              value: "gd-notification-ms"
+            - name: KAFKA_URL
+              value: "kafka:9092"
+            - name: KAFKA_TOPIC
+              value: "notification"
+          ports:
+            - containerPort: 3000
+
+---
+# Service for Notification Microservice
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-ms
+spec:
+  selector:
+    app: notification-ms
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+
+

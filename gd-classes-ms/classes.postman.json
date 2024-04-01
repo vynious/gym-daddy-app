@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "d8cdecb7-d2a1-43f7-a107-cfeae58d7d5c",
+		"name": "Class",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all classes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5200/classes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5200",
+					"path": [
+						"classes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new class",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"7\",\n  \"name\": \"Yoga\",\n    \"description\": \"Yoga class for all levels\",\n    \"duration\": 60,\n    \"date_time\": \"2023-03-18 18:00:00\",\n    \"suitable_level\": \"All Levels\",\n    \"capacity\": 20, \n    \"max_capacity\": 20\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5200/classes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5200",
+					"path": [
+						"classes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get class by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5200/classes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5200",
+					"path": [
+						"classes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+        {
+            "name": "Update Class Capacity",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"action\": \"book / cancel\"}"
+                },
+                "url": {
+                    "raw": "http://localhost:5200/classes/1",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5200",
+                    "path": [
+                        "classes",
+                        "1"
+                    ]
+                }
+            },
+            "response": []
+        },
+        
+		{
+			"name": "Delete class",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:5200/classes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5200",
+					"path": [
+						"classes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+            "name": "Get Schedule for Specific Day",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://localhost:5200/classes/date/2024-03-10",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5200",
+                    "path": [
+                        "classes",
+                        "date",
+                        "2024-03-10"
+                    ]
+                }
+            },
+            "response": []
+        }
+	]
+}

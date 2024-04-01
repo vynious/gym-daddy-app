@@ -1,0 +1,293 @@
+_format_version: "2.1"
+_transform: true
+
+services:
+  - name: join-queue-cms
+    protocol: http
+    url: http://join-queue-cms:3003
+    routes:
+      - name: join-queue
+        paths:
+          - /api/queue/join
+        methods:
+          - POST
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: get-upcoming
+        paths:
+          - /api/queue/upcoming
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: retrieve-next
+        paths:
+          - /api/queue/next
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+  - name: gym-avail-cms
+    protocol: http
+    url: http://gym-avail-ms:3006
+    routes:
+      - name: get-avail
+        paths:
+          - /api/gym/avail
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: update-avail
+        paths:
+          - /api/gym/update-avail
+        methods:
+          - POST
+        protocols:
+          - http
+          - https
+        strip_path: false
+
+  - name: createbooking-cms
+    protocol: http
+    url: http://createbooking-cms:5002
+    routes:
+      - name: make-booking
+        paths:
+          - /api/booking
+        methods:
+          - POST
+          - OPTIONS
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: cancel-booking
+        paths:
+          - /api/booking/:booking_id
+        methods:
+          - DELETE
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: get-booking
+        paths:
+          - /api/booking/:booking_id
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: list-bookings
+        paths:
+          - /api/booking
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: list-user-bookings
+        paths:
+          - /api/booking/user/:user_id
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: update-bookings
+        paths:
+          - /api/booking/:booking_id
+        methods:
+          - PUT
+        protocols:
+          - http
+          - https
+        strip_path: false
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*" # Your Vue app's URL
+          methods:
+            - "GET"
+            - "POST"
+            - "PUT"
+            - "DELETE"
+            - "OPTIONS"
+            - "PATCH"
+          headers:
+            - "Content-Type"
+          exposed_headers:
+            - "Content-Type"
+          max_age: 3600
+          credentials: true
+
+  - name: user-ms
+    protocol: http
+    url: http://user-ms:3005
+    routes:
+      - name: register-user
+        paths:
+          - /api/users/register
+        methods:
+          - POST
+          - OPTIONS
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: login-user
+        paths:
+          - /api/users/login
+        methods:
+          - POST
+          - OPTIONS
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: get-user
+        paths:
+          - /api/users/user
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: get-all-users
+        paths:
+          - /api/users/allusers
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: get-telegram-handle
+        paths:
+          - /api/users/telegram
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: validate-jwt-default
+        paths:
+          - /api/users/validatejwt/default
+        methods:
+          - GET
+          - OPTIONS
+        protocols:
+          - http
+          - https
+        strip_path: false
+      - name: validate-jwt-admin
+        paths:
+          - /api/users/validatejwt/admin
+        methods:
+          - GET
+          - OPTIONS
+        protocols:
+          - http
+          - https
+        strip_path: false
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*" # Your Vue app's URL
+          methods:
+            - "GET"
+            - "POST"
+            - "PUT"
+            - "DELETE"
+            - "OPTIONS"
+            - "PATCH"
+          headers:
+            - "Content-Type"
+            - "Authorization"
+          exposed_headers:
+            - "Content-Type"
+            - "Authorization"
+          max_age: 3600
+          credentials: true
+
+  - name: createclass-cms
+    protocol: http
+    url: http://createclass-cms:5001
+    routes:
+      - name: create-class
+        paths:
+          - /api/class
+        methods:
+          - POST
+          - OPTIONS
+        protocols:
+          - http
+          - https
+        strip_path: false
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*" # Your Vue app's URL
+          methods:
+            - "GET"
+            - "POST"
+            - "PUT"
+            - "DELETE"
+            - "OPTIONS"
+            - "PATCH"
+          headers:
+            - "Content-Type"
+          exposed_headers:
+            - "Content-Type"
+          max_age: 3600
+          credentials: true
+
+  - name: get-classes
+    protocol: http
+    url: http://classes-ms:5200
+    routes:
+      - name: get-classes
+        paths:
+          - /api/classes
+        methods:
+          - GET
+        protocols:
+          - http
+          - https
+        strip_path: false
+    plugins:
+      - name: cors
+        config:
+          origins:
+            - "*" # Your Vue app's URL
+          methods:
+            - "GET"
+            - "POST"
+            - "PUT"
+            - "DELETE"
+            - "OPTIONS"
+            - "PATCH"
+          headers:
+            - "Content-Type"
+          exposed_headers:
+            - "Content-Type"
+          max_age: 3600
+          credentials: true

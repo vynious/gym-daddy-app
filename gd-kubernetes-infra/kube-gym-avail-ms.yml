@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gd-gym-avail
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gym-avail-ms
+  namespace: gd-gym-avail  # Updated namespace here
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gym-avail-ms
+  template:
+    metadata:
+      labels:
+        app: gym-avail-ms
+    spec:
+      containers:
+        - name: gym-avail-ms
+          image: gd-gym-avail-ms
+          ports:
+            - containerPort: 3006
+          env:
+            - name: DB_PASSWORD
+              value: "postgres"
+            - name: DB_USER
+              value: "postgres"
+            - name: DB_HOST
+              value: "gym-avail-db"
+            - name: DB_NAME
+              value: "gym_avail_ms"
+          volumeMounts:
+            - name: migration-volume
+              mountPath: /app/db/migrations
+            - name: script-volume
+              mountPath: /app/scripts
+      volumes:
+        - name: migration-volume
+          configMap:
+            name: gym-avail-ms-migrations
+        - name: script-volume
+          configMap:
+            name: gym-avail-ms-scripts
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gym-avail-ms
+  namespace: gd-gym-avail  # Updated namespace here
+spec:
+  selector:
+    app: gym-avail-ms
+  ports:
+    - protocol: TCP
+      port: 3006
+      targetPort: 3006
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gym-avail-db
+  namespace: gd-gym-avail  # Updated namespace here
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gym-avail-db
+  template:
+    metadata:
+      labels:
+        app: gym-avail-db
+    spec:
+      containers:
+        - name: gym-avail-db
+          image: postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_DB
+              value: "gym_avail_ms"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gym-avail-db
+  namespace: gd-gym-avail  # Updated namespace here
+spec:
+  selector:
+    app: gym-avail-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
