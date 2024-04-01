@@ -1,8 +1,10 @@
 <!-- admin side -->
 <template>
-  <div class="background" >
-    <a-card style="width: 800px; margin-top: 5%;">
-      <h1>Create a Class <router-link to="/classSearch">Class search</router-link></h1>
+  <div class="background">
+    <a-card style="width: 800px; margin-top: 5%">
+      <h1>
+        Create a Class <router-link to="/classSearch">Class search</router-link>
+      </h1>
       <a-form
         ref="formRef"
         :model="formState"
@@ -10,17 +12,26 @@
         :label-col="labelCol"
         :wrapper-col="wrapperCol"
       >
-        <a-form-item label="Class Id" name="id"  style="font-family: 'Poppins Medium';">
-            <a-input v-model:value="formState.id" />
+        <a-form-item
+          label="Class Id"
+          name="id"
+          style="font-family: 'Poppins Medium'"
+        >
+          <a-input v-model:value="formState.id" />
         </a-form-item>
-        <a-form-item label="Class name" name="name"  style="font-family: 'Poppins Medium';">
+        <a-form-item
+          label="Class name"
+          name="name"
+          style="font-family: 'Poppins Medium'"
+        >
           <a-input v-model:value="formState.name" />
         </a-form-item>
         <a-form-item label="Activity time" required name="date_time">
           <a-date-picker
             v-model:value="formState.date_time"
             show-time
-            type="datetime"
+            format="YYYY-MM-DD HH:mm:00"
+            value-format="YYYY-MM-DD HH:mm:00"
             placeholder="Pick a date and time"
             style="width: 100%"
           />
@@ -38,18 +49,28 @@
           <a-textarea v-model:value="formState.description" />
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 14, offset: 5 }">
-          <a-button type="primary" @click="onSubmit" style="font-family: 'Poppins Medium';">Create</a-button>
-          <a-button style="font-family: 'Poppins Medium'; margin-left: 10px" @click="resetForm" >Reset</a-button>
+          <a-button
+            type="primary"
+            @click="onSubmit"
+            style="font-family: 'Poppins Medium'"
+            >Create</a-button
+          >
+          <a-button
+            style="font-family: 'Poppins Medium'; margin-left: 10px"
+            @click="resetForm"
+            >Reset</a-button
+          >
         </a-form-item>
       </a-form>
     </a-card>
   </div>
 </template>
 
-
 <script setup>
-import { reactive, ref } from 'vue';
-import axios from 'axios';
+import { reactive, ref } from "vue";
+import axios from "axios";
+import dayjs from "dayjs";
+
 const formRef = ref();
 const labelCol = {
   span: 5,
@@ -59,81 +80,87 @@ const wrapperCol = {
 };
 const formState = reactive({
   id: 0,
-  name: '', // string
-  date_time: undefined, 
+  name: "", // string
+  date_time: undefined,
   duration: 0, // number
-  suitable_level: '', // string
+  suitable_level: "", // string
   max_capacity: 0,
-  description: '', // string 
+  description: "", // string
 });
+
 const rules = {
   id: [
     {
       required: true,
-      message: 'Please input id',
-      trigger: 'change',
+      message: "Please input id",
+      trigger: "change",
     },
   ],
   name: [
     {
       required: true,
-      message: 'Please input class name',
-      trigger: 'change',
+      message: "Please input class name",
+      trigger: "change",
     },
   ],
-  date_time: [
-    {
-      required: true,
-      message: 'Please pick a date and time',
-      trigger: 'change',
-      type: 'object',
-    },
-  ],
+
   duration: [
     {
       required: true,
-      message: 'Please input duration',
-      trigger: 'change',
+      message: "Please input duration",
+      trigger: "change",
     },
   ],
   suitable_level: [
     {
       required: true,
-      message: 'Please input suitable level',
-      trigger: 'change',
+      message: "Please input suitable level",
+      trigger: "change",
     },
   ],
   max_capacity: [
     {
       required: true,
-      message: 'Please input max capacity',
-      trigger: 'change',
+      message: "Please input max capacity",
+      trigger: "change",
     },
   ],
   description: [
     {
       required: true,
-      message: 'Please input activity description',
-      trigger: 'blur',
+      message: "Please input activity description",
+      trigger: "blur",
     },
   ],
 };
+var token = JSON.parse(localStorage.getItem("token"));
 const onSubmit = () => {
   formRef.value
     .validate()
     .then(() => {
-      axios.post(process.env.VUE_APP_CREATE_CLASS_URL, formState)
-        .then(response => {
-          console.log('Class created successfully', response.data);
+      console.log(formState);
+      const formattedDateTime = dayjs(formState.date_time).format(
+        "YYYY-MM-DD HH:mm:00"
+      );
+      formState.date_time = formattedDateTime;
+      console.log(formState);
+      axios
+        .post(process.env.VUE_APP_CREATE_CLASS_URL, formState, {
+          headers: {
+            Authorisation: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log("Class created successfully", response.data);
           resetForm();
         })
-        .catch(error => {
-          console.error('Error creating class:', error);
+        .catch((error) => {
+          console.error("Error creating class:", error);
           // Handle error, show message to user, etc.
         });
     })
-    .catch(error => {
-      console.log('error', error);
+    .catch((error) => {
+      console.log("error", error);
     });
 };
 const resetForm = () => {
@@ -175,31 +202,28 @@ const resetForm = () => {
       format("svg");
 }
 
-  .background {
-        background-image: url("../assets/background.png");
-        background-size: cover;
-        background-position: center;
-        height: 100vh;
-        display: flex;
-        flex-direction: column; /* Align items in a column */
-        justify-content: flex-start; /* Start from the top */
-        align-items: center;
-        font-family: "Poppins Medium";
-    }
-h1{
+.background {
+  background-image: url("../assets/background.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; /* Align items in a column */
+  justify-content: flex-start; /* Start from the top */
+  align-items: center;
+  font-family: "Poppins Medium";
+}
+h1 {
   font-family: "Poppins Bold";
 }
 .background .ant-form-item-label {
-  font-family: 'Poppins Medium';
+  font-family: "Poppins Medium";
 }
 
-
-h1{
+h1 {
   font-family: "Poppins Bold";
 }
 .background .ant-form-item-label {
-  font-family: 'Poppins Medium';
+  font-family: "Poppins Medium";
 }
-
-
 </style>
