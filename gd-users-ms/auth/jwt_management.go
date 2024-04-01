@@ -53,7 +53,7 @@ func (service *JwtService) TokenGenerate(username string, roleID int, telegramHa
 }
 
 func ExtractToken(c *gin.Context) string {
-	bearerToken := c.Request.Header.Get("Authorization")
+	bearerToken := c.Request.Header.Get("Authorisation")
 	if len(strings.Split(bearerToken, " ")) == 2 {
 		return strings.Split(bearerToken, " ")[1]
 	}

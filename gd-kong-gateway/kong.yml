@@ -220,10 +220,10 @@ services:
             - "PATCH"
           headers:
             - "Content-Type"
-            - "Authorization"
+            - "Authorisation"
           exposed_headers:
             - "Content-Type"
-            - "Authorization"
+            - "Authorisation"
           max_age: 3600
           credentials: true
 
