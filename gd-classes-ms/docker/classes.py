@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from os import environ
 from sqlalchemy import func
+import requests
+
 
 
 app = Flask(__name__)
@@ -28,8 +30,7 @@ class Classes(db.Model):
     capacity = db.Column(db.Integer)
     max_capacity = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, id, name, description, duration, date_time, suitable_level, capacity, max_capacity):
-        self.id = id
+    def __init__(self, name, description, duration, date_time, suitable_level, capacity, max_capacity):
         self.name = name
         self.description = description
         self.duration = duration
@@ -49,6 +50,23 @@ class Classes(db.Model):
                 "capacity": self.capacity,
                 'max_capacity': self.max_capacity}
 
+def authenticate(f):
+    def wrapper(*args, **kwargs):
+        token = request.headers.get('Authorisation')
+        if not token:
+            return jsonify({"error": "Missing Authorisation header"}), 401
+
+        validate_jwt_url = "http://user-ms:3005/api/users/validatejwt/default"
+        headers = {"Authorisation": token}
+        response = requests.get(validate_jwt_url, headers=headers)
+
+        if response.status_code != 200:
+            return jsonify({"error": "Unauthorised"}), 401
+
+        return f(*args, **kwargs)
+    wrapper.__name__ = f.__name__
+    return wrapper
+
 
 
 @app.route("/api/classes", methods=['GET', 'POST'])
@@ -60,14 +78,8 @@ def classes():
 
     elif request.method == 'POST':
         data = request.get_json()
-        id = data.get('id')
-
-        existing_class = Classes.query.get(id)
-        if existing_class:
-            return jsonify({"message": "Class already exists", "class": existing_class.json()}), 400
 
         new_class = Classes(
-            id=id,
             name=data.get('name'),
             description=data.get('description'),
             duration=data.get('duration'),

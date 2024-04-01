@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-
+	"github.com/ljlimjk10/users-ms/auth"
 	"github.com/ljlimjk10/users-ms/models/role_models"
 	"github.com/ljlimjk10/users-ms/models/user_models"
 	"github.com/ljlimjk10/users-ms/models/user_role_assoc_models"
@@ -24,8 +24,15 @@ type SanitisedUser struct {
 	Role      string `json:"role"`
 }
 
+
+
 func GetUser(c *gin.Context, db *pg.DB) {
 	username := c.Query("username")
+
+	if err := auth.CheckMatchingCallerUsername(c, username); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
 	user, err := user_models.GetUser(db, username)
 	if err != nil {
 		log.Println(err)
@@ -94,6 +101,10 @@ func GetAllUsers(c *gin.Context, db *pg.DB) {
 
 func GetUserById(c *gin.Context, db *pg.DB) {
 	userId := c.Query("userId")
+	if err := auth.CheckMatchingCallerId(c, userId); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
 	user, err := user_models.GetUser(db, userId)
 	if err != nil {
 		log.Println(err)
@@ -131,10 +142,14 @@ func GetUserById(c *gin.Context, db *pg.DB) {
 
 
 func GetTelegramHandle(c *gin.Context, db *pg.DB) {
-	userIdStr := c.Query("userId")
-	
 
-	telegramHandle, err := user_models.GetTelegramHandleByUsername(db, userIdStr)
+	userId := c.Query("userId")
+	if err := auth.CheckMatchingCallerId(c, userId); err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
+
+	telegramHandle, err := user_models.GetTelegramHandleByUsername(db, userId)
 	if err != nil {
 		log.Println(err)
 		if errors.Is(err, pg.ErrNoRows) {

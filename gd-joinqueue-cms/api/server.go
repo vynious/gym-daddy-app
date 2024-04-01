@@ -26,8 +26,9 @@ func SpawnServer() *Server {
 }
 
 func (s *Server) MountHandlers() {
+	
 	s.Router.GET("/metrics", gin.WrapH(promhttp.Handler()))
-
+	s.Router.Use(CORSMiddleware())
 	api := s.Router.Group("/api/queue")
 
 	api.Use(s.GenerateRequestID)
@@ -53,7 +54,7 @@ func (s *Server) AuthenticateDefault(c *gin.Context) {
 
 	req, err := http.NewRequestWithContext(c, "GET", "http://user-ms:3005/api/users/validatejwt/default", nil)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "try again later.")
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "try again later."})
 		c.Abort()
 		return
 	}
@@ -61,7 +62,7 @@ func (s *Server) AuthenticateDefault(c *gin.Context) {
 	// extract the "Bearer XXXX" and set as header
 	token := c.GetHeader("Authorisation")
 	if token == "" {
-		c.String(http.StatusBadRequest, "missing auth token please login.")
+		c.JSON(http.StatusBadRequest, gin.H{"message":"missing auth token please login."})
 		c.Abort()
 		return
 	}
@@ -71,7 +72,7 @@ func (s *Server) AuthenticateDefault(c *gin.Context) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "try again later.")
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "try again later."})
 		c.Abort()
 		return
 	}
@@ -80,7 +81,7 @@ func (s *Server) AuthenticateDefault(c *gin.Context) {
 
 	log.Printf("res %+v", resp)
 	if resp.Status == http.StatusText(http.StatusUnauthorized) {
-		c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorised. Go be authorised den come back"})
 		c.Abort()
 		return
 	}
@@ -93,7 +94,7 @@ func (s *Server) AuthenticateAdmin(c *gin.Context) {
 
 	req, err := http.NewRequestWithContext(c, "GET", "http://user-ms:3005/api/users/validatejwt/admin", nil)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "try again later.")
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "try again later."})
 		c.Abort()
 		return
 	}
@@ -101,7 +102,7 @@ func (s *Server) AuthenticateAdmin(c *gin.Context) {
 	// extract the "Bearer XXXX" and set as header
 	token := c.GetHeader("Authorisation")
 	if token == "" {
-		c.String(http.StatusBadRequest, "missing auth token please login.")
+		c.JSON(http.StatusBadRequest, gin.H{"message":"missing auth token please login."})
 		c.Abort()
 		return
 	}
@@ -111,12 +112,12 @@ func (s *Server) AuthenticateAdmin(c *gin.Context) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "try again later.")
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "try again later."})
 		c.Abort()
 		return
 	}
 	if resp.StatusCode == 401 {
-		c.String(http.StatusUnauthorized, "only admin")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "only admin-level access"})
 		c.Abort()
 		return
 	}
@@ -125,9 +126,26 @@ func (s *Server) AuthenticateAdmin(c *gin.Context) {
 
 	log.Printf("res %+v", resp)
 	if resp.Status == http.StatusText(http.StatusUnauthorized) {
-		c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorised. Go be authorised den come back"})
 		c.Abort()
 		return
 	}
 	c.Next()
+}
+
+
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token, Authorisation")
+
+		// Add this line to allow preflight requests
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
+		}
+
+		c.Next()
+	}
 }

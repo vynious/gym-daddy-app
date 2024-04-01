@@ -59,6 +59,8 @@ func ExtractToken(c *gin.Context) string {
 	}
 	return ""
 }
+
+
 func (service *JwtService) TokenValidate(c *gin.Context) error {
 	jwtTokenStr := ExtractToken(c)
 	token, err := jwt.ParseWithClaims(jwtTokenStr, &authCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
@@ -84,7 +86,7 @@ func (service *JwtService) JwtAuthMiddlewareDefault() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		err := service.TokenValidate(c)
 		if err != nil {
-			c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+			c.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorised, please login"})
 			c.Abort()
 			return
 		}
@@ -108,9 +110,6 @@ func DecodeToken(c *gin.Context) (*authCustomClaims, error) {
 	}
 
 	if claims, ok := token.Claims.(*authCustomClaims); ok && token.Valid {
-		if claims.RoleID != 2 {
-			return nil, fmt.Errorf("only admin can access")
-		}
 		return claims, nil
 	} else {
 		return nil, fmt.Errorf("invalid token or claims")
@@ -118,17 +117,62 @@ func DecodeToken(c *gin.Context) (*authCustomClaims, error) {
 }
 
 
+func CheckAdmin(claims *authCustomClaims) error {
+	if claims.RoleID != 2 {
+			return fmt.Errorf("only admin can access")
+		}
+	return nil
+}
+
+func CheckMatchingCallerUsername(c *gin.Context, username string) error {
+	claims ,err := DecodeToken(c)
+	if err != nil {
+		log.Println("failed to decode auth token on header")
+		return fmt.Errorf("failed to decode auth token for checking caller id")
+	}
+	// admin auto access
+	if err := CheckAdmin(claims); err != nil {
+		return err
+	}
+	if claims.Username != username {
+		return fmt.Errorf("unauthorised user access")
+	}
+	return nil
+}
+
+func CheckMatchingCallerId(c *gin.Context, userId string) error {
+	claims ,err := DecodeToken(c)
+	if err != nil {
+		log.Println("failed to decode auth token on header")
+		return fmt.Errorf("failed to decode auth token for checking caller id")
+	}
+	// admin auto access
+	if err := CheckAdmin(claims); err != nil {
+		return err
+	}
+	if claims.ID != userId {
+		return fmt.Errorf("unauthorised user access")
+	}
+	return nil
+}
+
 func (service *JwtService) JwtAuthMiddlewareAdmin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		err := service.TokenValidate(c)
 		if err != nil {
-			c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+			c.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorised, please login"})
 			c.Abort()
 			return
 		}
 		// check admin
-		if _,err := DecodeToken(c); err != nil {
-			c.String(http.StatusUnauthorized, err.Error())
+		claims ,err := DecodeToken(c)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
+			c.Abort()
+			return
+		}
+		if err := CheckAdmin(claims); err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 			c.Abort()
 			return
 		}

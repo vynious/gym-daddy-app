@@ -2,622 +2,341 @@ _format_version: "2.1"
 _transform: true
 
 services:
-  - name: join-queue-cms
-    protocol: http
-    url: http://join-queue-cms:3003
-    routes:
-      - name: join-queue
-        paths:
-          - /api/queue/join
-        methods:
-          - POST
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
+    - name: join-queue-cms
+      protocol: http
+      url: http://join-queue-cms:3003
+      routes:
+          - name: join-queue
+            paths:
+                - /api/queue/join
+            methods:
+                - POST
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: get-upcoming
+            paths:
+                - /api/queue/upcoming
+            methods:
+                - GET
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: retrieve-next
+            paths:
+                - /api/queue/next
+            methods:
+                - GET
+            protocols:
+                - http
+                - https
+            strip_path: false
+      plugins:
+        - name: cors
+          config:
               origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-      
-
-      - name: get-upcoming
-        paths:
-          - /api/queue/upcoming
-        methods:
-          - GET
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-      - name: retrieve-next
-        paths:
-          - /api/queue/next
-        methods:
-          - GET
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-  - name: gym-avail-cms
-    protocol: http
-    url: http://gym-avail-ms:3006
-    routes:
-      - name: get-avail
-        paths:
-          - /api/gym/avail
-        methods:
-          - GET
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-      - name: update-avail
-        paths:
-          - /api/gym/update-avail
-        methods:
-          - POST
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-  - name: createclass-cms
-    protocol: http
-    url: http://createclass-cms:5001
-    routes:
-      - name: create-class
-        paths:
-          - /api/class
-        methods:
-          - POST
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-  - name: get-classes
-    protocol: http
-    url: http://classes-ms:5200
-    routes:
-        - name: get-classes
-          paths:
-              - /api/classes
-          methods:
-              - GET
-          protocols:
-              - http
-              - https
-          strip_path: false
-          plugins:
-            - name: cors
-              config:
-                origins:
                   - "*" # Your Vue app's URL
-                methods:
+              methods:
                   - "GET"
                   - "POST"
                   - "PUT"
                   - "DELETE"
                   - "OPTIONS"
                   - "PATCH"
+              headers:
+                  - "Content-Type"
+              exposed_headers:
+                  - "Content-Type"
+              max_age: 3600
+              credentials: true
+    - name: gym-avail-cms
+      protocol: http
+      url: http://gym-avail-ms:3006
+      routes:
+          - name: get-avail
+            paths:
+                - /api/gym/avail
+            methods:
+                - GET
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: update-avail
+            paths:
+                - /api/gym/update-avail
+            methods:
+                - POST
+            protocols:
+                - http
+                - https
+            strip_path: false
+      plugins:
+        - name: cors
+          config:
+              origins:
+                  - "*" # Your Vue app's URL
+              methods:
+                  - "GET"
+                  - "POST"
+                  - "PUT"
+                  - "DELETE"
+                  - "OPTIONS"
+                  - "PATCH"
+              headers:
+                  - "Content-Type"
+              exposed_headers:
+                  - "Content-Type"
+              max_age: 3600
+              credentials: true
+    - name: createbooking-cms
+      protocol: http
+      url: http://createbooking-cms:5002
+      routes:
+          - name: make-booking
+            paths:
+                - /api/booking
+            methods:
+                - POST
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: cancel-booking
+            paths:
+                - /api/booking/:booking_id
+            methods:
+                - DELETE
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: get-booking
+            paths:
+                - /api/booking/:booking_id
+            methods:
+                - GET
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: list-bookings
+            paths:
+                - /api/booking
+            methods:
+                - GET
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: list-user-bookings
+            paths:
+                - /api/booking/user/:user_id
+            methods:
+                - GET
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: update-bookings
+            paths:
+                - /api/booking/:booking_id
+            methods:
+                - PUT
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+      plugins:
+          - name: cors
+            config:
+                origins:
+                    - "*" # Your Vue app's URL
+                methods:
+                    - "GET"
+                    - "POST"
+                    - "PUT"
+                    - "DELETE"
+                    - "OPTIONS"
+                    - "PATCH"
                 headers:
-                  - "Content-Type"
+                    - "Content-Type"
                 exposed_headers:
-                  - "Content-Type"
+                    - "Content-Type"
                 max_age: 3600
                 credentials: true
 
-  - name: createbooking-cms
-    protocol: http
-    url: http://createbooking-cms:5002
-    routes:
-      - name: make-booking
-        paths:
-          - /api/booking
-        methods:
-          - POST
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
+    - name: user-ms
+      protocol: http
+      url: http://user-ms:3005
+      routes:
+          - name: register-user
+            paths:
+                - /api/users/register
+            methods:
+                - POST
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: login-user
+            paths:
+                - /api/users/login
+            methods:
+                - POST
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: get-user
+            paths:
+                - /api/users/user
+            methods:
+                - GET
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: get-all-users
+            paths:
+                - /api/users/allusers
+            methods:
+                - GET
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: get-telegram-handle
+            paths:
+                - /api/users/telegram
+            methods:
+                - GET
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: validate-jwt-default
+            paths:
+                - /api/users/validatejwt/default
+            methods:
+                - GET
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+          - name: validate-jwt-admin
+            paths:
+                - /api/users/validatejwt/admin
+            methods:
+                - GET
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+      plugins:
           - name: cors
             config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
+                origins:
+                    - "*" # Your Vue app's URL
+                methods:
+                    - "GET"
+                    - "POST"
+                    - "PUT"
+                    - "DELETE"
+                    - "OPTIONS"
+                    - "PATCH"
+                headers:
+                    - "Content-Type"
+                    - "Authorisation"
+                exposed_headers:
+                    - "Content-Type"
+                    - "Authorisation"
+                max_age: 3600
+                credentials: true
 
-      - name: cancel-booking
-        paths:
-          - /api/booking/:booking_id
-        methods:
-          - DELETE
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
+    - name: createclass-cms
+      protocol: http
+      url: http://createclass-cms:5001
+      routes:
+          - name: create-class
+            paths:
+                - /api/class
+            methods:
+                - POST
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+      plugins:
           - name: cors
             config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
+                origins:
+                    - "*" # Your Vue app's URL
+                methods:
+                    - "GET"
+                    - "POST"
+                    - "PUT"
+                    - "DELETE"
+                    - "OPTIONS"
+                    - "PATCH"
+                headers:
+                    - "Content-Type"
+                    - "Authorisation"
+                exposed_headers:
+                    - "Content-Type"
+                    - "Authorisation"
+                max_age: 3600
+                credentials: true
 
-      - name: get-booking
-        paths:
-          - /api/booking/:booking_id
-        methods:
-          - GET
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
+    - name: get-classes
+      protocol: http
+      url: http://classes-ms:5200
+      routes:
+          - name: get-classes
+            paths:
+                - /api/classes
+            methods:
+                - GET
+                - DELETE
+                - PATCH
+                - OPTIONS
+            protocols:
+                - http
+                - https
+            strip_path: false
+      plugins:
           - name: cors
             config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-      - name: list-bookings
-        paths:
-          - /api/booking
-        methods:
-          - GET
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-      - name: list-user-bookings
-        paths:
-          - /api/booking/user/:user_id
-        methods:
-          - GET
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-      - name: update-bookings
-        paths:
-          - /api/booking/:booking_id
-        methods:
-          - PUT
-          - OPTIONS
-
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-
-  - name: user-ms
-    protocol: http
-    url: http://user-ms:3005
-    routes:
-      - name: register-user
-        paths:
-          - /api/users/register
-        methods:
-          - POST
-          - OPTIONS
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-  
-      - name: login-user
-        paths:
-          - /api/users/login
-        methods:
-          - POST
-          - OPTIONS
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-      - name: get-user
-        paths:
-          - /api/users/user
-        methods:
-          - GET
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-      - name: get-all-users
-        paths:
-          - /api/users/allusers
-        methods:
-          - GET
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-      
-      - name: get-telegram-handle
-        paths:
-          - /api/users/telegram
-        methods:
-          - GET
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-      
-      - name: validate-jwt
-        paths: 
-          - /api/users/validatejwt
-        methods:
-          - GET
-          - OPTIONS
-          - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorisation"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-
-# plugins:
-#   - name: cors
-#     config:
-#       origins:
-#         - "http://localhost:8080"  # Now an array
-#       methods:
-#         - "GET"
-#         - "POST"
-#         - "PUT"
-#         - "DELETE"
-#         - "OPTIONS"
-#         - "PATCH"  # Each method is an item in the array
-#       headers:
-#         - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-#         - "Content-Type"  # Now an array
-#       exposed_headers:
-#         - "Authorization"  # Now an array, corrected spelling
-#       max_age: 3600
-#       credentials: true
-
-#   - name: jwt
-#   - route:
+                origins:
+                    - "*" # Your Vue app's URL
+                methods:
+                    - "GET"
+                    - "POST"
+                    - "PUT"
+                    - "DELETE"
+                    - "OPTIONS"
+                    - "PATCH"
+                headers:
+                    - "Content-Type"
+                exposed_headers:
+                    - "Content-Type"
+                max_age: 3600
+                credentials: true

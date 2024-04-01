@@ -71,8 +71,13 @@ def create_booking():
     print("start creating booking", flush=True)
 
     # Extract necessary info from the request
+
     user_id = request.json.get("user_id")
     class_id = request.json.get("class_id")
+
+    if not class_id.isdigit():
+        return jsonify({"message": "wrong format for class_id"}), 400
+        
     res = requests.patch(
         f"http://{FLASK_CLASS_SERVER}/api/classes/{int(class_id)}", json={"action": "book"}
     )

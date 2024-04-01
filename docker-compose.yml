@@ -142,7 +142,6 @@ services:
     ports:
       - "3003:3003"
     restart: always
-
     environment:
       GPRC_SERVER_QUEUE: "queue-ms:3002"
       GPRC_SERVER_NOTIFICATION: "notification-ms:3000"
