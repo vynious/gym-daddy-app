@@ -4,27 +4,14 @@
     <div class="form-section">
       <div class="form-container">
         <div class="gym-logo">
-          <img
-            src="../images/icons-8-dumbbell-32-removebg-preview-10.png"
-            alt="Gym Logo"
-          />
+          <img src="../images/icons-8-dumbbell-32-removebg-preview-10.png" alt="Gym Logo" />
         </div>
         <div class="error-message" v-if="error">{{ error }}</div>
         <div class="form-group">
-          <input
-            type="text"
-            v-model="username"
-            placeholder="Username"
-            required
-          />
+          <input type="text" v-model="username" placeholder="Username" required />
         </div>
         <div class="form-group">
-          <input
-            type="password"
-            v-model="password"
-            placeholder="Password"
-            required
-          />
+          <input type="password" v-model="password" placeholder="Password" required />
         </div>
         <div class="form-check">
           <label class="checkbox-container">
@@ -76,34 +63,41 @@ export default {
         .post(process.env.VUE_APP_LOGIN_USER_URL, loginPayload)
         .then((response) => {
           // Handle success
-          console.log("Login successful", response.data);
+          console.log("Login successful");
           this.error = "";
 
           localStorage.setItem("token", JSON.stringify(response.data));
 
           localStorage.setItem("loggedIn", true);
 
-          this.$router.push("/");
-
           var token = JSON.parse(localStorage.getItem("token"));
-          console.log("dog");
-          console.log(token);
-          axios
-            .get("http://localhost:8000/api/users/validatejwt/admin", {
+          axios.get(`${process.env.VUE_APP_GET_USER_URL}?username=${this.username}`, {
+            headers: {
+              Authorisation: `Bearer ${token}`,
+            },
+          }).then((userResponse) => {
+            // Store user-specific information as needed
+            localStorage.setItem("user_id", JSON.stringify(userResponse.data.user_id));
+
+            // Check if user is admin
+            // Check if user is admin
+            axios.get("http://localhost:8000/api/users/validatejwt/admin", {
               headers: {
-                Authorization: `Bearer ${token}`,
+                Authorisation: `Bearer ${token}`,
               },
-            })
-            .then((response) => {
-              var isAdmin = false;
-              if (response.status === 200) {
-                isAdmin = true;
-              }
+            }).then((adminResponse) => {
+              const isAdmin = adminResponse.status === 200;
               localStorage.setItem("isAdmin", isAdmin);
-            })
-            .catch((error) => {
-              console.log(error.message);
+              if (isAdmin) {
+                this.$router.push("/admin");
+              } else {
+                this.$router.push("/");
+              }
+            }).catch((error) => {
+              console.error("Admin check error:", error.message);
+              this.$router.push("/");
             });
+          });
         })
         .catch((error) => {
           if (error.response && error.response.data) {
@@ -126,31 +120,21 @@ export default {
 @font-face {
   font-family: "Poppins Medium";
   src: url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.eot");
-  src: url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff2")
-      format("woff2"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff")
-      format("woff"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.ttf")
-      format("truetype"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.svg#Poppins Medium")
-      format("svg");
+  src: url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.eot?#iefix") format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff") format("woff"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.ttf") format("truetype"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.svg#Poppins Medium") format("svg");
 }
 
 @font-face {
   font-family: "Poppins Bold";
   src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot");
-  src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff2")
-      format("woff2"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff")
-      format("woff"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.ttf")
-      format("truetype"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold")
-      format("svg");
+  src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot?#iefix") format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff") format("woff"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.ttf") format("truetype"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold") format("svg");
 }
 
 .login-container {
@@ -269,11 +253,11 @@ input {
   border-radius: 3px;
 }
 
-.checkbox-container input:checked ~ .checkmark-icon {
+.checkbox-container input:checked~.checkmark-icon {
   background-color: #000000;
 }
 
-.checkbox-container input:checked ~ .checkmark-icon:after {
+.checkbox-container input:checked~.checkmark-icon:after {
   content: "\2705";
   font-size: 20px;
   color: white;

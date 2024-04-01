@@ -33,13 +33,19 @@ export default {
 	data() {
 		return {
 			classes: [],
-			userId: 1, // This should be dynamically set based on the logged-in user
+			userId: null // This should be dynamically set based on the logged-in user
 		};
 	},
 	created() {
+		this.fetchUserId();
 		this.fetchClasses();
 	},
 	methods: {
+		fetchUserId() {
+			// This should be dynamically set based on the logged-in user
+			const userId = localStorage.getItem("user_id");
+			this.userId = userId ? JSON.parse(userId) : null;
+		},
 		fetchClasses() {
 			const baseURL = "http://localhost:8000/api/classes";
 			axios
@@ -58,7 +64,7 @@ export default {
 			const bookingURL = "http://localhost:8000/api/booking";
 			const bookingData = {
 				user_id: this.userId,
-				class_id: classId,
+				class_id: classId.toString(),
 			};
 
 			axios
