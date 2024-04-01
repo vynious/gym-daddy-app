@@ -89,7 +89,7 @@ export default {
               const isAdmin = adminResponse.status === 200;
               localStorage.setItem("isAdmin", isAdmin);
               if (isAdmin) {
-                this.$router.push("/admin");
+                this.$router.push("/");
               } else {
                 this.$router.push("/");
               }
