@@ -112,7 +112,7 @@
                 <img src="../assets/gym.png" class="card-img-top gymimg" alt="...">
 
                 <div class="card-body">
-                    <button type="button" class="btn entergymbtn" @click="showQR = true">Enter Gym</button>
+                    <button type="button" class="btn entergymbtn" @click="showQR = true; updateGymAvail()">Enter Gym</button>
                 </div>
             </div>
 
@@ -168,8 +168,7 @@
         },
         created() {
             // call backend here
-            // this.fetchQueueData();
-
+            this.fetchQueueData();
             this.callQueueNo();
 
             QRCode.toDataURL("https://www.google.com/")  // need a URL for here
@@ -182,38 +181,42 @@
         },
         methods: {
             fetchQueueData() {
-                const baseURL = "";
+                const baseURL = "http://127.0.0.1:8000";
 
-                this.$axios.get(`${baseURL}/`, {
+                axios.get(`${baseURL}/api/queue/join`, {
                     // headers: {
                     //     Authorization: ``
                     // }
                 }) 
-                .then (response => {
+                .then(response => {
                     console.log(response.data);
-                    // this.currentQueue = 
-                    // this.userQueue = 
+                    this.userQueue = response.data.queue_number
 
-                    const progress = this.currentQueue / this.userQueue * 100;
-                    this.progressBar = `${progress}%`;
+                    axios.get(`${baseURL}/api/queue/upcoming`)
+                    .then (response => {
+                        this.currentQueue = response.data; // check this
+                        const progress = this.currentQueue / this.userQueue * 100;
+                        this.progressBar = `${progress}%`;
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    })
+
                 })
+                .catch (err => {
+                    console.error(err);
+                })
+                
             },
             callQueueNo() {
                 if (this.currentQueue == this.userQueue) {
                     this.isTurn = true;
                 }
             },
-            increaseGymCapacity() {
-                const baseURL = "";
+            updateGymAvail() {
+                const baseURL = "http://127.0.0.1:8000";
 
-                axios.post(`${baseURL}/`)
-                .then (response => {
-                    // update capacity
-                    console.log(response);
-                })
-                .catch(err => {
-                    console.error(err);
-                })
+                axios.get(`${baseURL}/api/`)
             }
         }
     }

@@ -71,8 +71,8 @@
                 <div class="card-title header">Virtual Queue</div> 
                 <div class="card-text subheader">
                     There are currently
-                    <span class="circle"> {{ queueNo }} </span>
-                    people in line.
+                    <span class="circle"> {{ gymAvail }} </span>
+                    spots available in the gym.
                 </div>  
             </div> 
 
@@ -92,23 +92,23 @@
         name: 'JoinQueue',
         data() {
             return {
-                queueNo: 0
+                gymAvail: 0
             }
         },
         methods: {
             joinqueue() {
                 this.$router.push({name: 'joinqueue'});
-                // const baseURL = "";
+                const baseURL = "http://127.0.0.1:8000";
 
-                // this.$axios.get(`${baseURL}/`,{  // to check path
-                //     // headers: {
-                //     //     Authorization: ``
-                //     // }
-                // }) 
-                // .then(response => {
-                //     console.log(response.data);
-                //     // this.queueNo = 
-                // })
+                this.$axios.get(`${baseURL}/api/gym/avail`,{  
+                    // headers: {
+                    //     Authorization: ``
+                    // }
+                }) 
+                .then(response => {
+                    console.log(response.data);
+                    this.gymAvail = response.data; 
+                })
                 
             }
         }
