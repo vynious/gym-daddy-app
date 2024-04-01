@@ -29,10 +29,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
       
@@ -60,10 +60,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -90,10 +90,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -124,10 +124,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -154,10 +154,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -188,10 +188,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
   - name: get-classes
@@ -253,10 +253,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -283,10 +283,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -313,10 +313,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -343,10 +343,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -373,10 +373,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -404,10 +404,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
@@ -422,35 +422,6 @@ services:
         methods:
           - POST
           - OPTIONS
-        protocols:
-          - http
-          - https
-        strip_path: false
-        plugins:
-          - name: cors
-            config:
-              origins:
-                - "http://localhost:8080"  # Now an array
-              methods:
-                - "GET"
-                - "POST"
-                - "PUT"
-                - "DELETE"
-                - "OPTIONS"
-                - "PATCH"  # Each method is an item in the array
-              headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
-                - "Content-Type"  # Now an array
-              exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
-              max_age: 3600
-              credentials: true
-  
-      - name: login-user
-        paths:
-          - /api/users/login
-        methods:
-          - POST
           - OPTIONS
         protocols:
           - http
@@ -469,15 +440,46 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
+              max_age: 3600
+              credentials: true
+  
+      - name: login-user
+        paths:
+          - /api/users/login
+        methods:
+          - POST
+          - OPTIONS
+          - OPTIONS
+        protocols:
+          - http
+          - https
+        strip_path: false
+        plugins:
+          - name: cors
+            config:
+              origins:
+                - "http://localhost:8080"  # Now an array
+              methods:
+                - "GET"
+                - "POST"
+                - "PUT"
+                - "DELETE"
+                - "OPTIONS"
+                - "PATCH"  # Each method is an item in the array
+              headers:
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Content-Type"  # Now an array
+              exposed_headers:
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
       - name: get-user
-        paths: 
+        paths:
           - /api/users/user
         methods:
           - GET
@@ -499,15 +501,15 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
       - name: get-all-users
-        paths: 
+        paths:
           - /api/users/allusers
         methods:
           - GET
@@ -529,15 +531,15 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
       
       - name: get-telegram-handle
-        paths: 
+        paths:
           - /api/users/telegram
         methods:
           - GET
@@ -559,10 +561,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
       
@@ -571,6 +573,7 @@ services:
           - /api/users/validatejwt
         methods:
           - GET
+          - OPTIONS
           - OPTIONS
         protocols:
           - http
@@ -589,10 +592,10 @@ services:
                 - "OPTIONS"
                 - "PATCH"  # Each method is an item in the array
               headers:
-                - "Authorization"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
+                - "Authorisation"  # Corrected spelling from 'Authorisation' to 'Authorization' unless 'Authorisation' is specifically required
                 - "Content-Type"  # Now an array
               exposed_headers:
-                - "Authorization"  # Now an array, corrected spelling
+                - "Authorisation"  # Now an array, corrected spelling
               max_age: 3600
               credentials: true
 
