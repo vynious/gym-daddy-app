@@ -10,12 +10,15 @@
         :label-col="labelCol"
         :wrapper-col="wrapperCol"
       >
-        <a-form-item label="Class name" name="className"  style="font-family: 'Poppins Medium';">
-          <a-input v-model:value="formState.className" />
+        <a-form-item label="Class Id" name="id"  style="font-family: 'Poppins Medium';">
+            <a-input v-model:value="formState.id" />
         </a-form-item>
-        <a-form-item label="Activity time" required name="activityTime">
+        <a-form-item label="Class name" name="name"  style="font-family: 'Poppins Medium';">
+          <a-input v-model:value="formState.name" />
+        </a-form-item>
+        <a-form-item label="Activity time" required name="date_time">
           <a-date-picker
-            v-model:value="formState.activityTime"
+            v-model:value="formState.date_time"
             show-time
             type="datetime"
             placeholder="Pick a date and time"
@@ -25,14 +28,14 @@
         <a-form-item label="Duration" name="duration">
           <a-input-number v-model:value="formState.duration" />
         </a-form-item>
-        <a-form-item label="Suitable level" name="suitableLevel">
-          <a-input v-model:value="formState.suitableLevel" />
+        <a-form-item label="Suitable level" name="suitable_level">
+          <a-input v-model:value="formState.suitable_level" />
         </a-form-item>
-        <a-form-item label="Max Capacity" name="maxCapacity">
-          <a-input-number v-model:value="formState.maxCapacity" />
+        <a-form-item label="Max Capacity" name="max_capacity">
+          <a-input-number v-model:value="formState.max_capacity" />
         </a-form-item>
-        <a-form-item label="Activity description" name="activityDescription">
-          <a-textarea v-model:value="formState.activityDescription" />
+        <a-form-item label="Activity description" name="description">
+          <a-textarea v-model:value="formState.description" />
         </a-form-item>
         <a-form-item :wrapper-col="{ span: 14, offset: 5 }">
           <a-button type="primary" @click="onSubmit" style="font-family: 'Poppins Medium';">Create</a-button>
@@ -46,6 +49,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue';
+import axios from 'axios';
 const formRef = ref();
 const labelCol = {
   span: 5,
@@ -54,22 +58,30 @@ const wrapperCol = {
   span: 13,
 };
 const formState = reactive({
-  className: '', // string
-  activityTime: undefined, 
+  id: 0,
+  name: '', // string
+  date_time: undefined, 
   duration: 0, // number
-  suitableLevel: '', // string
-  maxCapacity: 0,
-  activityDescription: '', // string 
+  suitable_level: '', // string
+  max_capacity: 0,
+  description: '', // string 
 });
 const rules = {
-  className: [
+  id: [
+    {
+      required: true,
+      message: 'Please input id',
+      trigger: 'change',
+    },
+  ],
+  name: [
     {
       required: true,
       message: 'Please input class name',
       trigger: 'change',
     },
   ],
-  activityTime: [
+  date_time: [
     {
       required: true,
       message: 'Please pick a date and time',
@@ -84,21 +96,21 @@ const rules = {
       trigger: 'change',
     },
   ],
-  suitableLevel: [
+  suitable_level: [
     {
       required: true,
       message: 'Please input suitable level',
       trigger: 'change',
     },
   ],
-  maxCapacity: [
+  max_capacity: [
     {
       required: true,
       message: 'Please input max capacity',
       trigger: 'change',
     },
   ],
-  activityDescription: [
+  description: [
     {
       required: true,
       message: 'Please input activity description',
@@ -110,7 +122,15 @@ const onSubmit = () => {
   formRef.value
     .validate()
     .then(() => {
-      console.log('values', formState);
+      axios.post(process.env.VUE_APP_CREATE_CLASS_URL, formState)
+        .then(response => {
+          console.log('Class created successfully', response.data);
+          resetForm();
+        })
+        .catch(error => {
+          console.error('Error creating class:', error);
+          // Handle error, show message to user, etc.
+        });
     })
     .catch(error => {
       console.log('error', error);
