@@ -38,7 +38,7 @@
 							background-color: #f5222d;
 							color: white;
 						"
-						@click="cancelClass(classItem.id)"
+						@click="deleteClass(classItem.id)"
 					>
 						Delete
 					</a-button>
@@ -55,12 +55,8 @@ export default {
 	data() {
 		return {
 			classes: [],
-<<<<<<< HEAD
-			userId: 1, // This should be dynamically set based on the logged-in user
 			isAdmin: false,
-=======
-			userId: null // This should be dynamically set based on the logged-in user
->>>>>>> 9b83c5606886f2cb3b82d5381fbde6c12a7a5d65
+			userId: null, // This should be dynamically set based on the logged-in user
 		};
 	},
 	created() {
@@ -110,6 +106,24 @@ export default {
 						error
 					);
 					alert("Booking failed. Please try again.");
+				});
+		},
+		deleteClass(classId) {
+			const deleteURL =
+				"http://localhost:8000/api/classes/" + classId.toString();
+
+			axios
+				.delete(deleteURL)
+				.then((response) => {
+					console.log(response.data);
+					alert("delete successful!");
+				})
+				.catch((error) => {
+					console.error(
+						"There was an error deleting the class:",
+						error
+					);
+					alert("delete failed. Please try again.");
 				});
 		},
 	},
