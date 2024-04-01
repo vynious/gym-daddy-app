@@ -1,0 +1,1696 @@
+openapi: 3.0.0
+info:
+  title: gym-daddy
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+  - url: http://localhost:8001
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+paths:
+  /api/queue/join:
+    post:
+      tags:
+        - default
+      summary: User joins gym queue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                user_id: f278aade-247a-4f87-ab6e-b9e745838a6c
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduIiwicm9sZV9pZCI6MiwidGVsZWdyYW1faGFuZGxlIjoic2hhd250eXciLCJpc3MiOiJqayIsImV4cCI6MTcxMTk2Mjk0OH0.TYCZ1mHZABefoGkMVSB3q5UF5c-IasRKxpGrqsefqos
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '130'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Request-Id:
+              schema:
+                type: string
+                example: a807637d-0138-4e7b-b904-eafd4a41407a
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:15:08 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '48'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '41'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 1ab4b476b3c790031900001ab060a76a
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                data:
+                  queue_number: 1
+                  user_id: f278aade-247a-4f87-ab6e-b9e745838a6c
+                  created_at:
+                    seconds: 1711962908
+                    nanos: 385752551
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '46'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Request-Id:
+              schema:
+                type: string
+                example: 796d540c-e123-44b3-ae3f-b2a6cd0f6ef7
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:24:06 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '7'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '47'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: fb9a7e4c23395f0b31fb2f1c1500795b
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: missing auth token please login.
+  /api/queue/upcoming:
+    get:
+      tags:
+        - default
+      summary: Get upcoming ticket in the queue
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduIiwicm9sZV9pZCI6MSwidGVsZWdyYW1faGFuZGxlIjoic2hhd250eXciLCJpc3MiOiJqayIsImV4cCI6MTcxMTk2ODI3OH0.M9L7e2oNivkEAn7Xyc1Vpye1bCD6_AbgayjK_Xa-Efk
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '130'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Request-Id:
+              schema:
+                type: string
+                example: debad807-6f78-4852-809e-060a0278174e
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:42:23 GMT
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '25'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '5'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 7e901c4da227a57bd735212d82700756
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                data:
+                  queue_number: 1
+                  user_id: f278aade-247a-4f87-ab6e-b9e745838a6c
+                  created_at:
+                    seconds: 1711963519
+                    nanos: 773601167
+  /api/queue/next:
+    get:
+      tags:
+        - default
+      summary: Dequeue remove first from queue
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduMSIsInJvbGVfaWQiOjIsInRlbGVncmFtX2hhbmRsZSI6InNoYXdudHl3MSIsImlzcyI6ImprIiwiZXhwIjoxNzExOTY4MzgxfQ.90GSe0OMCvbdrLH7s-k4s5ALN9vDamNYKfrsI7gcU9E
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '130'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Request-Id:
+              schema:
+                type: string
+                example: 1751566c-a486-4fec-acc2-14c6faf2c324
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:46:42 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '20'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '5'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 3cb44728cc8cb249ffc3202180bc863a
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                data:
+                  queue_number: 1
+                  user_id: f278aade-247a-4f87-ab6e-b9e745838a6c
+                  created_at:
+                    seconds: 1711963519
+                    nanos: 773601167
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '37'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            X-Request-Id:
+              schema:
+                type: string
+                example: 128e6193-cf5c-4fc6-970a-d7a3f5bd72c1
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:45:05 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '20'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '5'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 35e5437dca3b13210eb7897868f69256
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: only admin-level access
+
+  /api/gym/avail:
+    get:
+      tags:
+        - default
+      summary: Get current availabilities in the Gym
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: 'Bearer '
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '11'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:10:15 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '26'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '2'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 3ce95e6390fdb634456f8b041c192f7d
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                count: 0
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '46'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:13:54 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '2'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '1'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: d29f0b6851644038f3a5ed34f2d00429
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: missing auth token please login.
+  /api/gym/update-avail:
+    post:
+      tags:
+        - default
+      summary: Update the gym availabilities - User leaves the gym
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                update_type: increment
+                quantity: 1
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduIiwicm9sZV9pZCI6MiwidGVsZWdyYW1faGFuZGxlIjoic2hhd250eXciLCJpc3MiOiJqayIsImV4cCI6MTcxMTk2NTk4Nn0.pCD9GRF5IlCKmyx7E4fhG1lmphS09GIyY_lJIaWJkSM
+      responses:
+        '201':
+          description: Created
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '12'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:07:29 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '9'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '3'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 368071624fb3612a346a7022bedc9b59
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                count: 50
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '37'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:05:43 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '3'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '82'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: c62ed1713e2ae422c8d1a12760c1c956
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: only admin-level access
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '58'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:03:24 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '28'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '56'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 302b142c700fa768ece1202aabb16265
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: cannot increment current availability above 50
+  /api/booking:
+    post:
+      tags:
+        - default
+      summary: Create booking for a class
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                user_id: 4b2067b6-d8d4-4d97-9f95-46839805864a
+                class_id: '1'
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXciLCJyb2xlX2lkIjoyLCJ0ZWxlZ3JhbV9oYW5kbGUiOiIxMjIxMTIiLCJpc3MiOiJqayIsImV4cCI6MTcxMTk2MjA2N30.8bw1XcvrTzibD471EZ8yI2nd-Z0I9ynk8Rt7YolswFo
+      responses:
+        '201':
+          description: CREATED
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '126'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Server:
+              schema:
+                type: string
+                example: Werkzeug/3.0.1 Python/3.12.2
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:47:28 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '1121'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '44'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: fa31b650469c85486736f650dd5add1b
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                booking_id: cfc05420-b351-4424-86a8-7545efb182de
+                message: Booking created and notification sent successfully
+        '400':
+          description: BAD REQUEST
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '45'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Server:
+              schema:
+                type: string
+                example: Werkzeug/3.0.1 Python/3.12.2
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:49:24 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '29'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '7'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 370b2032ad95a74fab07d90a6e5e686b
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: wrong format for class_id
+        '401':
+          description: UNAUTHORIZED
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '30'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Server:
+              schema:
+                type: string
+                example: Werkzeug/3.0.1 Python/3.12.2
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:48:18 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '18'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '3'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: f9a8674d6e66de2bfb06a24a4224b731
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: Unauthorised
+        '500':
+          description: INTERNAL SERVER ERROR
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '75'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Server:
+              schema:
+                type: string
+                example: Werkzeug/3.0.1 Python/3.12.2
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:48:48 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '43'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '3'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: b6793c52456ddd0b9dda263e61bbd173
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: <Response [404]>
+                message: Failed to create booking
+  /api/booking/user/04eeff27-f178-465f-9a62-b24d61f99b95:
+    get:
+      tags:
+        - default
+      summary: Get user's bookings by user_id
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduIiwicm9sZV9pZCI6MiwidGVsZWdyYW1faGFuZGxlIjoic2hhd250eXciLCJpc3MiOiJqayIsImV4cCI6MTcxMTg3ODQxMX0.BYzVti8KcbslBmnqAv4V28-Hzm-6cDAwxHl28Et1e7o
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/users/register:
+    post:
+      tags:
+        - default
+      summary: Register a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: shawn1
+                email: shawn1@gmail.com
+                password: admin
+                first_name: shawn1
+                last_name: thiah
+                telegram_handle: shawntyw1
+                role_id: 2
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '42'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:15:44 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '1088'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '66'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 5a9fc50e6cab9943bc2d9764ec310020
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: User registered successfully
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '35'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:20:31 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '1045'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '2'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: c6004e0a1a8d5349df65f75032383b4c
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: 500 - Missing field
+                  value:
+                    error: Failed to register user
+                example-1:
+                  summary: 500 - User details already taken
+                  value:
+                    error: Failed to register user
+  /api/users/login:
+    post:
+      tags:
+        - default
+      summary: Login a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: shawn1
+                password: admin
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '212'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:15:48 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '1034'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '1'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 286a2952e634c572d416ff3a4338ef17
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                token: >-
+                  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduIiwicm9sZV9pZCI6MiwidGVsZWdyYW1faGFuZGxlIjoic2hhd250eXciLCJpc3MiOiJqayIsImV4cCI6MTcxMTk2Mjk0OH0.TYCZ1mHZABefoGkMVSB3q5UF5c-IasRKxpGrqsefqos
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '47'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:25:13 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '1038'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '2'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: ad26ff20e6aad15e3a12307866737720
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: 400 -  Wrong password
+                  value:
+                    error: Invalid password. Please try again.
+                example-1:
+                  summary: 40 - Non-existent user
+                  value:
+                    error: >-
+                      No user record found. Please register or try again with
+                      another set of credentials
+  /api/users/validatejwt/admin:
+    get:
+      tags:
+        - default
+      summary: validate jwt admin
+      security:
+        - basicAuth: []
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduIiwicm9sZV9pZCI6MSwidGVsZWdyYW1faGFuZGxlIjoic2hhd250eXciLCJpc3MiOiJqayIsImV4cCI6MTcxMTg1NzAxMH0.IudtYFQoSL3hENE-ADVelxRq9RNaABoJtv5ooZpM7x4
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/users/user:
+    get:
+      tags:
+        - default
+      summary: Get user by username
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduIiwicm9sZV9pZCI6MiwidGVsZWdyYW1faGFuZGxlIjoic2hhd250eXciLCJpc3MiOiJqayIsImV4cCI6MTcxMTk2Mjk0OH0.TYCZ1mHZABefoGkMVSB3q5UF5c-IasRKxpGrqsefqos
+        - name: username
+          in: query
+          schema:
+            type: string
+          example: shawn
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '180'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:18:06 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '13'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '2'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 6eeb4c63fd17e631ff750258beb88278
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                user_id: ef73f473-86ed-456a-914c-b33ff036346d
+                username: shawn
+                email: shawn@gmail.com
+                first_name: shawn
+                last_name: thiah
+                telegram_handle: shawntyw
+                role: Admin
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '40'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:39:38 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '0'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '2'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: a4f7a93392668168525eaa0261332602
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: unauthorised, please login
+        '404':
+          description: Not Found
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '27'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:31:10 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '26'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '9'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: fc8341756af0f16e4b406b355325bf28
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: User not found.
+  /api/users/allusers:
+    get:
+      tags:
+        - default
+      summary: Get all users
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduIiwicm9sZV9pZCI6MiwidGVsZWdyYW1faGFuZGxlIjoic2hhd250eXciLCJpc3MiOiJqayIsImV4cCI6MTcxMTk2NDUzOH0.I9RMC10lxqXRm730UEo2iI0K8mhsyFkZYLSzzkLXp48
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '365'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:43:11 GMT
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '7'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '2'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 50c69866020ed51c68332d5af239ec27
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                - user_id: 32785a34-5940-40c4-84fb-cdf2b085c046
+                  username: shawn
+                  email: shawn@gmail.com
+                  first_name: shawn
+                  last_name: thiah
+                  telegram_handle: shawntyw
+                  role: Admin
+                - user_id: 4b2067b6-d8d4-4d97-9f95-46839805864a
+                  username: shawn1
+                  email: shawn1@gmail.com
+                  first_name: shawn
+                  last_name: thiah
+                  telegram_handle: shawntyw1
+                  role: User
+        '401':
+          description: Unauthorized
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Content-Length:
+              schema:
+                type: integer
+                example: '40'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:43:43 GMT
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '0'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '2'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 4cf6752411d1415261582019e137af73
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                message: unauthorised, please login
+  /api/class:
+    post:
+      tags:
+        - default
+      summary: Admin create a class
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id: '19'
+                name: Yoga
+                description: Yoga class for all levels
+                duration: 60
+                date_time: '2023-03-18 18:00:00'
+                suitable_level: All Levels
+                capacity: 20
+                max_capacity: 20
+      parameters:
+        - name: Authorisation
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNoYXduIiwicm9sZV9pZCI6MiwidGVsZWdyYW1faGFuZGxlIjoic2hhd250eXciLCJpc3MiOiJqayIsImV4cCI6MTcxMTk2NDUzOH0.I9RMC10lxqXRm730UEo2iI0K8mhsyFkZYLSzzkLXp48
+      responses:
+        '201':
+          description: CREATED
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '1127'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Server:
+              schema:
+                type: string
+                example: Werkzeug/3.0.1 Python/3.12.2
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:44:28 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '2320'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '139'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 81f834331c2e743e02c3992a22603250
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                code: 201
+                data:
+                  create_class_result:
+                    class:
+                      capacity: 20
+                      date_time: Sat, 18 Mar 2023 18:00:00 GMT
+                      description: Yoga class for all levels
+                      duration: 60
+                      id: 19
+                      max_capacity: 20
+                      name: Yoga
+                      suitable_level: All Levels
+                    code: 201
+                    message: Class created successfully
+                  notification_responses:
+                    - notification:
+                        content: >
+                          We have an upcoming class! Open our app to find out
+                          more.
+                        createdAt: '2024-04-01T08:44:26.544027462Z'
+                        id: 0be93f10-f004-11ee-a55d-0242ac170015
+                        notificationType: New-Class
+                        telegramHandle: shawntyw
+                    - notification:
+                        content: >
+                          We have an upcoming class! Open our app to find out
+                          more.
+                        createdAt: '2024-04-01T08:44:27.583032379Z'
+                        id: 0c87de1d-f004-11ee-a55d-0242ac170015
+                        notificationType: New-Class
+                        telegramHandle: shawntyw1
+        '401':
+          description: UNAUTHORIZED
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '30'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Server:
+              schema:
+                type: string
+                example: Werkzeug/3.0.1 Python/3.12.2
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 09:49:48 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '86'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '48'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: 20977f7579e1ef1e78db893b7f838744
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                error: Unauthorised
+  /api/classes:
+    get:
+      tags:
+        - default
+      summary: Get all classes
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Content-Length:
+              schema:
+                type: integer
+                example: '2009'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Server:
+              schema:
+                type: string
+                example: Werkzeug/3.0.1 Python/3.12.2
+            Date:
+              schema:
+                type: string
+                example: Mon, 01 Apr 2024 08:45:35 GMT
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Authorisation
+            X-Kong-Upstream-Latency:
+              schema:
+                type: integer
+                example: '15'
+            X-Kong-Proxy-Latency:
+              schema:
+                type: integer
+                example: '71'
+            Via:
+              schema:
+                type: string
+                example: kong/3.6.1
+            X-Kong-Request-Id:
+              schema:
+                type: string
+                example: a6b2f2551e14a43b5558d93ca999fe65
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                classes:
+                  - capacity: 30
+                    date_time: Fri, 18 Mar 2022 09:00:00 GMT
+                    description: Relaxing and rejuvenating yoga class for all levels.
+                    duration: 60
+                    id: 1
+                    max_capacity: 30
+                    name: Yoga
+                    suitable_level: All Levels
+                  - capacity: 20
+                    date_time: Sat, 19 Mar 2022 17:30:00 GMT
+                    description: >-
+                      Core-strengthening Pilates class focusing on flexibility
+                      and strength.
+                    duration: 45
+                    id: 2
+                    max_capacity: 20
+                    name: Pilates
+                    suitable_level: Intermediate
+                  - capacity: 30
+                    date_time: Sun, 20 Mar 2022 18:00:00 GMT
+                    description: High-energy Zumba class with Latin-inspired dance moves.
+                    duration: 60
+                    id: 3
+                    max_capacity: 30
+                    name: Zumba
+                    suitable_level: All Levels
+                  - capacity: 20
+                    date_time: Mon, 21 Mar 2022 19:00:00 GMT
+                    description: Intense indoor cycling class for a great cardio workout.
+                    duration: 45
+                    id: 4
+                    max_capacity: 20
+                    name: Spin
+                    suitable_level: Advanced
+                  - capacity: 25
+                    date_time: Tue, 22 Mar 2022 18:30:00 GMT
+                    description: High-intensity interval training for a full-body workout.
+                    duration: 30
+                    id: 5
+                    max_capacity: 25
+                    name: HIIT
+                    suitable_level: Intermediate
+                  - capacity: 20
+                    date_time: Sat, 18 Mar 2023 18:00:00 GMT
+                    description: Yoga class for all levels
+                    duration: 60
+                    id: 19
+                    max_capacity: 20
+                    name: Yoga
+                    suitable_level: All Levels
+                  - capacity: 20
+                    date_time: Sat, 18 Mar 2023 18:00:00 GMT
+                    description: Yoga class for all levels
+                    duration: 60
+                    id: 20
+                    max_capacity: 20
+                    name: Yoga
+                    suitable_level: All Levels

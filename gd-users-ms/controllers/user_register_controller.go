@@ -67,5 +67,5 @@ func RegisterUser(c *gin.Context, db *pg.DB) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "User registered successfully"})
+	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully"})
 }

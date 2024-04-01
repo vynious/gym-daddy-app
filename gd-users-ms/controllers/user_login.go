@@ -48,7 +48,12 @@ func LoginUser(c *gin.Context, db *pg.DB, jwtAuthService *auth.JwtService) {
 	}
 
 	roleId, err := user_role_assoc_models.GetUserRoleID(db, user.UserID)
-
+	
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Internal server error. Please contact system admin."})
+		return
+	}
 	signedToken, err := jwtAuthService.TokenGenerate(loginPayload.Username, roleId, user.TelegramHandle)
 
 	if err != nil {
@@ -57,5 +62,5 @@ func LoginUser(c *gin.Context, db *pg.DB, jwtAuthService *auth.JwtService) {
 		return
 	}
 
-	c.JSON(http.StatusOK, signedToken)
+	c.JSON(http.StatusOK, gin.H{"token": signedToken})
 }
