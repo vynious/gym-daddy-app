@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from os import environ
 from sqlalchemy import func
+import requests
+
 
 
 app = Flask(__name__)
@@ -47,6 +49,23 @@ class Classes(db.Model):
                 "suitable_level": self.suitable_level,
                 "capacity": self.capacity,
                 'max_capacity': self.max_capacity}
+
+def authenticate(f):
+    def wrapper(*args, **kwargs):
+        token = request.headers.get('Authorisation')
+        if not token:
+            return jsonify({"error": "Missing Authorisation header"}), 401
+
+        validate_jwt_url = "http://user-ms:3005/api/users/validatejwt/default"
+        headers = {"Authorisation": token}
+        response = requests.get(validate_jwt_url, headers=headers)
+
+        if response.status_code != 200:
+            return jsonify({"error": "Unauthorised"}), 401
+
+        return f(*args, **kwargs)
+    wrapper.__name__ = f.__name__
+    return wrapper
 
 
 
