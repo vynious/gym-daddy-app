@@ -89,7 +89,7 @@ export default {
         });
         axios.get("http://localhost:8000/api/users/validatejwt/admin", {
             headers: {
-              Authorisation:localStorage.getItem('token')
+              Authorisation:`Bearer ${localStorage.getItem('token')}`
             }
         })
             .then(response => {
