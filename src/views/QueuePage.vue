@@ -1,65 +1,63 @@
 <style scoped>
-    .background {
-        background-image: url("../assets/background.png");
-        background-size: cover;
-        background-position: center;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Poppins medium';
-    }
+.background {
+  background-image: url("../assets/background.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .cardPos {
-        justify-content: center;
-        display: flex;
-        margin: auto;
-        align-items: center;
-        margin-top: 50px;
-    }
+.cardPos {
+  justify-content: center;
+  display: flex;
+  margin: auto;
+  align-items: center;
+  margin-top: 50px;
+}
 
-    .header {
-        font-family: 'Poppins bold';
-        font-size: 58px;
-    }
+.header {
+  font-weight: bold;
+  font-size: 60px;
+}
 
-    .subheader {
-        font-size: 30px;
-    }
+.subheader {
+  font-size: 34px;
+}
 
-    .circle {
-        background-color: #C7FF9C;
-        border-radius: 50%;
-        padding: 5px;
-    }
+.circle {
+  background-color: #c7ff9c;
+  border-radius: 50%;
+  padding: 5px;
+}
 
-    .queueimg {
-        margin: auto;
-        height: auto;
-        width: 400px;
-    }
+.queueimg {
+  margin: auto;
+  height: auto;
+  width: 400px;
+}
 
-    .joinbtn {
-        background-color: #C7FF9C;
-        font-size: 28px;
-        width: 250px;
-        justify-content: center;
-        margin: auto;
-        align-items: center;
-        display: flex;
-        transition-duration: 0.2s;
-        margin-bottom: 20px;
-    }
+.joinbtn {
+  background-color: #c7ff9c;
+  font-size: 35px;
+  width: 250px;
+  justify-content: center;
+  margin: auto;
+  align-items: center;
+  display: flex;
+  transition-duration: 0.2s;
+  margin-bottom: 20px;
+}
 
-    .joinbtn:hover {
-        background-color: #A9E47C; 
-        color: black;
-    }
+.joinbtn:hover {
+  background-color: #a9e47c;
+  color: black;
+}
 
-    .routerlink {
-        text-decoration: none;
-
-    }
+.routerlink {
+  text-decoration: none;
+}
 </style>
 
 <template>
@@ -83,8 +81,8 @@
             </div>
 
         </div>
+      </div>
 
-    </div>
 </template>
 
 <script>

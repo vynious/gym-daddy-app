@@ -1,102 +1,101 @@
 <style scoped>
-    .background {
-        background-image: url("../assets/background.png");
-        background-size: cover;
-        background-position: center;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Poppins medium';
-    }
+.background {
+  background-image: url("../assets/background.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .cardPos {
-        justify-content: center;
-        display: flex;
-        margin: auto;
-        align-items: center;
-        margin-top: 50px;
-    }
+.cardPos {
+  justify-content: center;
+  display: flex;
+  margin: auto;
+  align-items: center;
+  margin-top: 50px;
+}
 
-    .header {
-        font-family: 'Poppins bold';
-        font-size: 38px;
-        margin-bottom: 0px;
-    }
+.header {
+  font-weight: bold;
+  font-size: 48px;
+  margin-bottom: 0px;
+}
 
-    .subheader {
-        font-size: 30px;
-    }
+.subheader {
+  font-weight: medium;
+  font-size: 34px;
+}
 
-    .wording {
-        font-weight: medium;
-        font-size: 22px;
-    }
+.wording {
+  font-weight: medium;
+  font-size: 28px;
+}
 
-    .borderstyle {
-        border-style: solid;
-        border-color: #C7FF9C;
-        border-width: 9px;
-        border-radius: 10px;
-        width: 300px;
-        display: flex;
-        margin: auto;
-        justify-content: center;
-        margin-top: 25px;
-    }
+.borderstyle {
+  border-style: solid;
+  border-color: #c7ff9c;
+  border-width: 9px;
+  border-radius: 10px;
+  width: 300px;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  margin-top: 25px;
+}
 
-    .gymimg {
-        margin: auto;
-        height: auto;
-        width: 400px;
-    }
+.gymimg {
+  margin: auto;
+  height: auto;
+  width: 400px;
+}
 
-    .queueno {
-        font-size: 150px;
-        font-weight: bolder;
-    }
+.queueno {
+  font-size: 150px;
+  font-weight: bolder;
+}
 
-    .entergymbtn {
-        background-color: #C7FF9C;
-        font-size: 28px;
-        width: 250px;
-        justify-content: center;
-        margin: auto;
-        align-items: center;
-        display: flex;
-        transition-duration: 0.2s;
-        margin-bottom: 20px;
-    }
+.entergymbtn {
+  background-color: #c7ff9c;
+  font-size: 35px;
+  width: 250px;
+  justify-content: center;
+  margin: auto;
+  align-items: center;
+  display: flex;
+  transition-duration: 0.2s;
+  margin-bottom: 20px;
+}
 
-    .queue-info {
-        margin-top: 40px;
-        font-size: 24px;
-        font-weight: medium;
-        text-align: right;
-    }
+.queue-info {
+  margin-top: 40px;
+  font-size: 24px;
+  font-weight: medium;
+  text-align: right;
+}
 
-    .queue-progress {
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-        border-style: solid;
-        border-color: #D9D9D9;
-        border-radius: 50px;
-    }
+.queue-progress {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  border-style: solid;
+  border-color: #d9d9d9;
+  border-radius: 50px;
+}
 
-    .progress-container {
-        width: 100%;
-        height: 30px;
-        background-color: white;
-        border-radius: 50px;
-    }
+.progress-container {
+  width: 100%;
+  height: 30px;
+  background-color: white;
+  border-radius: 50px;
+}
 
-    .progress-bar {
-        height: 100%;
-        background-color: #d9d9d9;
-        border-radius: 50px;
-    }
-
+.progress-bar {
+  height: 100%;
+  background-color: #d9d9d9;
+  border-radius: 50px;
+}
 </style>
 
 <template>
@@ -145,15 +144,15 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
     </div>
+
 </template>
 
 <script>
-    import QRCode from 'qrcode';
-    import axios from 'axios';
+import QRCode from "qrcode";
+import axios from "axios";
 
     export default {
         data() {
