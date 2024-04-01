@@ -4,14 +4,27 @@
     <div class="form-section">
       <div class="form-container">
         <div class="gym-logo">
-          <img src="../images/icons-8-dumbbell-32-removebg-preview-10.png" alt="Gym Logo" />
+          <img
+            src="../images/icons-8-dumbbell-32-removebg-preview-10.png"
+            alt="Gym Logo"
+          />
         </div>
         <div class="error-message" v-if="error">{{ error }}</div>
         <div class="form-group">
-          <input type="text" v-model="username" placeholder="Username" required />
+          <input
+            type="text"
+            v-model="username"
+            placeholder="Username"
+            required
+          />
         </div>
         <div class="form-group">
-          <input type="password" v-model="password" placeholder="Password" required />
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Password"
+            required
+          />
         </div>
         <div class="form-check">
           <label class="checkbox-container">
@@ -35,11 +48,9 @@
 </template>
 
 <script>
-
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  
   name: "LoginPage",
   data() {
     return {
@@ -61,48 +72,48 @@ export default {
         password: this.password,
       };
 
-      axios.post(process.env.VUE_APP_LOGIN_USER_URL, loginPayload)
-        .then(response => {
+      axios
+        .post(process.env.VUE_APP_LOGIN_USER_URL, loginPayload)
+        .then((response) => {
           // Handle success
           console.log("Login successful", response.data);
           this.error = "";
 
-          // You might want to save the received token in local storage
-          localStorage.setItem('token', response.data.token);
+          localStorage.setItem("token", JSON.stringify(response.data));
 
-          localStorage.setItem('loggedIn', true);
+          localStorage.setItem("loggedIn", true);
 
-          // Redirect the user to another page after login
-          this.$router.push('/');
+          this.$router.push("/");
+
+          var token = JSON.parse(localStorage.getItem("token"));
+          console.log("dog");
+          console.log(token);
+          axios
+            .get("http://localhost:8000/api/users/validatejwt/admin", {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((response) => {
+              var isAdmin = false;
+              if (response.status === 200) {
+                isAdmin = true;
+              }
+              localStorage.setItem("isAdmin", isAdmin);
+            })
+            .catch((error) => {
+              console.log(error.message);
+            });
         })
-        .catch(error => {
-          // Handle error
+        .catch((error) => {
           if (error.response && error.response.data) {
-            // Server responded with a status other than 2xx
             console.error("Login error:", error.response.data.message);
             this.error = error.response.data.message;
           } else {
-            // Something happened in setting up the request that triggered an Error
             console.error("Login error:", error.message);
             this.error = "An error occurred. Please try again.";
           }
         });
-        axios.get("http://localhost:8000/api/users/validatejwt/admin", {
-            headers: {
-              Authorisation:`Bearer ${localStorage.getItem('token')}`
-            }
-        })
-            .then(response => {
-              var isAdmin = false
-              if (response.status === 200){
-               isAdmin = true 
-              }
-              localStorage.setItem('isAdmin', isAdmin);
-            })
-            .catch( error => {
-                console.log(error.message);
-            });
-
     },
   },
 };
@@ -115,21 +126,31 @@ export default {
 @font-face {
   font-family: "Poppins Medium";
   src: url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.eot");
-  src: url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.eot?#iefix") format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff2") format("woff2"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff") format("woff"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.ttf") format("truetype"),
-    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.svg#Poppins Medium") format("svg");
+  src: url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/0c28006f19928dfd146027cfd7024ca0.svg#Poppins Medium")
+      format("svg");
 }
 
 @font-face {
   font-family: "Poppins Bold";
   src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot");
-  src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot?#iefix") format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff2") format("woff2"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff") format("woff"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.ttf") format("truetype"),
-    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold") format("svg");
+  src: url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/07ecc0aa9ce268962dea7356eeff50a6.svg#Poppins Bold")
+      format("svg");
 }
 
 .login-container {
@@ -248,11 +269,11 @@ input {
   border-radius: 3px;
 }
 
-.checkbox-container input:checked~.checkmark-icon {
+.checkbox-container input:checked ~ .checkmark-icon {
   background-color: #000000;
 }
 
-.checkbox-container input:checked~.checkmark-icon:after {
+.checkbox-container input:checked ~ .checkmark-icon:after {
   content: "\2705";
   font-size: 20px;
   color: white;
