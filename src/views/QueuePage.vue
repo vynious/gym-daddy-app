@@ -68,10 +68,8 @@
             <div class="card-body m-auto"> 
                 <div class="card-title header">Virtual Queue</div> 
                 <div class="card-text subheader">
-                    There are currently
-                    <span class="circle"> {{ gymAvail }} </span>
-                    spots available in the gym.
-                </div>  
+                    Join the queue now to enter the gym!
+                </div> 
             </div> 
 
             <img src="../assets/queue.png" class="card-img-top queueimg" alt="..."> 
@@ -96,18 +94,6 @@
         methods: {
             joinqueue() {
                 this.$router.push({name: 'joinqueue'});
-                const baseURL = "http://127.0.0.1:8000";
-
-                this.$axios.get(`${baseURL}/api/gym/avail`,{  
-                    // headers: {
-                    //     Authorization: ``
-                    // }
-                }) 
-                .then(response => {
-                    console.log(response.data);
-                    this.gymAvail = response.data; 
-                })
-                
             }
         }
     };
