@@ -35,7 +35,7 @@ func RetrieveCurrentAvail(c *gin.Context, db *pg.DB) {
 		}
 	}
 
-	c.JSON(http.StatusOK, gymAvail.CurrentAvail)
+	c.JSON(http.StatusOK, gin.H{"count": gymAvail.CurrentAvail})
 }
 
 func UpdateCurrentAvail(c *gin.Context, db *pg.DB) {
@@ -72,5 +72,5 @@ func UpdateCurrentAvail(c *gin.Context, db *pg.DB) {
 	go rpc.GRPCGetUpcomingTickets(c)
 
 	
-	c.JSON(http.StatusCreated, gymAvail.CurrentAvail)
+	c.JSON(http.StatusCreated, gin.H{"count": gymAvail.CurrentAvail})
 }

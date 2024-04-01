@@ -84,7 +84,7 @@ func (service *JwtService) JwtAuthMiddlewareDefault() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		err := service.TokenValidate(c)
 		if err != nil {
-			c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+			c.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorised, please login"})
 			c.Abort()
 			return
 		}
@@ -122,13 +122,13 @@ func (service *JwtService) JwtAuthMiddlewareAdmin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		err := service.TokenValidate(c)
 		if err != nil {
-			c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+			c.JSON(http.StatusUnauthorized, gin.H{"message": "unauthorised, please login"})
 			c.Abort()
 			return
 		}
 		// check admin
 		if _,err := DecodeToken(c); err != nil {
-			c.String(http.StatusUnauthorized, err.Error())
+			c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 			c.Abort()
 			return
 		}

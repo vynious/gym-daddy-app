@@ -21,10 +21,11 @@ func main() {
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	gym := router.Group("/api/gym")
 	{	
-		gym.Use(AuthenticateAdmin)
+		gym.Use(AuthenticateDefault)
 		gym.GET("/avail", func(c *gin.Context) {
 			controllers.RetrieveCurrentAvail(c, dbc.DB)
 		})
+		gym.Use(AuthenticateAdmin)
 		gym.POST("/update-avail", func(c *gin.Context) {
 			controllers.UpdateCurrentAvail(c, dbc.DB)
 		})
@@ -41,7 +42,7 @@ func AuthenticateDefault(c *gin.Context) {
 
 	req, err := http.NewRequestWithContext(c, "GET", "http://user-ms:3005/api/users/validatejwt/default", nil)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "try again later.")
+		c.JSON(http.StatusInternalServerError, gin.H{"message":"try again later."})
 		c.Abort()
 		return
 	}
@@ -49,7 +50,7 @@ func AuthenticateDefault(c *gin.Context) {
 	// extract the "Bearer XXXX" and set as header
 	token := c.GetHeader("Authorisation")
 	if token == "" {
-		c.String(http.StatusBadRequest, "missing auth token please login.")
+		c.JSON(http.StatusBadRequest, gin.H{"message": "missing auth token please login."})
 		c.Abort()
 		return
 	}
@@ -59,7 +60,7 @@ func AuthenticateDefault(c *gin.Context) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "try again later.")
+		c.JSON(http.StatusInternalServerError, gin.H{"message":"try again later."})
 		c.Abort()
 		return
 	}
@@ -68,7 +69,7 @@ func AuthenticateDefault(c *gin.Context) {
 
 	log.Printf("res %+v", resp)
 	if resp.Status == http.StatusText(http.StatusUnauthorized) {
-		c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorised. Go be authorised den come back"})
 		c.Abort()
 		return
 	}
@@ -81,7 +82,7 @@ func AuthenticateAdmin(c *gin.Context) {
 
 	req, err := http.NewRequestWithContext(c, "GET", "http://user-ms:3005/api/users/validatejwt/admin", nil)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "try again later.")
+		c.JSON(http.StatusInternalServerError, gin.H{"message":"try again later."})
 		c.Abort()
 		return
 	}
@@ -90,7 +91,7 @@ func AuthenticateAdmin(c *gin.Context) {
 	// extract the "Bearer XXXX" and set as header
 	token := c.GetHeader("Authorisation")
 	if token == "" {
-		c.String(http.StatusBadRequest, "missing auth token please login.")
+		c.JSON(http.StatusBadRequest, gin.H{"message": "missing auth token please login."})
 		c.Abort()
 		return
 	}
@@ -100,13 +101,13 @@ func AuthenticateAdmin(c *gin.Context) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		c.String(http.StatusInternalServerError, "try again later.")
+		c.JSON(http.StatusInternalServerError, gin.H{"message":"try again later."})
 		c.Abort()
 		return
 	}
 
 	if resp.StatusCode == 401 {
-		c.String(http.StatusUnauthorized, "only admin")
+		c.JSON(http.StatusUnauthorized, gin.H{"message":"only admin-level access"})
 		c.Abort()
 		return
 	}
@@ -115,7 +116,7 @@ func AuthenticateAdmin(c *gin.Context) {
 
 	log.Printf("res %+v", resp)
 	if resp.Status == http.StatusText(http.StatusUnauthorized) {
-		c.String(http.StatusUnauthorized, "Unauthorised. Go be authorised den come back")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "Unauthorised. Go be authorised den come back"})
 		c.Abort()
 		return
 	}

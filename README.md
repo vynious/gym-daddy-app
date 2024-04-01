@@ -12,6 +12,7 @@ Offering a virtual queuing system to tackle the long queue and the class booking
 
 
 
+
 ## Setting up GYM-DADDY with Docker
 ```bash
 # clone the repo
@@ -26,6 +27,8 @@ docker compose down
 git submodule update --remote
 ```
 
+## To view the API Documentation
+- Use `swagger-api-doc.yml` and copy paste the whole thing inside the Swagger UI Editor `https://editor.swagger.io/`
 
 ## User Scenerios
 ### 
