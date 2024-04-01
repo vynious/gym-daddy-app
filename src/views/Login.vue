@@ -80,7 +80,6 @@ export default {
             localStorage.setItem("user_id", JSON.stringify(userResponse.data.user_id));
 
             // Check if user is admin
-            // Check if user is admin
             axios.get("http://localhost:8000/api/users/validatejwt/admin", {
               headers: {
                 Authorisation: `Bearer ${token}`,
