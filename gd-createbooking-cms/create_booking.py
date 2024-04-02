@@ -135,7 +135,7 @@ def create_booking():
     )
 
 
-@app.route("/api/booking/<string:booking_id>", methods=["DELETE"])
+@app.route("/api/booking/<string:booking_id>", methods=["DELETE", "OPTIONS"])
 @authenticate
 def cancel_booking(booking_id):
     booking_res, err = get_booking(booking_id=booking_id)
@@ -168,7 +168,7 @@ def cancel_booking(booking_id):
     return jsonify({"message": "Booking cancelled successfully"})
 
 
-@app.route("/api/booking/<string:booking_id>", methods=["GET"])
+@app.route("/api/booking/<string:booking_id>", methods=["GET", "OPTIONS"])
 @authenticate
 def get_booking(booking_id):
     # Create a new get booking request message
@@ -183,7 +183,7 @@ def get_booking(booking_id):
         print(f"gRPC call failed: {e}")
         return jsonify({"error": str(e)}), 500
     class_response = requests.get(
-        f"{FLASK_CLASS_SERVER}/api/classes/{int(response.booking.class_id)}"
+        f"http://{FLASK_CLASS_SERVER}/api/classes/{int(response.booking.class_id)}"
     )
     if class_response.status_code != 200:
         return (
@@ -204,7 +204,7 @@ def get_booking(booking_id):
     return jsonify(booking_info), 200
 
 
-@app.route("/api/booking", methods=["GET"])
+@app.route("/api/booking", methods=["GET", "OPTIONS"])
 @authenticate
 def list_bookings():
 
@@ -238,7 +238,7 @@ def list_bookings():
     return jsonify({"bookings": bookings})
 
 
-@app.route("/api/booking/user/<string:user_id>", methods=["GET"])
+@app.route("/api/booking/user/<string:user_id>", methods=["GET", "OPTIONS"])
 @authenticate
 def get_booking_by_user(user_id):
     # Create a new get booking by user request message
@@ -273,7 +273,7 @@ def get_booking_by_user(user_id):
     return jsonify({"bookings": bookings})
 
 
-@app.route("/api/booking/<string:booking_id>", methods=["PUT"])
+@app.route("/api/booking/<string:booking_id>", methods=["PUT", "OPTIONS"])
 @authenticate
 def update_booking(booking_id):
     # Extract necessary info from the request

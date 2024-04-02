@@ -35,27 +35,23 @@ services:
                 - https
             strip_path: false
       plugins:
-        - name: cors
-          config:
-              origins:
-                  - "*" # Your Vue app's URL
-              methods:
-                  - "GET"
-                  - "POST"
-                  - "PUT"
-                  - "DELETE"
-                  - "OPTIONS"
-                  - "PATCH"
-              headers:
-                  - "Content-Type"
-                  - "Authorisation"
-
-              exposed_headers:
-                  - "Content-Type"
-                  - "Authorisation"
-
-              max_age: 3600
-              credentials: true
+          - name: cors
+            config:
+                origins:
+                    - "*" # Your Vue app's URL
+                methods:
+                    - "GET"
+                    - "POST"
+                    - "PUT"
+                    - "DELETE"
+                    - "OPTIONS"
+                    - "PATCH"
+                headers:
+                    - "Content-Type"
+                exposed_headers:
+                    - "Content-Type"
+                max_age: 3600
+                credentials: true
     - name: gym-avail-cms
       protocol: http
       url: http://gym-avail-ms:3006
@@ -75,33 +71,28 @@ services:
                 - /api/gym/update-avail
             methods:
                 - POST
-                - OPTIONS
             protocols:
                 - http
                 - https
             strip_path: false
-
       plugins:
-        - name: cors
-          config:
-              origins:
-                  - "*" # Your Vue app's URL
-              methods:
-                  - "GET"
-                  - "POST"
-                  - "PUT"
-                  - "DELETE"
-                  - "OPTIONS"
-                  - "PATCH"
-              headers:
-                  - "Content-Type"
-                  - "Authorisation"
-              exposed_headers:
-                  - "Content-Type"
-                  - "Authorisation"
-
-              max_age: 3600
-              credentials: true
+          - name: cors
+            config:
+                origins:
+                    - "*" # Your Vue app's URL
+                methods:
+                    - "GET"
+                    - "POST"
+                    - "PUT"
+                    - "DELETE"
+                    - "OPTIONS"
+                    - "PATCH"
+                headers:
+                    - "Content-Type"
+                exposed_headers:
+                    - "Content-Type"
+                max_age: 3600
+                credentials: true
     - name: createbooking-cms
       protocol: http
       url: http://createbooking-cms:5002
@@ -116,26 +107,19 @@ services:
                 - http
                 - https
             strip_path: false
-          - name: cancel-booking
+          - name: manage-booking-by-id
             paths:
-                - /api/booking/:booking_id
+                - /api/booking/
             methods:
                 - DELETE
-                - OPTIONS
-            protocols:
-                - http
-                - https
-            strip_path: false
-          - name: get-booking
-            paths:
-                - /api/booking/:booking_id
-            methods:
+                - PUT
                 - GET
                 - OPTIONS
             protocols:
                 - http
                 - https
             strip_path: false
+          
           - name: list-bookings
             paths:
                 - /api/booking
@@ -156,16 +140,6 @@ services:
                 - http
                 - https
             strip_path: false
-          - name: update-bookings
-            paths:
-                - /api/booking/:booking_id
-            methods:
-                - PUT
-                - OPTIONS
-            protocols:
-                - http
-                - https
-            strip_path: false
       plugins:
           - name: cors
             config:
@@ -179,11 +153,11 @@ services:
                     - "OPTIONS"
                     - "PATCH"
                 headers:
-                    - "Content-Type"
                     - "Authorisation"
+                    - "Content-Type"
                 exposed_headers:
-                    - "Content-Type"
                     - "Authorisation"
+                    - "Content-Type"
                 max_age: 3600
                 credentials: true
 
@@ -347,9 +321,7 @@ services:
                     - "PATCH"
                 headers:
                     - "Content-Type"
-                    - "Authorisation"
                 exposed_headers:
                     - "Content-Type"
-                    - "Authorisation"
                 max_age: 3600
                 credentials: true

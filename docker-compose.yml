@@ -111,7 +111,7 @@ services:
       - "3001:3001"
       - "9102:9102"
     environment:
-      TELEGRAM_BOT_KEY: '6440570082:AAEydONrrATMun4ccOeCDcTe6YyShNVq_zs'
+      TELEGRAM_BOT_KEY: '6546636032:AAFAbVoJd3XDac6r50pRNA8JvcTfos8YGrA'
       MONGO_CONN_URI: 'mongodb://mongo-store:27017'
       MONGO_DB_NAME: 'users'
       MONGO_COLL_NAME: 'telegram_subscribers'
