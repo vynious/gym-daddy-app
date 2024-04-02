@@ -110,10 +110,10 @@ export default {
         .catch((error) => {
           if (error.response && error.response.data) {
             // Now safely access error.response.data
-            console.error("Signup error:", error.response.data.message);
-            this.signupStatus = error.response.data.message || "An error occurred. Please try again.";
+            console.error("Signup error:", error);
+            this.signupStatus = error || "An error occurred. Please try again.";
           } else {
-            console.error("Signup error:", error.message);
+            console.error("Signup error:", error);
             this.signupStatus = "An error occurred. Please try again.";
           }
         });

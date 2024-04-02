@@ -61,54 +61,35 @@
 </style>
 
 <template>
-  <div class="background">
-    <div
-      class="card cardPos"
-      style="width: 800px; background-color: white; margin-top: 100px"
-    >
-      <div class="card-body m-auto">
-        <div class="card-title header">Virtual Queue</div>
-        <div class="card-text subheader">
-          There are currently
-          <span class="circle"> {{ queueNo }} </span>
-          people in line.
+    <div class="background">
+       
+        <div class="card cardPos" style="width: 800px; background-color: white; margin-top: 100px;"> 
+
+            <div class="card-body m-auto"> 
+                <div class="card-title header">Virtual Queue</div> 
+                <div class="card-text subheader">
+                    Join the queue now to enter the gym!
+                </div> 
+            </div> 
+
+            <img src="../assets/queue.png" class="card-img-top queueimg" alt="..."> 
+
+            <div class="card-body">
+                <button type="button" class="btn joinbtn" @click="joinqueue()">Join Queue</button>
+            </div>
+
         </div>
       </div>
 
-      <img src="../assets/queue.png" class="card-img-top queueimg" alt="..." />
-
-      <div class="card-body">
-        <button type="button" class="btn joinbtn" @click="joinqueue()">
-          Join Queue
-        </button>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
-export default {
-  name: "JoinQueue",
-  data() {
-    return {
-      queueNo: 0,
+    export default {
+        name: 'JoinQueue',
+        methods: {
+            joinqueue() {
+                this.$router.push({name: 'joinqueue'});
+            }
+        }
     };
-  },
-  methods: {
-    joinqueue() {
-      this.$router.push({ name: "joinqueue" });
-      // const baseURL = "";
-
-      // this.$axios.get(`${baseURL}/`,{  // to check path
-      //     // headers: {
-      //     //     Authorisation: ``
-      //     // }
-      // })
-      // .then(response => {
-      //     console.log(response.data);
-      //     // this.queueNo =
-      // })
-    },
-  },
-};
 </script>

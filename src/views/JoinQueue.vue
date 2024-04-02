@@ -99,128 +99,171 @@
 </style>
 
 <template>
-  <div class="background">
-    <div
-      class="card cardPos"
-      style="width: 800px; background-color: white; margin-top: 100px"
-    >
-      <!-- Its the person's turn and they have not entered gym -->
-      <div class="card-body m-auto" v-if="isTurn && !showQR">
-        <div class="card-title header">It is your turn!</div>
-        <div class="card-body wording">
-          Please head down to the gym and click the button below when you have
-          entered the gym to receive your checkout QR code ☺️
-        </div>
+    <div class="background">
+       
+        <div class="card cardPos" style="width: 800px; background-color: white; margin-top: 100px;"> 
 
-        <img src="../assets/gym.png" class="card-img-top gymimg" alt="..." />
+            <!-- Its the person's turn and they have not entered gym -->
+            <div class="card-body m-auto" v-if="isTurn && !showQR">
+                <div class="card-title header">It is your turn!</div>
+                <div class="card-body wording">Please head down to the gym and click the button below when you have entered the gym to receive your checkout QR code ☺️</div>
 
-        <div class="card-body">
-          <button type="button" class="btn entergymbtn" @click="showQR = true">
-            Enter Gym
-          </button>
-        </div>
-      </div>
+                <img src="../assets/gym.png" class="card-img-top gymimg" alt="...">
 
-      <!-- Generation of QR code after person enters gym-->
-      <div class="card-body m-auto" v-else-if="isTurn && showQR">
-        <div class="card-title header">Checkout QR Code</div>
-        <div class="qr-modal-body">
-          <img :src="QRcodeURL" height="300px" alt="QR Code" />
-        </div>
-        <div class="card-body" style="font-size: 30px">
-          Remember to scan this QR code to sign out after exiting the gym. Thank
-          you!
-        </div>
-      </div>
-
-      <!-- Waiting in line -->
-      <div class="card-body m-auto" v-else>
-        <div class="card-title header">You have joined the virtual queue.</div>
-        <div class="card-body subheader">
-          Your queue number is
-          <div class="borderstyle">
-            <span class="queueno"> {{ userQueue }} </span>
-          </div>
-
-          <div class="queue-info">{{ currentQueue }}/{{ userQueue }}</div>
-
-          <div class="queue-progress">
-            <div class="progress-container">
-              <div class="progress-bar" :style="{ width: progressBar }"></div>
+                <div class="card-body">
+                    <button type="button" class="btn entergymbtn" @click="showQR = true; updateGymAvail()">Enter Gym</button>
+                </div>
             </div>
-          </div>
+
+            <!-- Generation of QR code after person enters gym-->
+            <div class="card-body m-auto" v-else-if="isTurn && showQR">
+                <div class="card-title header">Checkout QR Code</div>
+                <div class="qr-modal-body">
+                    <img :src="QRcodeURL" height="300px" alt="QR Code">
+                </div>
+                <div class="card-body" style="font-size: 25px;">Remember to scan this QR code to sign out after exiting the gym. Thank you!</div>
+            </div>
+
+            <!-- Waiting in line -->
+            <div class="card-body m-auto" v-else>
+                <div class="card-title header">You have joined the virtual queue.</div>
+                <div class="card-body subheader">
+                    Your queue number is
+                    <div class="borderstyle">
+                        <span class="queueno"> {{ userQueue }} </span>
+                    </div>
+
+                    <div class="queue-info">
+                        {{ currentQueue }}/{{ userQueue }}
+                    </div>
+
+                    <div class="queue-progress">
+                        <div class="progress-container">
+                            <div class="progress-bar" :style="{width: progressBar}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+
     </div>
-  </div>
+
 </template>
 
 <script>
 import QRCode from "qrcode";
 import axios from "axios";
 
-export default {
-  data() {
-    return {
-      currentQueue: 36, // numerator
-      userQueue: 36, // denominator (100%)
-      progressBar: "0%",
-      isTurn: false,
-      showQR: false,
-      QRcodeURL: "https://www.google.com/", // URL here too
-    };
-  },
-  created() {
-    // call backend here
-    // this.fetchQueueData();
+    export default {
+        data() {
+            return {
+                currentQueue: 36,  // numerator
+                userQueue: 36,  // denominator (100%)
+                progressBar: "0%",
+                isTurn: false,
+                showQR: false,
+                QRcodeURL: "" 
+            };
+        },
+        created() {
+            this.fetchQueueData();
+            this.callQueueNo();
 
-    this.callQueueNo();
+            QRCode.toDataURL("http://127.0.0.1:8000/api/gym/update-avail")  
+            .then(URL => {
+                this.QRcodeURL = URL;
+            })
+            .catch(err => {
+                console.error("Error generating QR code: ", err)
+            })
+        },
+        methods: {
+            fetchQueueData() {
+                const baseURL = "http://127.0.0.1:8000";
+                const authToken = sessionStorage.AuthToken;
 
-    QRCode.toDataURL("https://www.google.com/") // need a URL for here
-      .then((URL) => {
-        this.QRcodeURL = URL;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  },
-  methods: {
-    fetchQueueData() {
-      const baseURL = "";
+                // get user's queue number
+                axios.post(`${baseURL}/api/queue/join`, {
+                    Headers: {
+                        Authorisation: `Bearer ${authToken}`
+                    }
+                })
+                .then (response => {
+                    console.log(response.data);
+                    this.userQueue = response.data.queue_number;
 
-      this.$axios
-        .get(`${baseURL}/`, {
-          // headers: {
-          //     Authorisation: ``
-          // }
-        })
-        .then((response) => {
-          console.log(response.data);
-          // this.currentQueue =
-          // this.userQueue =
+                    // get current queue number
+                    axios.post(`${baseURL}/api/queue/upcoming`, {
+                        Headers: {
+                            Authorisation: `Bearer ${authToken}`
+                        }
+                    })
+                    .then (response => {
+                        console.log(response.data);
+                        this.currentQueue = response.data.queue_number;
 
-          const progress = (this.currentQueue / this.userQueue) * 100;
-          this.progressBar = `${progress}%`;
-        });
-    },
-    callQueueNo() {
-      if (this.currentQueue == this.userQueue) {
-        this.isTurn = true;
-      }
-    },
-    increaseGymCapacity() {
-      const baseURL = "";
+                        const percentage = (this.currentQueue/this.userQueue) * 100;
+                        this.progressBar = `${percentage}%`;
+                    })
+                    .catch (error => {
+                        console.log("Error fetching upcoming queue data: ", error);
+                    })
+                })
+                .catch (error => {
+                    console.log("Error fetching queue data: ", error);
+                })
 
-      axios
-        .post(`${baseURL}/`)
-        .then((response) => {
-          // update capacity
-          console.log(response);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-  },
-};
+                
+            },
+            callQueueNo() {
+                if (this.currentQueue == this.userQueue) {
+                    this.isTurn = true;
+                }
+            },
+            deQueue() { // function should be in an admin's page
+                const baseURL = "http://127.0.0.1:8000";
+                const authToken = sessionStorage.AuthToken;
+
+                axios.get(`${baseURL}/api/gym/avail`, {
+                    headers: {
+                        Authorisation: `Bearer ${authToken}`
+                    }
+                })
+                .then (response => {
+                    console.log(response.data);
+                    const gymAvail = response.data;
+                    
+                    // dequeues next person as long as there's space in gym
+                    while (gymAvail > 0) {
+                        axios.get(`${baseURL}/api/queue/next`, {
+                            headers: {
+                            Authorisation: `Bearer ${authToken}`
+                        }
+                        })
+                        .then (response => {
+                            console.log(response.data);
+                        })
+                        .catch (error => {
+                            console.log("Error dequeuing next person: ", error);
+                        })
+                    }
+                })
+                .catch (error => {
+                    console.log("Error obtaining gym availabilities: ", error);
+                })
+
+            },
+            updateGymAvail() { // call this function from this page but function should be in an admin's page
+                const baseURL = "http://127.0.0.1:8000";
+                const authToken = sessionStorage.AuthToken;
+
+                axios.post(`${baseURL}/api/gym/update-avail`, {
+                    headers: {
+                        Authorisation: `Bearer ${authToken}`
+                    }
+                })
+
+            }
+        }
+    }
 </script>
