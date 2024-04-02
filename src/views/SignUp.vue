@@ -156,7 +156,7 @@ export default {
 
 .gym-logo {
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .gym-logo img {
@@ -165,7 +165,7 @@ export default {
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.3rem;
 }
 
 input {

@@ -111,6 +111,12 @@ const router = createRouter({
           name: 'SignUp',
           component: () => import('../views/SignUp.vue'),
           meta: { showNav: false }
+      },
+      {
+        path: "/gymManagement",
+        name: "GymManagement",
+        component: () => import("../views/GymManagement.vue"),
+        meta: {showNav: true}
         }
     ],
     scrollBehavior(to, from, savedPosition) {

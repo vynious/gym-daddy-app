@@ -141,10 +141,12 @@ const onSubmit = () => {
           alert("Successfully created new class!")
           console.log("Class created successfully", response.data);
           resetForm();
+          alert("Class created successfully!");
         })
         .catch((error) => {
           console.error("Error creating class:", error);
           // Handle error, show message to user, etc.
+          alert("Failed to create class!");
         });
     })
     .catch((error) => {
