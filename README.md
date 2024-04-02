@@ -62,7 +62,7 @@ _To receive notification on Telegram, user must be subscribed to the telegram bo
 1. The user will send a POST request to book the class of their preference. 
 2. Before allowing the booking to take place, the user validates their Auth Token with the User Microservice before making any requests, this is to check if the user is authorised. 
 3. Once validated, the Create Booking Complex Microservice updates capacity levels to Class Microservice via HTTP PATCH
-4. Class Microservice returns 201 if success and error_code if failure to Create Booking Complex Microservice
+4. Class Microservice returns 201 if success and error_code if failure to Class Booking Complex Microservice
 5. Class Booking Complex Microservice books a specific class via HTTP POST to Booking Microservice
 6. Booking Microservice initiates an asynchronous RPC dial to Notification Microservice for booking confirmation message
 7. Notification Microservice publishes message to Kafka
@@ -84,11 +84,11 @@ _To receive notification on Telegram, user must be subscribed to the telegram bo
 
 ### User enters the gym
 ![Scenario 3](./readme-files/s2.png)
-1. A PATCH request is initiated by the admin scanning the user’s entry QR code on when leaving the gym
+1. A PATCH request is initiated by the admin through manual updates, when the user enters the gym.
 2. Before letting the admin update the gym availability, the admin validates their Auth Token with the User Microservice before making any requests, this is to check if the admin is authorised. 
 3. Once validated, the Gym Availability Complex Microservice updates its own availability count to reduce by 1.
-4. The Update Gym Availability Complex Microservice then initiates an RPC dial to the Queue Microservice to dequeue the first ticket in the queue, because the user has entered the gym.
-5. The Update Gym Availability Complex Microservice sends notifications to the next few tickets in the queue asnchronously via RPC dial
+4. The Update Gym Availability Complex Microservice then initiates an RPC dial to the Queue Microservice to get the upcoming tickets.
+5. The Manage Gym Availability Complex Microservice sends notifications to the next few tickets in the queue asnchronously via RPC dial
 6. The Notification Microservice publishes a message to Kafka
 7. The TelegramBot Microservice, subscribed to Kafka, receives the message and notifies users about the updated gym availabilities and their ticket status
 
