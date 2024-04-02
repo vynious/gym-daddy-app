@@ -96,7 +96,7 @@ export default {
         first_name: this.firstName,
         last_name: this.lastName,
         telegram_handle: this.telegramHandle,
-        role_id: this.roleId,
+        role_id: parseInt(this.roleId),
       };
       console.log(process.env.VUE_APP_REGISTER_USER_URL);
       axios.post(process.env.VUE_APP_REGISTER_USER_URL, payload)
@@ -155,7 +155,7 @@ export default {
 
 .gym-logo {
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .gym-logo img {
@@ -164,7 +164,7 @@ export default {
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.3rem;
 }
 
 input {
