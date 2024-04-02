@@ -95,7 +95,7 @@ export default {
     joinQueue() {
       const baseURL = "http://127.0.0.1:8000/api/queue/join";
       const authToken = JSON.parse(localStorage.getItem("token"));
-      const userId = localStorage.getItem("user_id");
+      const userId = JSON.parse(localStorage.getItem("user_id"));
 
       if (!userId) {
         alert("User ID is missing.");
@@ -104,6 +104,7 @@ export default {
 
       axios.post(baseURL, { user_id: userId }, { headers: { Authorisation: `Bearer ${authToken}` } })
         .then(response => {
+          console.log(response.data.data)
           const queueNumber = response.data.data.queue_number;
           console.log(queueNumber)
           localStorage.setItem("userQueue", queueNumber);
