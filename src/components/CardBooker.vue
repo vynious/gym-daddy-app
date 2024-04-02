@@ -24,12 +24,9 @@
           <b>Max Capacity: {{ classItem.max_capacity }}</b>
           <br />
           <a-button
-            type="primary"
-            style="
-              font-family: 'Poppins Medium';
-              margin-right: 5px;
-              margin-top: 10px;
-            "
+			v-if="!isAdmin"
+			type="primary"
+            style="font-family: 'Poppins Medium'; margin-right: 5px"
             :disabled="isClassBooked(classItem.id)"
             @click="bookClass(classItem.id)"
           >

@@ -98,6 +98,7 @@ export default {
         telegram_handle: this.telegramHandle,
         role_id: parseInt(this.roleId),
       };
+      console.log(payload)
       console.log(process.env.VUE_APP_REGISTER_USER_URL);
       axios.post(process.env.VUE_APP_REGISTER_USER_URL, payload)
         .then((response) => {
@@ -109,10 +110,10 @@ export default {
         .catch((error) => {
           if (error.response && error.response.data) {
             // Now safely access error.response.data
-            console.error("Signup error:", error.response.data.message);
-            this.signupStatus = error.response.data.message || "An error occurred. Please try again.";
+            console.error("Signup error:", error);
+            this.signupStatus = error || "An error occurred. Please try again.";
           } else {
-            console.error("Signup error:", error.message);
+            console.error("Signup error:", error);
             this.signupStatus = "An error occurred. Please try again.";
           }
         });

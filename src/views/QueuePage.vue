@@ -61,54 +61,57 @@
 </style>
 
 <template>
-  <div class="background">
-    <div
-      class="card cardPos"
-      style="width: 800px; background-color: white; margin-top: 100px"
-    >
-      <div class="card-body m-auto">
-        <div class="card-title header">Virtual Queue</div>
-        <div class="card-text subheader">
-          There are currently
-          <span class="circle"> {{ queueNo }} </span>
-          people in line.
+    <div class="background">
+       
+        <div class="card cardPos" style="width: 800px; background-color: white; margin-top: 100px;"> 
+
+            <div class="card-body m-auto"> 
+                <div class="card-title header">Virtual Queue</div> 
+                <div class="card-text subheader">
+                    Join the queue now to enter the gym!
+                </div> 
+            </div> 
+
+            <img src="../assets/queue.png" class="card-img-top queueimg" alt="..."> 
+
+            <div class="card-body">
+                <button type="button" class="btn joinbtn" @click="joinQueue()">Join Queue</button>
+            </div>
+
         </div>
       </div>
 
-      <img src="../assets/queue.png" class="card-img-top queueimg" alt="..." />
-
-      <div class="card-body">
-        <button type="button" class="btn joinbtn" @click="joinqueue()">
-          Join Queue
-        </button>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
-export default {
-  name: "JoinQueue",
-  data() {
-    return {
-      queueNo: 0,
-    };
-  },
-  methods: {
-    joinqueue() {
-      this.$router.push({ name: "joinqueue" });
-      // const baseURL = "";
+import axios from "axios";
 
-      // this.$axios.get(`${baseURL}/`,{  // to check path
-      //     // headers: {
-      //     //     Authorisation: ``
-      //     // }
-      // })
-      // .then(response => {
-      //     console.log(response.data);
-      //     // this.queueNo =
-      // })
+export default {
+  name: 'JoinQueue',
+  methods: {
+    joinQueue() {
+      const baseURL = "http://127.0.0.1:8000/api/queue/join";
+      const authToken = JSON.parse(localStorage.getItem("token"));
+      const userId = localStorage.getItem("user_id");
+
+      if (!userId) {
+        alert("User ID is missing.");
+        return;
+      }
+
+      axios.post(baseURL, { user_id: userId }, { headers: { Authorisation: `Bearer ${authToken}` } })
+        .then(response => {
+          const queueNumber = response.data.data.queue_number;
+          console.log(queueNumber)
+          localStorage.setItem("userQueue", queueNumber);
+          this.$router.push({ name: 'joinqueue' }); // Assuming you have a route named 'QueueStatus' to show the queue status
+        })
+        .catch(error => {
+          console.error("Error joining queue: ", error);
+          alert("Failed to join queue. Please try again.");
+        });
     },
   },
 };
 </script>
+

@@ -61,16 +61,13 @@
 
 <template>
   <nav class="navbar">
-    <img
-      src="../images/icons-8-dumbbell-32-removebg-preview-10.png"
-      alt="logo"
-      class="navbar-logo"
-    />
+    <img src="../images/icons-8-dumbbell-32-removebg-preview-10.png" alt="logo" class="navbar-logo" />
     <div class="navbar-container">
       <ul class="navbar-menu">
         <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/queue">Queue</router-link></li>
+        <li v-if="loggedIn && !isAdmin"><router-link to="/queue">Queue</router-link></li>
         <li><router-link to="/book">Classes</router-link></li>
+        <li v-if="isAdmin"><router-link to="/gymManagement">Manage Gym</router-link></li>
         <li v-if="isAdmin"><router-link to="/createClass">Create Class</router-link></li>
         <li v-if="loggedIn && !isAdmin"><router-link to="/profile">Profile</router-link></li>
         <li v-if="loggedIn"><router-link to="/login" @click="logout">Sign out</router-link></li>
