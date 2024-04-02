@@ -22,11 +22,6 @@ To streamline the process, GYM DADDY offers a virtual queuing system to tackle t
 # to run docker compose
 ./build_compose.sh 
 
-# to close microservices
-docker compose down
-
-# for updating of proto submodules for all microservices
-git submodule update --remote
 ```
 
 ### Starting the frontend
@@ -40,6 +35,15 @@ npm install
 # start vue frontend server
 npm run serve
 
+```
+
+### Extra
+```bash
+# to close microservices
+docker compose down
+
+# for updating of proto submodules for all microservices
+git submodule update --remote
 ```
 
 ## To view the API Documentation
