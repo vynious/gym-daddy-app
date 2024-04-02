@@ -21,15 +21,18 @@ services:
                 - /api/queue/upcoming
             methods:
                 - GET
+                - OPTIONS
             protocols:
                 - http
                 - https
             strip_path: false
+
           - name: retrieve-next
             paths:
                 - /api/queue/next
             methods:
                 - GET
+                - OPTIONS
             protocols:
                 - http
                 - https
@@ -48,8 +51,10 @@ services:
                     - "PATCH"
                 headers:
                     - "Content-Type"
+                    - "Authorisation"
                 exposed_headers:
                     - "Content-Type"
+                    - "Authorisation"
                 max_age: 3600
                 credentials: true
     - name: gym-avail-cms
@@ -71,6 +76,7 @@ services:
                 - /api/gym/update-avail
             methods:
                 - POST
+                - OPTIONS
             protocols:
                 - http
                 - https
@@ -89,8 +95,10 @@ services:
                     - "PATCH"
                 headers:
                     - "Content-Type"
+                    - "Authorisation"
                 exposed_headers:
                     - "Content-Type"
+                    - "Authorisation"
                 max_age: 3600
                 credentials: true
     - name: createbooking-cms
@@ -321,7 +329,9 @@ services:
                     - "PATCH"
                 headers:
                     - "Content-Type"
+                    - "Authorisation"
                 exposed_headers:
                     - "Content-Type"
+                    - "Authorisation"
                 max_age: 3600
                 credentials: true
