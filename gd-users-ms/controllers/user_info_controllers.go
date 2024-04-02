@@ -29,10 +29,10 @@ type SanitisedUser struct {
 func GetUser(c *gin.Context, db *pg.DB) {
 	username := c.Query("username")
 
-	if err := auth.CheckMatchingCallerUsername(c, username); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
-		return
-	}
+	// if err := auth.CheckMatchingCallerUsername(c, username); err != nil {
+	// 	c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+	// 	return
+	// }
 	user, err := user_models.GetUser(db, username)
 	if err != nil {
 		log.Println(err)

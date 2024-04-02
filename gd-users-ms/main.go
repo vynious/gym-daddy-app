@@ -51,7 +51,7 @@ func main() {
 		users.GET("/allusers", jwtAuthService.JwtAuthMiddlewareAdmin(), func(c *gin.Context) {
 			users_controllers.GetAllUsers(c, db.DB)
 		})
-		users.GET("/user", jwtAuthService.JwtAuthMiddlewareDefault(), func(c *gin.Context) {
+		users.GET("/user", func(c *gin.Context) {
 			users_controllers.GetUser(c, db.DB)
 		})
 		users.GET("/telegram", func(c *gin.Context) {
