@@ -54,7 +54,7 @@ func (b *Bot) Start() {
 
 			switch callbackData {
 			case "subscribe":
-				if err := b.Database.CreateSubscription(types.TelegramHandle(telegramHandle), types.ChatID(chatId)); err != nil {
+				if err := b.Database.CreateSubscription(telegramHandle, int64(chatId)); err != nil {
 					log.Println("Error creating subscription:", err)
 					msg.Text = "Oh no! Something went wrong with the server, try again."
 				} else {
@@ -93,7 +93,7 @@ func (b *Bot) Start() {
 	}
 }
 
-func (b *Bot) SendNotification(chatId types.ChatID, message *types.NotificationMessage) error {
+func (b *Bot) SendNotification(chatId int64, message *types.NotificationMessage) error {
 	msg := tgbotapi.NewMessage(int64(chatId), string(message.Content))
 	_, err := b.Send(msg)
 	if err != nil {
