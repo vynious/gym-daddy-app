@@ -24,6 +24,11 @@ type Repository struct {
 	collname types.CollectionName
 }
 
+type UserDocument struct {
+	TelegramHandle string `bson:"TelegramHandle"`
+	ChatId    int64	`bson:"ChatId"`
+}
+
 func LoadMongoConfig() types.MongoConfig {
 	uri := os.Getenv("MONGO_CONN_URI")
 	dbname = os.Getenv("MONGO_DB_NAME")
@@ -53,27 +58,39 @@ func SpawnRepository(cfg types.MongoConfig) (*Repository, error) {
 
 }
 
-func (r *Repository) CreateSubscription(th types.TelegramHandle, cid types.ChatID) error {
-	_, err := r.mg.Database(dbname).Collection(collname).InsertOne(context.TODO(), bson.D{
-		{"TelegramHandle", th},
-		{"ChatId", cid}},
-	)
+func (r *Repository) CreateSubscription(th string, cid int64) error {
+	doc := UserDocument{
+		TelegramHandle: th,
+		ChatId:    cid,
+	}
+
+	_, err := r.mg.Database(dbname).Collection(collname).InsertOne(context.TODO(), doc)
 	if err != nil {
 		return fmt.Errorf("error creating subscription: %w", err)
 	}
 	return nil
 }
 
-func (r *Repository) GetSubscription(th types.TelegramHandle) (types.ChatID, error) {
-	var user types.UserDocument
-	fmt.Printf("%v", th)
-	if err := r.mg.Database(dbname).Collection(collname).FindOne(context.TODO(), bson.D{
-		{"TelegramHandle", th},
-	}).Decode(&user); err != nil {
-		return -1, fmt.Errorf("error getting subscription: %w", err)
-	}
-	return user.ChatId, nil
+func (r *Repository) GetSubscription(th string) (int64, error) {
+    var user UserDocument
+    filter := bson.D{{Key: "TelegramHandle", Value: th}}
+    
+    fmt.Println("Searching for TelegramHandle:", th) // Debugging line
+
+    err := r.mg.Database(dbname).Collection(collname).FindOne(context.TODO(), filter).Decode(&user)
+    if err != nil {
+        if err == mongo.ErrNoDocuments {
+            fmt.Println("No document found for TelegramHandle:", th) // Debugging line
+            return -1, fmt.Errorf("no document found: %w", err)
+        }
+        fmt.Println("Error getting subscription for TelegramHandle:", th, "Error:", err) // Debugging line
+        return -1, fmt.Errorf("error getting subscription: %w", err)
+    }
+    
+    fmt.Println("Found document for TelegramHandle:", th, "ChatId:", user.ChatId) // Debugging line
+    return user.ChatId, nil
 }
+
 
 func (r *Repository) CloseConnection() error {
 	if err := r.mg.Disconnect(context.Background()); err != nil {
