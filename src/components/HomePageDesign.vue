@@ -95,7 +95,7 @@
                 Close
               </button>
               <!-- Add your telegram group link here -->
-              <a href="https://t.me/gym_daddy_bot" target="_blank" class="modal-default-button">
+              <a href="https://t.me/gym_daddy_v2_bot" target="_blank" class="modal-default-button">
                 Join Now
               </a>
             </slot>
