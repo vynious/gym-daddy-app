@@ -10,7 +10,7 @@ import (
 func GetTelegramHandleFromUserMS(userId string) (string, error) {
 	var telegramHandle string
 
-	// oops... its hardcoded, abit lazy
+
 	userTeleEndpoint := fmt.Sprintf("http://user-ms:3005/api/users/telegram?userId=%v", userId)
 
 	resp, err := http.Get(userTeleEndpoint)
