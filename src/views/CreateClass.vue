@@ -138,6 +138,7 @@ const onSubmit = () => {
           },
         })
         .then((response) => {
+          alert("Successfully created new class!")
           console.log("Class created successfully", response.data);
           resetForm();
         })

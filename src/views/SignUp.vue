@@ -96,8 +96,9 @@ export default {
         first_name: this.firstName,
         last_name: this.lastName,
         telegram_handle: this.telegramHandle,
-        role_id: this.roleId,
+        role_id: parseInt(this.roleId),
       };
+      console.log(payload)
       console.log(process.env.VUE_APP_REGISTER_USER_URL);
       axios.post(process.env.VUE_APP_REGISTER_USER_URL, payload)
         .then((response) => {
