@@ -60,7 +60,7 @@ func main() {
 		users.GET("/validatejwt/admin", jwtAuthService.JwtAuthMiddlewareAdmin())
 		users.GET("/validatejwt/default", jwtAuthService.JwtAuthMiddlewareDefault())
 	}
-	
+
 	router.Run("0.0.0.0:3005")
 
 }

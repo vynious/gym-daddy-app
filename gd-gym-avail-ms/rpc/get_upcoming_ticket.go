@@ -15,7 +15,7 @@ func GRPCGetUpcomingTickets(ctx context.Context) ([]*queue.Ticket, error) {
 	var tickets []*queue.Ticket
 	grpcServerQueue := os.Getenv("GRPC_SERVER_QUEUE")
 	if grpcServerQueue == "" {
-		return nil, fmt.Errorf("missing .env url for queue grpc server")
+		return nil, fmt.Errorf("missing .gitignore url for queue grpc server")
 	}
 
 	qcc, err := grpc.Dial(grpcServerQueue, grpc.WithTransportCredentials(insecure.NewCredentials()))

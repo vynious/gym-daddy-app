@@ -15,7 +15,7 @@ type RedisDB struct {
 func SpawnRedisDB(queueName string) (*RedisDB, error) {
 	redisUrl := os.Getenv("REDIS_URL")
 	if redisUrl == "" {
-		return nil, fmt.Errorf("missing redis url in .env")
+		return nil, fmt.Errorf("missing redis url in .gitignore")
 	}
 	opts, err := redis.ParseURL(redisUrl)
 	if err != nil {

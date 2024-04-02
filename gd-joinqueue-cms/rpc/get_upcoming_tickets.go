@@ -9,14 +9,12 @@ import (
 	"os"
 )
 
-
-
 func GRPCGetUpcomingTickets(ctx context.Context, sendNotification bool) ([]*queue.Ticket, error) {
 
 	var tickets []*queue.Ticket
 	grpcServerQueue := os.Getenv("GRPC_SERVER_QUEUE")
 	if grpcServerQueue == "" {
-		return nil, fmt.Errorf("missing .env url for queue grpc server")
+		return nil, fmt.Errorf("missing .gitignore url for queue grpc server")
 	}
 
 	qcc, err := grpc.Dial(grpcServerQueue, grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -34,13 +32,12 @@ func GRPCGetUpcomingTickets(ctx context.Context, sendNotification bool) ([]*queu
 
 	if sendNotification {
 		go func() {
-		for _, ticket := range tickets {
-			currentNumber := ticket.GetQueueNumber()
-			GRPCSendNotification(ctx, &currentNumber, ticket, "Coming-Soon")
+			for _, ticket := range tickets {
+				currentNumber := ticket.GetQueueNumber()
+				GRPCSendNotification(ctx, &currentNumber, ticket, "Coming-Soon")
 			}
 		}()
 	}
-	
 
 	tickets = response.GetTickets()
 	return tickets, nil
