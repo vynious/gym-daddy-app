@@ -75,7 +75,7 @@
             <img src="../assets/queue.png" class="card-img-top queueimg" alt="..."> 
 
             <div class="card-body">
-                <button type="button" class="btn joinbtn" @click="joinqueue()">Join Queue</button>
+                <button type="button" class="btn joinbtn" @click="joinQueue()">Join Queue</button>
             </div>
 
         </div>
@@ -84,12 +84,34 @@
 </template>
 
 <script>
-    export default {
-        name: 'JoinQueue',
-        methods: {
-            joinqueue() {
-                this.$router.push({name: 'joinqueue'});
-            }
-        }
-    };
+import axios from "axios";
+
+export default {
+  name: 'JoinQueue',
+  methods: {
+    joinQueue() {
+      const baseURL = "http://127.0.0.1:8000/api/queue/join";
+      const authToken = sessionStorage.getItem("AuthToken");
+      const userId = localStorage.getItem("user_id");
+
+      if (!userId) {
+        alert("User ID is missing.");
+        return;
+      }
+
+      axios.post(baseURL, { user_id: userId }, { headers: { Authorisation: `Bearer ${authToken}` } })
+        .then(response => {
+          const queueNumber = response.data.data.queue_number;
+          console.log(queueNumber)
+          localStorage.setItem("userQueue", queueNumber);
+          this.$router.push({ name: 'joinqueue' }); // Assuming you have a route named 'QueueStatus' to show the queue status
+        })
+        .catch(error => {
+          console.error("Error joining queue: ", error);
+          alert("Failed to join queue. Please try again.");
+        });
+    },
+  },
+};
 </script>
+

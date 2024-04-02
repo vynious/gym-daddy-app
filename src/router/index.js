@@ -133,7 +133,20 @@ const router = createRouter({
     }
 })
 
+// Global beforeEach guard
+router.beforeEach((to, from, next) => {
+  // List of public pages that don't require auth
+  const publicPages = ['/login', '/sign-up'];
+  // Assume 'isLoggedIn' state is stored in localStorage
+  const isLoggedIn = JSON.parse(localStorage.getItem('loggedIn') || 'false');
 
+  if (!publicPages.includes(to.path) && !isLoggedIn) {
+    // Redirect to the login page if not logged in and trying to access a restricted page
+    return next('/login');
+  }
+  // For all other cases, just continue as normal
+  next();
+});
 
 
 export default router;
