@@ -6,7 +6,10 @@
           :bordered="false"
           style="font-family: 'Poppins Bold'; margin-bottom: 10px"
         >
-          <div class="card-title" style="font-family: 'Poppins Bold'">
+          <div
+            class="card-title"
+            style="font-family: 'Poppins Bold'; font-size: 25px"
+          >
             {{ classItem.name }}
           </div>
           <p style="font-family: 'Poppins Medium'">
@@ -22,7 +25,11 @@
           <br />
           <a-button
             type="primary"
-            style="font-family: 'Poppins Medium'; margin-right: 5px"
+            style="
+              font-family: 'Poppins Medium';
+              margin-right: 5px;
+              margin-top: 10px;
+            "
             :disabled="isClassBooked(classItem.id)"
             @click="bookClass(classItem.id)"
           >
