@@ -20,10 +20,12 @@
 .header {
   font-weight: bold;
   font-size: 60px;
+  font-family: 'Poppins Bold', sans-serif;
 }
 
 .subheader {
   font-size: 34px;
+  font-family: 'Poppins Medium', sans-serif;
 }
 
 .circle {
@@ -48,6 +50,7 @@
   display: flex;
   transition-duration: 0.2s;
   margin-bottom: 20px;
+  font-family: 'Poppins Medium', sans-serif;
 }
 
 .joinbtn:hover {
@@ -61,25 +64,25 @@
 </style>
 
 <template>
-    <div class="background">
-       
-        <div class="card cardPos" style="width: 800px; background-color: white; margin-top: 100px;"> 
+  <div class="background">
 
-            <div class="card-body m-auto"> 
-                <div class="card-title header">Virtual Queue</div> 
-                <div class="card-text subheader">
-                    Join the queue now to enter the gym!
-                </div> 
-            </div> 
+    <div class="card cardPos" style="width: 800px; background-color: white; margin-top: 100px;">
 
-            <img src="../assets/queue.png" class="card-img-top queueimg" alt="..."> 
-
-            <div class="card-body">
-                <button type="button" class="btn joinbtn" @click="joinQueue()">Join Queue</button>
-            </div>
-
+      <div class="card-body m-auto">
+        <div class="card-title header">Virtual Queue</div>
+        <div class="card-text subheader">
+          Join the queue now to enter the gym!
         </div>
       </div>
+
+      <img src="../assets/queue.png" class="card-img-top queueimg" alt="...">
+
+      <div class="card-body">
+        <button type="button" class="btn joinbtn" @click="joinQueue()">Join Queue</button>
+      </div>
+
+    </div>
+  </div>
 
 </template>
 
@@ -114,4 +117,3 @@ export default {
   },
 };
 </script>
-

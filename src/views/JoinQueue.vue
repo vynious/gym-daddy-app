@@ -21,16 +21,19 @@
   font-weight: bold;
   font-size: 48px;
   margin-bottom: 0px;
+  font-family: 'Poppins Bold', sans-serif;
 }
 
 .subheader {
   font-weight: medium;
   font-size: 34px;
+  font-family: 'Poppins Medium', sans-serif;
 }
 
 .wording {
   font-weight: medium;
   font-size: 28px;
+  font-family: 'Poppins Medium', sans-serif;
 }
 
 .borderstyle {
@@ -54,6 +57,7 @@
 .queueno {
   font-size: 150px;
   font-weight: bolder;
+  font-family: 'Poppins Bold', sans-serif;
 }
 
 .entergymbtn {
@@ -66,6 +70,7 @@
   display: flex;
   transition-duration: 0.2s;
   margin-bottom: 20px;
+  font-family: 'Poppins Medium', sans-serif;
 }
 
 .queue-info {
@@ -73,6 +78,7 @@
   font-size: 24px;
   font-weight: medium;
   text-align: right;
+  font-family: 'Poppins Medium', sans-serif;
 }
 
 .queue-progress {
@@ -97,7 +103,6 @@
   border-radius: 50px;
 }
 </style>
-
 <template>
     <div class="background">
        
@@ -213,97 +218,3 @@ export default {
 };
 
 </script>
-<!-- 
-
-
-// export default {
-// data() {
-// return {
-// currentQueue: 36,
-// userQueue: 36,
-// progressBar: "0%",
-// isTurn: false,
-// showQR: false,
-// QRcodeURL: "",
-// hasJoinedQueue: false
-// };
-// },
-// created() {
-// this.initializeQueueStatus();
-// this.generateQRCode();
-// },
-// methods: {
-// initializeQueueStatus() {
-// this.hasJoinedQueue = localStorage.getItem("hasJoinedQueue") === "true";
-// if (!this.hasJoinedQueue) {
-// this.fetchQueueData();
-// }
-// },
-// async fetchQueueData() {
-
-// const baseURL = "http://127.0.0.1:8000";
-// const authToken = sessionStorage.getItem("AuthToken");
-// const userId = localStorage.getItem("user_id") ? JSON.parse(localStorage.getItem("user_id")) : null;
-
-// if (!userId) {
-// console.error("User ID is missing.");
-// return;
-// }
-
-// try {
-
-// const upcomingQueueResponse = await axios.get(`${baseURL}/api/queue/upcoming`, { headers: { Authorisation: `Bearer
-${authToken}` } });
-// console.log(upcomingQueueResponse)
-// this.currentQueue = upcomingQueueResponse.data.data.queue_number;
-// this.updateProgressBar();
-// } catch (error) {
-// console.error("Error fetching queue data: ", error);
-// }
-// },
-// updateProgressBar() {
-// console.log(this.currentQueue)
-// console.log(this.userQueue)
-// const percentage = (this.currentQueue / this.userQueue) * 100;
-// this.progressBar = `${percentage}%`;
-// this.isTurn = this.currentQueue === this.userQueue;
-// },
-// async generateQRCode() {
-// try {
-// this.QRcodeURL = await QRCode.toDataURL("http://127.0.0.1:8000/api/gym/update-avail");
-// } catch (error) {
-// console.error("Error generating QR code: ", error);
-// }
-// },
-// async deQueue() {
-// // This should be in an admin's page
-// const baseURL = "http://127.0.0.1:8000";
-// const authToken = sessionStorage.getItem("AuthToken");
-
-// try {
-// const gymAvailResponse = await axios.get(`${baseURL}/api/gym/avail`, { headers: { Authorization: `Bearer
-${authToken}` } });
-// let gymAvail = gymAvailResponse.data;
-
-// while (gymAvail > 0) {
-// await axios.get(`${baseURL}/api/queue/next`, { headers: { Authorisation: `Bearer ${authToken}` } });
-// gymAvail--; // Decrease gym availability after dequeuing
-// }
-// } catch (error) {
-// console.error("Error in deQueue: ", error);
-// }
-// },
-// async updateGymAvail() {
-// // This should be in an admin's page
-// const baseURL = "http://127.0.0.1:8000";
-// const authToken = sessionStorage.getItem("AuthToken");
-
-// try {
-// await axios.post(`${baseURL}/api/gym/update-avail`, {}, { headers: { Authorisation: `Bearer ${authToken}` } });
-// } catch (error) {
-// console.error("Error updating gym availability: ", error);
-// }
-// }
-// }
-// }
-// </script> -->
