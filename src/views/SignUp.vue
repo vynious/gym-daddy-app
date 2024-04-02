@@ -31,6 +31,12 @@
         <div class="form-group">
           <input type="password" v-model="confirmPassword" placeholder="Confirm password" required />
         </div>
+        <div class="form-group">
+          <select v-model="roleId" required>
+            <option value="1">User</option>
+            <option value="2">Admin</option>
+          </select>
+        </div>
         <button class="btn-signup" @click="handleSignup">SIGN UP</button>
         <p class="login-link">
           Already have an account? <router-link to="/login">Login</router-link>
@@ -49,7 +55,7 @@
 import axios from 'axios';
 
 export default {
-  
+
   name: "SignupPage",
   data() {
     return {
@@ -90,7 +96,7 @@ export default {
         first_name: this.firstName,
         last_name: this.lastName,
         telegram_handle: this.telegramHandle,
-        role_id: this.roleId,
+        role_id: parseInt(this.roleId),
       };
       console.log(process.env.VUE_APP_REGISTER_USER_URL);
       axios.post(process.env.VUE_APP_REGISTER_USER_URL, payload)
@@ -149,7 +155,7 @@ export default {
 
 .gym-logo {
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .gym-logo img {
@@ -158,7 +164,7 @@ export default {
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.3rem;
 }
 
 input {
@@ -224,4 +230,24 @@ input {
   max-width: 100%;
   height: 55vh;
 }
+
+select {
+  width: 100%;
+  padding: 1rem;
+  padding-right: 2.5rem; /* Make extra space for the arrow */
+  border-radius: 6px;
+  border: none;
+  background-color: #ffffff;
+  color: #000;
+  font-family: "Poppins Medium";
+  -moz-appearance: none; /* Remove default arrow in Firefox */
+  -webkit-appearance: none; /* Remove default arrow in WebKit browsers */
+  appearance: none; /* Remove default arrow in modern browsers */
+  background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Add custom arrow */
+  background-position: right 1rem center; /* Position the arrow */
+  background-repeat: no-repeat; /* Do not repeat the background image */
+  background-size: 1em; /* Size the arrow */
+}
+
+
 </style>

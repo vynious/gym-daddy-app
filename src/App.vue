@@ -11,10 +11,10 @@
 
 <template>
   <div id="app">
-    <NavigationBar />
+    <!-- Conditionally render NavigationBar based on the current route's meta field -->
+    <NavigationBar v-if="$route.meta.showNav" />
     <router-view></router-view>
   </div>
-
 </template>
 
 <style>

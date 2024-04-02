@@ -66,7 +66,7 @@ export default {
           console.log("Login successful");
           this.error = "";
 
-          localStorage.setItem("token", JSON.stringify(response.data));
+          localStorage.setItem("token", JSON.stringify(response.data.token));
 
           localStorage.setItem("loggedIn", true);
 
@@ -80,17 +80,18 @@ export default {
             localStorage.setItem("user_id", JSON.stringify(userResponse.data.user_id));
 
             // Check if user is admin
-            // Check if user is admin
             axios.get("http://localhost:8000/api/users/validatejwt/admin", {
               headers: {
                 Authorisation: `Bearer ${token}`,
               },
             }).then((adminResponse) => {
               const isAdmin = adminResponse.status === 200;
-              localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
               if (isAdmin) {
+                localStorage.setItem("isAdmin", isAdmin);
                 this.$router.push("/");
+
               } else {
+                localStorage.setItem("isAdmin", isAdmin);
                 this.$router.push("/");
               }
             }).catch((error) => {
