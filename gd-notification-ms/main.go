@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/joho/godotenv"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/vynious/gym-daddy/gd-notification-ms/db"
 	"github.com/vynious/gym-daddy/gd-notification-ms/kafka"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/vynious/gym-daddy/gd-notification-ms/pb/proto_files/notification"
 	"github.com/vynious/gym-daddy/gd-notification-ms/rpc"
@@ -49,10 +49,10 @@ func main() {
 
 	defer server.CloseConnections()
 
-    http.Handle("/metrics", promhttp.Handler())
-    metricsPort := ":9101"
-    log.Printf("Prometheus metrics server listening at %v", metricsPort)
-    if err := http.ListenAndServe(metricsPort, nil); err != nil {
-        log.Fatalf("failed to start Prometheus metrics server: %v", err)
-    }
+	http.Handle("/metrics", promhttp.Handler())
+	metricsPort := ":9101"
+	log.Printf("Prometheus metrics server listening at %v", metricsPort)
+	if err := http.ListenAndServe(metricsPort, nil); err != nil {
+		log.Fatalf("failed to start Prometheus metrics server: %v", err)
+	}
 }

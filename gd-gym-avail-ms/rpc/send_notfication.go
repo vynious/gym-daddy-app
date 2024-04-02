@@ -15,7 +15,7 @@ func GRPCSendNotification(ctx context.Context, currentNumber *int64, ticket *que
 
 	grpcServerNotification := os.Getenv("GRPC_SERVER_NOTIFICATION")
 	if grpcServerNotification == "" {
-		log.Println("missing .env url for notification grpc server")
+		log.Println("missing .gitignore url for notification grpc server")
 	}
 
 	ncc, err := grpc.Dial(grpcServerNotification, grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -26,7 +26,7 @@ func GRPCSendNotification(ctx context.Context, currentNumber *int64, ticket *que
 	nClient := notification.NewNotificationServiceClient(ncc)
 
 	_, err = nClient.CreateNotification(ctx, &notification.CreateNotificationRequest{
-		UserId: ticket.GetUserId(),
+		UserId:             ticket.GetUserId(),
 		CurrentQueueNumber: currentNumber,
 		UserTicket:         ticket,
 		NotificationType:   nType,

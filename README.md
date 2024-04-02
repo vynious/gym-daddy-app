@@ -17,9 +17,8 @@ To streamline the process, GYM DADDY offers a virtual queuing system to tackle t
 
 
 ## Setting up GYM-DADDY with Docker
+### Starting the backend
 ```bash
-# clone the repo
-
 # to run docker compose
 ./build_compose.sh 
 
@@ -30,6 +29,19 @@ docker compose down
 git submodule update --remote
 ```
 
+### Starting the frontend
+```bash
+# enter frontend repo
+cd gd-frontend
+
+# install node dependencies
+npm install
+
+# start vue frontend server
+npm run serve
+
+```
+
 ## To view the API Documentation
 - Use `swagger-api-doc.yml` and copy paste the whole thing inside the Swagger UI Editor `https://editor.swagger.io/`
 
@@ -37,8 +49,7 @@ git submodule update --remote
 
 ## ⚠️ Important ⚠️
 
-_To receive notification on Telegram, user must be subscribed to the telegram bot @gym_daddy_bot. 
-User must also register with the same telegram handle_
+_To receive notification on Telegram, user must be subscribed to the telegram bot with the same telegram handle used during registration._
 
 
 ## User Scenerios

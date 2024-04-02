@@ -15,7 +15,7 @@ func GRPCJoinQueue(ctx context.Context, userId string) (*queue.Ticket, error) {
 
 	grpcServerQueue := os.Getenv("GRPC_SERVER_QUEUE")
 	if grpcServerQueue == "" {
-		return nil, fmt.Errorf("missing .env url for queue grpc server")
+		return nil, fmt.Errorf("missing .gitignore url for queue grpc server")
 	}
 	qcc, err := grpc.Dial(grpcServerQueue, grpc.WithTransportCredentials(insecure.NewCredentials()))
 
@@ -31,8 +31,6 @@ func GRPCJoinQueue(ctx context.Context, userId string) (*queue.Ticket, error) {
 		return nil, fmt.Errorf("failed to join queue")
 	}
 	ticket = response.GetTicket()
-
-	
 
 	return ticket, nil
 }

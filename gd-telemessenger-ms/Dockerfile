@@ -5,8 +5,8 @@ WORKDIR /app
 
 COPY . .
 
-# Copy the .env file into the container
-# COPY .env .
+# Copy the .gitignore file into the container
+# COPY .gitignore .
 
 
 # Build the Go app

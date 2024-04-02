@@ -5,10 +5,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"net/http"
 	"github.com/ljlimjk10/gym-avail-ms/controllers"
 	"github.com/ljlimjk10/gym-avail-ms/db"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"net/http"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 	router.Use(CORSMiddleware())
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	gym := router.Group("/api/gym")
-	{	
+	{
 		gym.Use(AuthenticateDefault)
 		gym.GET("/avail", func(c *gin.Context) {
 			controllers.RetrieveCurrentAvail(c, dbc.DB)
@@ -35,15 +35,13 @@ func main() {
 	router.Run("0.0.0.0:3006")
 }
 
-
-
 // Middleware
 func AuthenticateDefault(c *gin.Context) {
 	log.Println("authenticating user...")
 
 	req, err := http.NewRequestWithContext(c, "GET", "http://user-ms:3005/api/users/validatejwt/default", nil)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message":"try again later."})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "try again later."})
 		c.Abort()
 		return
 	}
@@ -61,7 +59,7 @@ func AuthenticateDefault(c *gin.Context) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message":"try again later."})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "try again later."})
 		c.Abort()
 		return
 	}
@@ -77,17 +75,15 @@ func AuthenticateDefault(c *gin.Context) {
 	c.Next()
 }
 
-
 func AuthenticateAdmin(c *gin.Context) {
 	log.Println("authenticating admin user...")
 
 	req, err := http.NewRequestWithContext(c, "GET", "http://user-ms:3005/api/users/validatejwt/admin", nil)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message":"try again later."})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "try again later."})
 		c.Abort()
 		return
 	}
-
 
 	// extract the "Bearer XXXX" and set as header
 	token := c.GetHeader("Authorisation")
@@ -102,13 +98,13 @@ func AuthenticateAdmin(c *gin.Context) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message":"try again later."})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "try again later."})
 		c.Abort()
 		return
 	}
 
 	if resp.StatusCode == 401 {
-		c.JSON(http.StatusUnauthorized, gin.H{"message":"only admin-level access"})
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "only admin-level access"})
 		c.Abort()
 		return
 	}
