@@ -162,49 +162,57 @@ import axios from "axios";
                 progressBar: "0%",
                 isTurn: false,
                 showQR: false,
-                QRcodeURL: "https://www.google.com/" // URL here too
+                QRcodeURL: "" 
             };
         },
         created() {
-            // call backend here
             this.fetchQueueData();
             this.callQueueNo();
 
-            QRCode.toDataURL("https://www.google.com/")  // need a URL for here
+            QRCode.toDataURL("http://127.0.0.1:8000/api/gym/update-avail")  
             .then(URL => {
                 this.QRcodeURL = URL;
             })
             .catch(err => {
-                console.error(err)
+                console.error("Error generating QR code: ", err)
             })
         },
         methods: {
             fetchQueueData() {
                 const baseURL = "http://127.0.0.1:8000";
+                const authToken = sessionStorage.AuthToken;
 
-                axios.get(`${baseURL}/api/queue/join`, {
-                    // headers: {
-                    //     Authorization: ``
-                    // }
-                }) 
-                .then(response => {
+                // get user's queue number
+                axios.post(`${baseURL}/api/queue/join`, {
+                    Headers: {
+                        Authorisation: `Bearer ${authToken}`
+                    }
+                })
+                .then (response => {
                     console.log(response.data);
-                    this.userQueue = response.data.queue_number
+                    this.userQueue = response.data.queue_number;
 
-                    axios.get(`${baseURL}/api/queue/upcoming`)
+                    // get current queue number
+                    axios.post(`${baseURL}/api/queue/upcoming`, {
+                        Headers: {
+                            Authorisation: `Bearer ${authToken}`
+                        }
+                    })
                     .then (response => {
-                        this.currentQueue = response.data; // check this
-                        const progress = this.currentQueue / this.userQueue * 100;
-                        this.progressBar = `${progress}%`;
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    })
+                        console.log(response.data);
+                        this.currentQueue = response.data.queue_number;
 
+                        const percentage = (this.currentQueue/this.userQueue) * 100;
+                        this.progressBar = `${percentage}%`;
+                    })
+                    .catch (error => {
+                        console.log("Error fetching upcoming queue data: ", error);
+                    })
                 })
-                .catch (err => {
-                    console.error(err);
+                .catch (error => {
+                    console.log("Error fetching queue data: ", error);
                 })
+
                 
             },
             callQueueNo() {
@@ -212,10 +220,49 @@ import axios from "axios";
                     this.isTurn = true;
                 }
             },
-            updateGymAvail() {
+            deQueue() { // function should be in an admin's page
                 const baseURL = "http://127.0.0.1:8000";
+                const authToken = sessionStorage.AuthToken;
 
-                axios.get(`${baseURL}/api/`)
+                axios.get(`${baseURL}/api/gym/avail`, {
+                    headers: {
+                        Authorisation: `Bearer ${authToken}`
+                    }
+                })
+                .then (response => {
+                    console.log(response.data);
+                    const gymAvail = response.data;
+                    
+                    // dequeues next person as long as there's space in gym
+                    while (gymAvail > 0) {
+                        axios.get(`${baseURL}/api/queue/next`, {
+                            headers: {
+                            Authorisation: `Bearer ${authToken}`
+                        }
+                        })
+                        .then (response => {
+                            console.log(response.data);
+                        })
+                        .catch (error => {
+                            console.log("Error dequeuing next person: ", error);
+                        })
+                    }
+                })
+                .catch (error => {
+                    console.log("Error obtaining gym availabilities: ", error);
+                })
+
+            },
+            updateGymAvail() { // call this function from this page but function should be in an admin's page
+                const baseURL = "http://127.0.0.1:8000";
+                const authToken = sessionStorage.AuthToken;
+
+                axios.post(`${baseURL}/api/gym/update-avail`, {
+                    headers: {
+                        Authorisation: `Bearer ${authToken}`
+                    }
+                })
+
             }
         }
     }

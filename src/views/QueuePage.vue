@@ -86,11 +86,6 @@
 <script>
     export default {
         name: 'JoinQueue',
-        data() {
-            return {
-                gymAvail: 0
-            }
-        },
         methods: {
             joinqueue() {
                 this.$router.push({name: 'joinqueue'});
