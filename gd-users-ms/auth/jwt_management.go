@@ -117,11 +117,11 @@ func DecodeToken(c *gin.Context) (*authCustomClaims, error) {
 }
 
 
-func CheckAdmin(claims *authCustomClaims) error {
-	if claims.RoleID != 2 {
-			return fmt.Errorf("only admin can access")
-		}
-	return nil
+func CheckAdmin(claims *authCustomClaims) bool {
+	if claims.RoleID == 2 {
+			return true
+	}
+	return false
 }
 
 func CheckMatchingCallerUsername(c *gin.Context, username string) error {
@@ -131,9 +131,11 @@ func CheckMatchingCallerUsername(c *gin.Context, username string) error {
 		return fmt.Errorf("failed to decode auth token for checking caller id")
 	}
 	// admin auto access
-	if err := CheckAdmin(claims); err != nil {
-		return err
+	isAdmin := CheckAdmin(claims) 
+	if isAdmin {
+		return nil
 	}
+	
 	if claims.Username != username {
 		return fmt.Errorf("unauthorised user access")
 	}
@@ -147,9 +149,11 @@ func CheckMatchingCallerId(c *gin.Context, userId string) error {
 		return fmt.Errorf("failed to decode auth token for checking caller id")
 	}
 	// admin auto access
-	if err := CheckAdmin(claims); err != nil {
-		return err
+	isAdmin := CheckAdmin(claims) 
+	if isAdmin {
+		return nil
 	}
+	
 	if claims.ID != userId {
 		return fmt.Errorf("unauthorised user access")
 	}
@@ -171,11 +175,14 @@ func (service *JwtService) JwtAuthMiddlewareAdmin() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		if err := CheckAdmin(claims); err != nil {
+		
+		isAdmin := CheckAdmin(claims) 
+		if !isAdmin {
 			c.JSON(http.StatusUnauthorized, gin.H{"message": err.Error()})
 			c.Abort()
 			return
 		}
+	
 		c.Next()
 	}
 }
