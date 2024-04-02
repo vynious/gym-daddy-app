@@ -3,7 +3,7 @@
   <div class="background">
     <a-card style="width: 800px; margin-top: 5%">
       <h1>
-        Create a Class <router-link to="/classSearch">Class search</router-link>
+        Create a Class
       </h1>
       <a-form
         ref="formRef"
@@ -12,13 +12,6 @@
         :label-col="labelCol"
         :wrapper-col="wrapperCol"
       >
-        <a-form-item
-          label="Class Id"
-          name="id"
-          style="font-family: 'Poppins Medium'"
-        >
-          <a-input v-model:value="formState.id" />
-        </a-form-item>
         <a-form-item
           label="Class name"
           name="name"
@@ -79,23 +72,16 @@ const wrapperCol = {
   span: 13,
 };
 const formState = reactive({
-  id: 0,
   name: "", // string
   date_time: undefined,
   duration: 0, // number
   suitable_level: "", // string
+  capacity: 0,
   max_capacity: 0,
   description: "", // string
 });
 
 const rules = {
-  id: [
-    {
-      required: true,
-      message: "Please input id",
-      trigger: "change",
-    },
-  ],
   name: [
     {
       required: true,
@@ -143,6 +129,7 @@ const onSubmit = () => {
         "YYYY-MM-DD HH:mm:00"
       );
       formState.date_time = formattedDateTime;
+      formState.capacity = formState.max_capacity;
       console.log(formState);
       axios
         .post(process.env.VUE_APP_CREATE_CLASS_URL, formState, {

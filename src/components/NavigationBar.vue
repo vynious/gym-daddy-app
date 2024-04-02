@@ -71,9 +71,11 @@
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/queue">Queue</router-link></li>
         <li><router-link to="/book">Classes</router-link></li>
-        <li v-show="isAdmin"><router-link to="/createClass">Create Class</router-link></li>
-        <li v-show="isAdmin"><router-link to="/classSearch">Search Classes</router-link></li>
-        <li><router-link to="/login">{{ loggedIn ? 'Profile' : 'Login' }}</router-link></li>
+        <li v-if="isAdmin"><router-link to="/createClass">Create Class</router-link></li>
+        <!-- <li v-show="isAdmin"><router-link to="/classSearch">Search Classes</router-link></li> -->
+        <li v-if="loggedIn & !isAdmin"><router-link to="/profile">Profile</router-link></li>
+        <li v-if="!loggedIn"><router-link to="/login">Login</router-link></li>
+        <li v-if="loggedIn"><router-link to="/" @click="logout">Sign out</router-link></li>
       </ul>
     </div>
   </nav>
@@ -94,6 +96,14 @@ export default {
     this.loggedIn = userLoggedIn === "true";
     this.isAdmin = localStorage.getItem('isAdmin');
   },
+  methods: {
+    logout() {
+      // Perform logout actions (clear session, etc.)
+      localStorage.setItem("loggedIn", "false");
+      this.loggedIn = false;
+      this.isAdmin = false;
+    }
+  }
 };
 </script>
 
