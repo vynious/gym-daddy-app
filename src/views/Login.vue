@@ -86,10 +86,12 @@ export default {
               },
             }).then((adminResponse) => {
               const isAdmin = adminResponse.status === 200;
-              localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
               if (isAdmin) {
+                localStorage.setItem("isAdmin", isAdmin);
                 this.$router.push("/");
+
               } else {
+                localStorage.setItem("isAdmin", isAdmin);
                 this.$router.push("/");
               }
             }).catch((error) => {

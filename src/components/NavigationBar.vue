@@ -75,7 +75,7 @@
         <!-- <li v-show="isAdmin"><router-link to="/classSearch">Search Classes</router-link></li> -->
         <li v-if="loggedIn & !isAdmin"><router-link to="/profile">Profile</router-link></li>
         <li v-if="!loggedIn"><router-link to="/login">Login</router-link></li>
-        <li v-if="loggedIn"><router-link to="/" @click="logout">Sign out</router-link></li>
+        <li v-if="loggedIn"><router-link to="/login" @click="logout">Sign out</router-link></li>
       </ul>
     </div>
   </nav>
@@ -102,6 +102,7 @@ export default {
       localStorage.setItem("loggedIn", "false");
       this.loggedIn = false;
       this.isAdmin = false;
+      this.$router.push("/login");
     }
   }
 };

@@ -133,6 +133,7 @@ export default {
 			const bookingURL = `http://localhost:8000/api/booking/user/${this.userId}`;
 			axios.get(bookingURL, { headers: { Authorisation: `Bearer ${JSON.parse(localStorage.getItem("token"))}` } })
 				.then((response) => {
+					console.log(response.data.bookings);
 					this.bookedClasses = response.data.bookings.map(booking => booking.class_id);
 				})
 				.catch((error) => {
