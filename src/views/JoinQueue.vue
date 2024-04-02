@@ -184,7 +184,7 @@ export default {
     },
     async fetchCurrentQueue() {
       const baseURL = 'http://127.0.0.1:8000';
-      const authToken = sessionStorage.getItem('AuthToken');
+      const authToken = JSON.parse(localStorage.getItem("token"));
 
       try {
         const upcomingQueueResponse = await axios.get(`${baseURL}/api/queue/upcoming`, {

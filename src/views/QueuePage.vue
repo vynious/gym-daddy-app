@@ -91,7 +91,7 @@ export default {
   methods: {
     joinQueue() {
       const baseURL = "http://127.0.0.1:8000/api/queue/join";
-      const authToken = sessionStorage.getItem("AuthToken");
+      const authToken = JSON.parse(localStorage.getItem("token"));
       const userId = localStorage.getItem("user_id");
 
       if (!userId) {

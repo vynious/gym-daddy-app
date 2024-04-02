@@ -128,10 +128,37 @@
     flex-direction: column;
     /* Align buttons vertically */
 }
+.queue-info {
+    text-align: center;
+    margin: 20px 0;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+}
+
+.queue-info p {
+    font-size: 20px;
+    color: #333;
+    margin: 10px 0;
+    letter-spacing: 0.5px;
+}
+
+.queue-info p span {
+    display: block;
+    font-size: 24px;
+    color: #2c3e50;
+    font-weight: 600;
+}
 </style>
 <template>
     <div class="background">
         <div class="cardPos">
+            <div class="queue-info">
+                <p>Current Gym Availability: {{ gymAvailability }}</p>
+                <p>Upcoming Queue Number: {{ upcomingQueueNumber }}</p>
+            </div>
             <button @click="dequeue" class="entergymbtn">Dequeue</button>
             <button @click="increaseAvailability" class="entergymbtn increase">Increase Gym Availability</button>
             <button @click="decreaseAvailability" class="entergymbtn decrease">Decrease Gym Availability</button>
@@ -143,38 +170,82 @@
 import axios from 'axios';
 
 export default {
+    data() {
+        return {
+            gymAvailability: 0,
+            upcomingQueueNumber: "No one in Queue",
+        };
+    },
+    created() {
+        this.fetchGymAvailability();
+        this.fetchUpcomingQueueNumber();
+    },
     methods: {
+        fetchGymAvailability() {
+            const authToken = JSON.parse(localStorage.getItem("token"));
+            axios.get('http://127.0.0.1:8000/api/gym/avail', { headers: { Authorisation: `Bearer ${authToken}` } })
+                .then(response => {
+                    this.gymAvailability = response.data.count;
+                })
+                .catch(error => {
+                    console.error("Error fetching gym availability: ", error);
+                });
+        },
+        fetchUpcomingQueueNumber() {
+            const authToken = JSON.parse(localStorage.getItem("token"));
+            axios.get('http://127.0.0.1:8000/api/queue/upcoming', { headers: { Authorisation: `Bearer ${authToken}` } })
+                .then(response => {
+                    this.upcomingQueueNumber = response.data.data.queue_number;
+                })
+                .catch(error => {
+                    console.error("Error fetching upcoming queue number: ", error);
+                });
+        },
         dequeue() {
-            axios.post('/api/dequeue')
+            const authToken = JSON.parse(localStorage.getItem("token"));
+            axios.get('http://127.0.0.1:8000/api/queue/next', { headers: { Authorisation: `Bearer ${authToken}` } })
                 .then(response => {
                     console.log(response);
-                    // Handle response
+                    alert("Removed first person from the queue.");
+                    this.fetchGymAvailability();
+                    this.fetchUpcomingQueueNumber();
+                
                 })
                 .catch(error => {
                     console.error(error);
-                    // Handle error
+                    alert(error.response.data.message);
+                    console.log(error.response.data)
+
+                    if (error.response.data == "failed to get next ticket") {
+                        this.upcomingQueueNumber = "No one in Queue"
+
+                    }
                 });
         },
         increaseAvailability() {
-            axios.post('/api/increase-availability')
+            const authToken = JSON.parse(localStorage.getItem("token"));
+            axios.post('http://127.0.0.1:8000/api/gym/update-avail', { update_type: "increment", quantity: 1 }, { headers: { Authorisation: `Bearer ${authToken}` } })
                 .then(response => {
                     console.log(response);
-                    // Handle response
+                    alert("Successfully updated gym availability.");
+                    this.fetchGymAvailability();
                 })
                 .catch(error => {
                     console.error(error);
-                    // Handle error
+                    alert(error.response.data.error);
                 });
         },
         decreaseAvailability() {
-            axios.post('/api/decrease-availability')
+            const authToken = JSON.parse(localStorage.getItem("token"));
+            axios.post('http://127.0.0.1:8000/api/gym/update-avail', { update_type: "decrement", quantity: 1 }, { headers: { Authorisation: `Bearer ${authToken}` } })
                 .then(response => {
                     console.log(response);
-                    // Handle response
+                    alert("Successfully updated gym availability.");
+                    this.fetchGymAvailability();
                 })
                 .catch(error => {
                     console.error(error);
-                    // Handle error
+                    alert(error.response.data.error);
                 });
         }
     }
