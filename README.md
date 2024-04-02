@@ -31,7 +31,14 @@ git submodule update --remote
 
 ### Starting the frontend
 ```bash
-# cd 
+# enter frontend repo
+cd gd-frontend
+
+# install node dependencies
+npm install
+
+# start vue frontend server
+npm run serve
 
 ```
 
