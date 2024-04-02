@@ -6,7 +6,10 @@
           :bordered="false"
           style="font-family: 'Poppins Bold'; margin-bottom: 10px"
         >
-          <div class="card-title" style="font-family: 'Poppins Bold'">
+          <div
+            class="card-title"
+            style="font-family: 'Poppins Bold'; font-size: 25px"
+          >
             {{ classItem.name }}
           </div>
           <p style="font-family: 'Poppins Medium'">
